@@ -59,6 +59,17 @@ export const useStudentStore = defineStore("student", () => {
     students.value = res.students;
   };
 
+  const create = async () => {
+    await api('students', {
+      method: 'POST',
+      body: {
+        ...student.value,
+        preserved_parts: JSON.parse(student.value.preserved_parts),
+        parts_tested_by_the_endowments: JSON.parse(student.value.parts_tested_by_the_endowments),
+      }
+    })
+  }
+
   return {
     paginationOptions,
     headers,
@@ -67,5 +78,6 @@ export const useStudentStore = defineStore("student", () => {
     studentsTotalCount,
     reset,
     list,
+    create
   };
 });
