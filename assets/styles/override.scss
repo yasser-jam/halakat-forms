@@ -1,0 +1,51 @@
+// RTL ISSUES
+.v-application.v-locale--is-rtl *,
+.v-overlay-container * {
+  letter-spacing: -0.1px !important;
+}
+
+// LIST GROUP
+.v-list-group {
+  --list-indent-size: 0px !important;
+}
+
+// TEXT FIELD
+.v-field__outline {
+  --v-field-border-opacity: 0 !important;
+}
+
+.v-text-field ::placeholder {
+  min-height: 30px;
+}
+
+.v-field.v-field--focused .v-field__outline,
+.v-input.v-input--error .v-field__outline {
+  --v-field-border-width: 1px !important;
+  --v-field-border-opacity: 0.1 !important;
+}
+
+.v-textarea textarea {
+  line-height: 1.75;
+}
+
+// TAB
+.v-slide-group__content {
+  column-gap: 16px;
+}
+.v-tab.v-tab {
+  // padding: 0 !important;
+  min-width: auto !important;
+  --v-theme-overlay-multiplier: 0 !important;
+}
+
+/* INPUT FIELDS ERRORS MESSAGES */
+.v-messages__message {
+  color: #f1416c;
+  margin: 2px -15px 10px 0;
+}
+
+/* INPUT FIELDS ERRORS MESSAGES */
+.v-messages__message {
+  color: #f1416c;
+  margin: 2px -15px 10px 0;
+}

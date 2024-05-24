@@ -1,0 +1,11 @@
+@use "vuetify/settings" with (
+  $body-font-family: "Cairo",
+
+  $shadow-key-umbra-opacity: rgba(#523f69, 0.01),
+  $shadow-key-penumbra-opacity: rgba(#523f69, 0.01),
+  $shadow-key-ambient-opacity: rgba(#523f69, 0.075),
+  $card-title-font-weight: 600,
+  $card-title-padding: 1rem 1.25rem,
+  $card-text-padding: 1.25rem 1rem,
+  $card-actions-padding: 0.5rem 1.25rem 1rem
+);
