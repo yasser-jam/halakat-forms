@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: 'http://localhost:3002'
+      apiUrl: 'https://halakat-backend-production.up.railway.app'
     }
   },
 

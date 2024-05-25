@@ -33,7 +33,7 @@ export interface Student {
     father_health_status?: string
     father_phone_number?: string
     father_work_number?: string
-    motehr_name?: string
+    mother_name?: string
     mother_status?: 'ALIVE' | 'MISSED' | 'DEAD'
     mother_job?: string
     mother_income_level?: string

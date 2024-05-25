@@ -3,7 +3,9 @@
     <v-card class="rounded-lg">
       <v-card-text>
         <div class="flex flex-col justify-center items-center">
-          <div class="w-32 h-32 bg-gray-300 rounded-full mb-4"></div>
+          <div class="flex justify-center items-center w-24 h-24 rounded-full bg-primary mb-4">
+            <v-icon size="4rem">mdi-mosque</v-icon>
+          </div>
 
           <div class="text-2xl font-bold">جامع الشيخ علي الدقر</div>
         </div>

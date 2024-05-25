@@ -5,7 +5,7 @@ export const useStudentStore = defineStore("student", () => {
   const student = ref<Student>(initStudent());
 
   const students = ref<Student[]>([]);
-  
+
   const studentsTotalCount = ref<number>(0);
 
   const paginationOptions = ref<PaginationOptions>(initPagination());
@@ -37,22 +37,22 @@ export const useStudentStore = defineStore("student", () => {
       count: 100,
       students: [
         {
-          name: 'ياسر سعداوي',
-          phoneNumber: '+963 011 275 6464',
-          image_url: '',
+          name: "ياسر سعداوي",
+          phoneNumber: "+963 011 275 6464",
+          image_url: "",
         },
         {
-          name: 'راشد الحناوي',
-          phoneNumber: '+963 011 275 6464',
-          image_url: '',
+          name: "راشد الحناوي",
+          phoneNumber: "+963 011 275 6464",
+          image_url: "",
         },
         {
-          name: 'كريم المسوتي',
-          phoneNumber: '+963 011 275 6464',
-          image_url: '',
+          name: "كريم المسوتي",
+          phoneNumber: "+963 011 275 6464",
+          image_url: "",
         },
-      ]
-    }
+      ],
+    };
 
     studentsTotalCount.value = res.count;
 
@@ -60,15 +60,20 @@ export const useStudentStore = defineStore("student", () => {
   };
 
   const create = async () => {
-    await api('students', {
-      method: 'POST',
+    await api("students", {
+      method: "POST",
       body: {
         ...student.value,
-        preserved_parts: JSON.parse(student.value.preserved_parts),
-        parts_tested_by_the_endowments: JSON.parse(student.value.parts_tested_by_the_endowments),
-      }
-    })
-  }
+        preserved_parts: JSON.stringify({
+          parts: student.value.preserved_parts.toString(),
+        }),
+        parts_tested_by_the_endowments: JSON.stringify({
+          parts: student.value.parts_tested_by_the_endowments.toString(),
+        }),
+        birth_date: new Date(student.value.birth_date as string),
+      },
+    });
+  };
 
   return {
     paginationOptions,
@@ -78,6 +83,6 @@ export const useStudentStore = defineStore("student", () => {
     studentsTotalCount,
     reset,
     list,
-    create
+    create,
   };
 });

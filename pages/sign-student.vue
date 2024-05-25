@@ -4,15 +4,16 @@
       <div
         class="text-base text-gray-800 max-w-[80%] text-center leading-relaxed my-8 mx-auto"
       >
-        تدعوكم إدارة مسجد الشيخ علي الدقر إلى التسجيل بدوراتها الصيفية لعام
-        <span>2024</span> متمنين الخير والتوفيق لنا ولكم تدعوكم إدارة مسجد الشيخ
-        علي الدقر إلى التسجيل بدوراتها الصيفية لعام <span>2024</span> متمنين
-        الخير والتوفيق لنا ولكم تدعوكم إدارة مسجد الشيخ علي الدقر إلى التسجيل
-        بدوراتها الصيفية لعام <span>2024</span> متمنين الخير والتوفيق لنا ولكم
+
+      انطلاقاً من قوله ﷺ: 
+      <div class="font-bold"><<خيركم من تعلم القرآن وعلمه>></div>
+      تدعوكم إدارة مسجد الشيخ علي الدقر للتسجيل بدورتها الصيفية لعام 1445هـ/2024م
       </div>
+
 
       <div class="w-[90%] h-[.5px] bg-gray-400 mx-auto"></div>
 
+      <v-btn @click="test">test</v-btn>
       <div class="flex flex-col items-center justify-center gap-6 mt-8">
         <div class="flex items-center gap-4">
           <div class="font-semibold text-gray-500">الأعمار المقبولة:</div>
@@ -183,7 +184,7 @@
           <base-label>اسم الأم</base-label>
 
           <v-text-field
-            v-model="student.motehr_name"
+            v-model="student.mother_name"
             density="compact"
             placeholder="اسم الأم"
           ></v-text-field>
@@ -234,7 +235,7 @@
         <v-col cols="12">
           <base-label>حالة الزواج</base-label>
 
-          <sys-marriage-status v-model="student.parent_marital_status" />
+          <sys-marriage-select v-model="student.parent_marital_status" />
         </v-col>
 
         <!-- <v-col cols="12" md="6">
@@ -412,4 +413,42 @@ const submit = async () => {
     loading.value = false;
   }
 };
+
+
+const test = () => {
+
+  tab.value = 3
+
+  student.value = {
+    first_name: "test",
+  last_name: "test",
+  student_mobile_number: "332524",
+  in_another_mosque: false,
+  birth_date: '2024-05-25T08:38:37.459Z',
+  current_residence_address_area: 'tersat',
+  current_residence_address_street: 'tersat',
+  current_residence_address_building: 'tersat',
+  original_residence_address_area: 'tersat',
+  original_residence_address_street: 'tersat',
+  original_residence_address_building: 'tersat',
+
+  father_name: 'test',
+  father_job: 'test',
+  father_status: 'ALIVE',
+  father_income_level: 'test',
+  father_phone_number: 'test',
+  father_work_number : '3245243',
+
+  mother_name: 'test',
+  mother_education_level: 'test',
+  mother_income_level: 'test',
+  mother_status: 'ALIVE',
+  parent_marital_status: 'MARRIED',
+
+  educational_class: 'testss',
+  student_health_status: 'ljfjadfs',
+
+  }
+}
+
 </script>
