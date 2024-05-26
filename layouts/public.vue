@@ -7,7 +7,7 @@
             <v-icon size="4rem">mdi-mosque</v-icon>
           </div>
 
-          <div class="text-2xl font-bold">جامع الشيخ علي الدقر</div>
+          <div class="text-2xl font-bold ">جامع الشيخ علي الدقر</div>
         </div>
         <NuxtPage />
       </v-card-text>
