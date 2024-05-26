@@ -415,9 +415,9 @@ const submit = async () => {
 };
 
 
-const test = () => {
+const test = async () => {
 
-  tab.value = 3
+  tab.value = 4
 
   student.value = {
     first_name: "test",
@@ -448,7 +448,11 @@ const test = () => {
   educational_class: 'testss',
   student_health_status: 'ljfjadfs',
 
+  preserved_parts: [1, 2, 3],
+  parts_tested_by_the_endowments: [1, 2]
+
   }
 }
+
 
 </script>

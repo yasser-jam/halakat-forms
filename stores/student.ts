@@ -65,10 +65,10 @@ export const useStudentStore = defineStore("student", () => {
       body: {
         ...student.value,
         preserved_parts: JSON.stringify({
-          parts: student.value.preserved_parts.toString(),
+          parts: student.value.preserved_parts?.toString(),
         }),
         parts_tested_by_the_endowments: JSON.stringify({
-          parts: student.value.parts_tested_by_the_endowments.toString(),
+          parts: student.value.parts_tested_by_the_endowments?.toString(),
         }),
         birth_date: new Date(student.value.birth_date as string),
       },

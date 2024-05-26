@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: 'https://halakat-backend-production.up.railway.app'
+      apiUrl: 'https://halakat-backend.vercel.app'
     }
   },
 
