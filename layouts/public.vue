@@ -17,15 +17,17 @@
       <div class="flex flex-col justify-between md:items-center gap-2 md:text-lg text-sm px-4 py-3">
         <div class="flex gap-2 items-center">
           <div class="text-gray-500">للتواصل:</div>
-          <div class="text-base tracking-widest font-bold">
-            0993544811 / 0993544811
+          <div dir="ltr" class="text-base tracking-widest font-bold">
+            <a href="tel:0944705208" class="text-black decoration-none">0944-705-208</a>
+            / 
+            <a href="tel:0934612625" class="text-black decoration-none">0934-612-625</a>
           </div>
         </div>
 
         <div class="flex gap-2 items-center">
           <div class="text-gray-500">العنوان:</div>
           <div class="font-bold text-xs">
-            حي كفرسوسة - جانب مدرسة الإمام الشافعي
+            كفرسوسة - ساحة - مقابل المقبرة
           </div>
         </div>
       </div>
