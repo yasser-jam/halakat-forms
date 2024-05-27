@@ -71,7 +71,7 @@
   
             <v-text-field
               v-model="student.birth_date"
-              :rules="useValidate(student.birth_date)"
+              :rules="useValidate(String(student.birth_date))"
               type="date"
               placeholder="تاريخ ميلاد الطالب"
             ></v-text-field>
@@ -103,7 +103,7 @@
           <v-col cols="12" md="6">
             <base-label>الأجزاء المحفوظة</base-label>
   
-            <sys-parts-select :rules="useValidate(student.first_name)" v-model="student.preserved_parts" />
+            <sys-parts-select v-model="student.preserved_parts" />
           </v-col>
   
           <v-col cols="12" md="6">
@@ -292,6 +292,7 @@
   
             <v-text-field
               v-model="student.current_residence_address_area"
+              :rules="useValidate(String(student.current_residence_address_area))"
               placeholder="الميدان"
             ></v-text-field>
           </v-col>

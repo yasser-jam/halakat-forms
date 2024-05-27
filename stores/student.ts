@@ -47,6 +47,12 @@ export const useStudentStore = defineStore("student", () => {
 
   const reset = (student.value = initStudent());
 
+  const get = async (id: number) : Promise<Student> => {
+    student.value = await api(`students/${id}`)
+  
+    return student.value
+  }
+
   const list = async () : Promise<Student[]> => {
     const res = await api("students");
 
@@ -81,6 +87,7 @@ export const useStudentStore = defineStore("student", () => {
     students,
     studentsTotalCount,
     reset,
+    get,
     list,
     create,
   };

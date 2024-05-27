@@ -18,70 +18,74 @@
           @update:model-value="search"
         />
 
-        <v-data-table
-          :headers="headers"
-          :items="data"
-          :items-length="studentsTotalCount"
-          :loading="pending"
-          :items-per-page="10"
-          :page="1"
-        >
-          <template #item.name="{ item }">
-            <div class="flex items-center gap-4 my-2">
-              <div class="w-12 h-12 rounded-full bg-gray-200"></div>
-
-              <div class="flex flex-col gap-1">
-                <div class="text-md font-weight-bold">
-                  {{ item.first_name + " " + item.last_name }}
-                </div>
-                <div class="text-xs font-bold text-gray-400">
-                  {{ item.educational_class }}
+        <client-only>
+          <v-data-table
+            :headers="headers"
+            :items="data"
+            :items-length="studentsTotalCount"
+            :loading="pending"
+            :items-per-page="10"
+            :page="1"
+          >
+            <template #item.name="{ item }">
+              <div class="flex items-center gap-4 my-2">
+                <div class="w-12 h-12 rounded-full bg-gray-200"></div>
+  
+                <div class="flex flex-col gap-1">
+                  <div class="text-md font-weight-bold">
+                    {{ item.first_name + " " + item.last_name }}
+                  </div>
+                  <div class="text-xs font-bold text-gray-400">
+                    {{ item.educational_class }}
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
+  
+            <template #item.halakah_name="{ item }">
+              <v-chip color="blue">اسم الحلقة</v-chip>
+            </template>
+  
+            <template #item.preserved_parts="{ item }">
+              <v-chip color="warning">{{
+                getParts(item.preserved_parts)
+              }}</v-chip>
+            </template>
+  
+            <template #item.points="{ item }">
+              <v-chip color="info">250 نقطة</v-chip>
+            </template>
+  
+            <template #item.phone_number="{ item }">
+              <v-chip color="success">{{ item.student_mobile_number }}</v-chip>
+            </template>
+  
+            <template #item.actions="{ item }">
+              <div class="flex gap-2 justify-end">
+                <v-btn
+                  color="blue"
+                  variant="tonal"
+                  size="x-small"
+                  :rounded="false"
+                  class="rounded-lg"
+                  icon="mdi-pencil"
+                  :to="`students/${item.id}`"
+                ></v-btn>
+                <v-btn
+                  color="error"
+                  variant="tonal"
+                  size="x-small"
+                  :rounded="false"
+                  class="rounded-lg"
+                  icon="mdi-trash-can"
+                ></v-btn>
+              </div>
+            </template>
+  
+            <!-- <template #bottom></template> -->
+          </v-data-table>
+        </client-only>
 
-          <template #item.halakah_name="{ item }">
-            <v-chip color="blue">اسم الحلقة</v-chip>
-          </template>
-
-          <template #item.preserved_parts="{ item }">
-            <v-chip color="warning">{{
-              getParts(item.preserved_parts)
-            }}</v-chip>
-          </template>
-
-          <template #item.points="{ item }">
-            <v-chip color="info">250 نقطة</v-chip>
-          </template>
-
-          <template #item.phone_number="{ item }">
-            <v-chip color="success">{{ item.student_mobile_number }}</v-chip>
-          </template>
-
-          <template #item.actions="{ item }">
-            <div class="flex gap-2 justify-end">
-              <v-btn
-                color="blue"
-                variant="tonal"
-                size="x-small"
-                :rounded="false"
-                class="rounded-lg"
-                icon="mdi-pencil"
-              ></v-btn>
-              <v-btn
-                color="error"
-                variant="tonal"
-                size="x-small"
-                :rounded="false"
-                class="rounded-lg"
-                icon="mdi-trash-can"
-              ></v-btn>
-            </div>
-          </template>
-
-          <!-- <template #bottom></template> -->
-        </v-data-table>
       </v-card-text>
     </v-card>
   </v-container>
