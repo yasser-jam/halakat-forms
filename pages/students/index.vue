@@ -10,37 +10,45 @@
     <v-card>
       <v-card-text>
         <v-text-field
+          v-model="key"
           prepend-inner-icon="mdi-magnify"
           placeholder="ابحث..."
           variant="outlined"
           size="small"
+          @update:model-value="search"
         />
 
-        <v-data-table-server
+        <v-data-table
           :headers="headers"
-          :items="students"
+          :items="data"
           :items-length="studentsTotalCount"
           :loading="pending"
-          v-model:options="paginationOptions"
-          @update:options="refresh"
+          :items-per-page="10"
+          :page="1"
         >
           <template #item.name="{ item }">
             <div class="flex items-center gap-4 my-2">
               <div class="w-12 h-12 rounded-full bg-gray-200"></div>
 
               <div class="flex flex-col gap-1">
-                <div class="text-md font-weight-bold">ياسر جمال الدين</div>
-                <div class="text-xs font-bold text-gray-400">الصف الخامس</div>
+                <div class="text-md font-weight-bold">
+                  {{ item.first_name + " " + item.last_name }}
+                </div>
+                <div class="text-xs font-bold text-gray-400">
+                  {{ item.educational_class }}
+                </div>
               </div>
             </div>
           </template>
 
           <template #item.halakah_name="{ item }">
-            <v-chip color="blue">المتفائلون</v-chip>
+            <v-chip color="blue">اسم الحلقة</v-chip>
           </template>
 
           <template #item.preserved_parts="{ item }">
-            <v-chip color="warning"> 10 أجزاء </v-chip>
+            <v-chip color="warning">{{
+              getParts(item.preserved_parts)
+            }}</v-chip>
           </template>
 
           <template #item.points="{ item }">
@@ -48,7 +56,7 @@
           </template>
 
           <template #item.phone_number="{ item }">
-            <v-chip color="success">0993544811</v-chip>
+            <v-chip color="success">{{ item.student_mobile_number }}</v-chip>
           </template>
 
           <template #item.actions="{ item }">
@@ -71,7 +79,9 @@
               ></v-btn>
             </div>
           </template>
-        </v-data-table-server>
+
+          <!-- <template #bottom></template> -->
+        </v-data-table>
       </v-card-text>
     </v-card>
   </v-container>
@@ -82,11 +92,22 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useStudentStore } from "~/stores/student";
+import type { Student } from "~/types";
 
 const studentStore = useStudentStore();
 
 const { headers, paginationOptions, students, studentsTotalCount } =
   storeToRefs(studentStore);
 
-const { pending, refresh } = useLazyAsyncData(() => studentStore.list());
+const key = ref<string>("");
+
+const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
+  studentStore.list()
+);
+
+const search = () => {
+  data.value = students.value.filter((stud) =>
+    stud.first_name.includes(key.value)
+  );
+};
 </script>

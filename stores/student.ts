@@ -43,35 +43,18 @@ export const useStudentStore = defineStore("student", () => {
     },
   ]);
 
+  const search = ref<string>('')
+
   const reset = (student.value = initStudent());
 
-  const list = async () => {
-    // const res = await api("students");
+  const list = async () : Promise<Student[]> => {
+    const res = await api("students");
 
-    const res = {
-      count: 100,
-      students: [
-        {
-          name: "ياسر سعداوي",
-          phoneNumber: "+963 011 275 6464",
-          image_url: "",
-        },
-        {
-          name: "راشد الحناوي",
-          phoneNumber: "+963 011 275 6464",
-          image_url: "",
-        },
-        {
-          name: "كريم المسوتي",
-          phoneNumber: "+963 011 275 6464",
-          image_url: "",
-        },
-      ],
-    };
+    studentsTotalCount.value = res.length;
 
-    studentsTotalCount.value = res.count;
+    students.value = res;
 
-    students.value = res.students;
+    return students.value
   };
 
   const create = async () => {
@@ -92,6 +75,7 @@ export const useStudentStore = defineStore("student", () => {
 
   return {
     paginationOptions,
+    search,
     headers,
     student,
     students,
