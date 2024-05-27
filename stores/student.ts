@@ -17,8 +17,23 @@ export const useStudentStore = defineStore("student", () => {
       sortable: false,
     },
     {
+      title: "اسم الحلقة",
+      key: "halakah_name",
+      sortable: false,
+    },
+    {
+      title: "الأجزاء المحفوظة",
+      key: "preserved_parts",
+      sortable: false,
+    },
+    {
+      title: "النقاط",
+      key: "points",
+      sortable: false,
+    },
+    {
       title: "الرقم",
-      key: "phoneNumber",
+      key: "phone_number",
       sortable: false,
     },
     {

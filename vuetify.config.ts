@@ -91,6 +91,11 @@ export default defineVuetifyConfiguration({
       ripple: false
     },
 
+    VChip: {
+      rounded: "lg",
+      class: 'font-weight-bold'
+    },
+
     VWindowItem: {
       transition: 'fade',
       reverseTransition: 'fade'
