@@ -377,7 +377,7 @@
   
         <div class="flex justify-center md:justify-end gap-4 mt-4">
           <v-btn color="grey" @click="tab--">عودة</v-btn>
-          <v-btn color="primary" @click="submit">إرسال</v-btn>
+          <v-btn color="primary" :loading @click="submit">إرسال</v-btn>
         </div>
       </v-window-item>
   
@@ -419,11 +419,11 @@ definePageMeta({
   layout: "public",
 });
 
-const tab = ref(5);
+const tab = ref(0);
 
 const form = ref(false)
 
-const success = ref(false)
+const success = ref(true)
 
 const studentStore = useStudentStore();
 
@@ -437,9 +437,19 @@ const submit = async () => {
   loading.value = true;
 
   try {
+    
     await studentStore.create();
+
+  } catch (error) {
+    success.value = false
   } finally {
+
+    tab.value++
+
     loading.value = false;
+
+    // init
+    initStudent()
   }
 };
 
@@ -477,8 +487,8 @@ const test = async () => {
   educational_class: 'testss',
   student_health_status: 'ljfjadfs',
 
-  preserved_parts: [1, 2, 3],
-  parts_tested_by_the_endowments: [1, 2]
+  preserved_parts: [],
+  parts_tested_by_the_endowments: []
 
   }
 }
