@@ -4,6 +4,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
     if (token.value) return
 
+
+    if (to.name?.includes('sign-student')) return
+    
     if (to.name?.includes('auth')) return
   
     return navigateTo('/auth/login')
