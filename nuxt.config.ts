@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'حلقات - إذارة الدورات القرآنية'
+      title: 'حلقات - مسجد علي الدقر'
     },
   },
 

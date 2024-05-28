@@ -1,6 +1,6 @@
 <template>
   <v-app dir="rtl">
-    <v-navigation-drawer location="right" color="primary-darken-3" permanent>
+    <v-navigation-drawer v-model="drawer" location="right" color="primary-darken-3" permanent>
       <layout-sidebar />
     </v-navigation-drawer>
 
@@ -17,5 +17,5 @@
 </template>
 
 <script setup>
-const drawer = ref(null);
+const drawer = ref(true);
 </script>
