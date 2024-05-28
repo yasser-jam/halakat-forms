@@ -19,7 +19,7 @@
         />
 
         <client-only>
-          <v-data-table
+          <v-data-table-server
             :headers="headers"
             :items="data"
             :items-length="studentsTotalCount"
@@ -82,8 +82,8 @@
               </div>
             </template>
   
-            <!-- <template #bottom></template> -->
-          </v-data-table>
+            <template #bottom></template>
+          </v-data-table-server>
         </client-only>
 
       </v-card-text>
