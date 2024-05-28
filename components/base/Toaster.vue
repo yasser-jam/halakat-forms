@@ -1,5 +1,5 @@
 <template>
-    <v-snackbar :color="toasterColor" variant="flat" location="top right" :close-delay="1111">
+    <v-snackbar :color="toasterColor" variant="flat" location="top right" :close-delay="1000">
         <slot />
     </v-snackbar>
 </template>

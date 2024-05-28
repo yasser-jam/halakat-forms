@@ -84,6 +84,15 @@ export const useStudentStore = defineStore("student", () => {
     toasterStore.success('تم إضافة الطالب بنجاح')
   };
 
+
+  const remove = async (id: number) => {
+    await api(`students/${id}`, {
+      method: 'DELETE'
+    })
+
+    toasterStore.success('تم حذف الطالب بنجاح')
+  }
+
   return {
     paginationOptions,
     search,
@@ -95,5 +104,6 @@ export const useStudentStore = defineStore("student", () => {
     get,
     list,
     create,
+    remove
   };
 });

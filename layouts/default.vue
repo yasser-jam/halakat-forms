@@ -14,8 +14,15 @@
       <NuxtPage />
     </v-main>
   </v-app>
+
+  <base-toaster v-model="toasterShow">{{ toasterMsg }}</base-toaster>
+
 </template>
 
 <script setup>
 const drawer = ref(true);
+
+const toasterStore = useToasterStore()
+
+const { toasterMsg, toasterShow } = storeToRefs(toasterStore)
 </script>

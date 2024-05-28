@@ -78,6 +78,7 @@
                   :rounded="false"
                   class="rounded-lg"
                   icon="mdi-trash-can"
+                  @click="openDeleteDialog(item.id)"
                 ></v-btn>
               </div>
             </template>
@@ -89,6 +90,8 @@
       </v-card-text>
     </v-card>
   </v-container>
+
+  <base-delete-dialog v-model="deleteToggler" :loading="deleteLoading" @delete="remove"></base-delete-dialog>
 
   <NuxtPage />
 </template>
@@ -105,9 +108,33 @@ const { headers, paginationOptions, students, studentsTotalCount } =
 
 const key = ref<string>("");
 
+const deleteToggler = ref<boolean>(false)
+const deletedId = ref<number>()
+const deleteLoading = ref<boolean>(false)
+
 const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
   studentStore.list()
 );
+
+const openDeleteDialog = (id: number) => {
+  deletedId.value = id
+  deleteToggler.value = true
+}
+
+const remove = async () => {
+  
+  deleteLoading.value = true
+  
+  try {
+    await studentStore.remove(deletedId.value as number)
+  
+    await refresh()
+  
+  } finally {
+    deleteLoading.value = false
+    deleteToggler.value = false
+  }
+}
 
 const search = () => {
   data.value = students.value.filter((stud) =>
