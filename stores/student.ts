@@ -2,6 +2,9 @@ import { defineStore } from "pinia";
 import type { Student, Header, PaginationOptions } from "~/types";
 
 export const useStudentStore = defineStore("student", () => {
+
+  const toasterStore = useToasterStore()
+
   const student = ref<Student>(initStudent());
 
   const students = ref<Student[]>([]);
@@ -45,7 +48,7 @@ export const useStudentStore = defineStore("student", () => {
 
   const search = ref<string>('')
 
-  const reset = (student.value = initStudent());
+  const reset = () => (student.value = initStudent());
 
   const get = async (id: number) : Promise<Student> => {
     student.value = await api(`students/${id}`)
@@ -77,6 +80,8 @@ export const useStudentStore = defineStore("student", () => {
         birth_date: new Date(student.value.birth_date as string),
       },
     });
+
+    toasterStore.success('تم إضافة الطالب بنجاح')
   };
 
   return {

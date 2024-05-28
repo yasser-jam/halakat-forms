@@ -36,7 +36,7 @@
                     {{ item.first_name + " " + item.last_name }}
                   </div>
                   <div class="text-xs font-bold text-gray-400">
-                    {{ item.educational_class }}
+                    الصف {{ item.educational_class }}
                   </div>
                 </div>
               </div>
