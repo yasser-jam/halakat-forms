@@ -357,6 +357,7 @@
 
                 <v-col cols="12">
                   <base-switch-input
+                    v-model="student.in_another_mosque"
                     title="سجل الطالب في جوامع سابقة"
                     subtitle="هل سجل الطالب في جوامع أو معاهد أو دورات قرآنية سابقة"
                     color="primary"
