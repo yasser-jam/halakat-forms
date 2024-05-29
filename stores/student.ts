@@ -71,17 +71,23 @@ export const useStudentStore = defineStore("student", () => {
       method: "POST",
       body: {
         ...student.value,
-        preserved_parts: JSON.stringify({
-          parts: student.value.preserved_parts?.toString(),
-        }),
-        parts_tested_by_the_endowments: JSON.stringify({
-          parts: student.value.parts_tested_by_the_endowments?.toString(),
-        }),
         birth_date: new Date(student.value.birth_date as string),
       },
     });
 
     toasterStore.success('تم إضافة الطالب بنجاح')
+  };
+
+  const update = async (id: number) => {
+    await api(`students/${id}`, {
+      method: "PUT",
+      body: {
+        ...student.value,
+        birth_date: new Date(student.value.birth_date as string),
+      },
+    });
+
+    toasterStore.success('تم تعديل الطالب بنجاح')
   };
 
 
@@ -104,6 +110,7 @@ export const useStudentStore = defineStore("student", () => {
     get,
     list,
     create,
+    update,
     remove
   };
 });

@@ -399,7 +399,9 @@ const { student } = storeToRefs(studentStore);
 const route = useRoute();
 const router = useRouter()
 
-const editMode = route.params.student_id != "create";
+const studentId = route.params.student_id as string
+
+const editMode = studentId != "create";
 
 const { pending } = useLazyAsyncData<Student>((): Promise<Student> => {
   if (editMode) return studentStore.get(Number(route.params.student_id));
@@ -416,7 +418,7 @@ const submit = async () => {
 
   try {
 
-    await studentStore.create()
+    editMode ? await studentStore.update(Number(studentId)) : await studentStore.create()
 
     goBack()
 
