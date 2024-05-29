@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <div class="flex justify-between mt-4 mb-6">
-      <div class="text-3xl font-semibold">قائمة الطلاب</div>
+      <div class="text-3xl font-semibold">قائمة الأساتذة</div>
 
-      <v-btn color="primary" elevation="0" to="/students/create"
-        >إضافة طالب جديد</v-btn
+      <v-btn color="primary" elevation="0" to="/teachers/create"
+        >إضافة أستاذ جديد</v-btn
       >
     </div>
     <v-card>
@@ -21,8 +21,8 @@
         <client-only>
           <v-data-table-server
             :headers="headers"
-            :items="students"
-            :items-length="studentsTotalCount"
+            :items="teachers"
+            :items-length="teachersTotalCount"
             :loading="pending"
             :items-per-page="10"
             :page="1"
@@ -36,7 +36,7 @@
                     {{ item.first_name + " " + item.last_name }}
                   </div>
                   <div class="text-xs font-bold text-gray-400">
-                    الصف {{ item.educational_class }}
+                    {{ item.educational_level }}
                   </div>
                 </div>
               </div>
@@ -57,7 +57,7 @@
             </template>
 
             <template #item.phone_number="{ item }">
-              <v-chip color="success">{{ item.student_mobile_number }}</v-chip>
+              <v-chip color="success">{{ item.mobile_phone_number }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">
@@ -69,7 +69,7 @@
                   :rounded="false"
                   class="rounded-lg"
                   icon="mdi-pencil"
-                  :to="`students/${item.id}`"
+                  :to="`teachers/${item.id}`"
                 ></v-btn>
                 <v-btn
                   color="error"
@@ -101,13 +101,11 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useStudentStore } from "~/stores/student";
-import type { Student } from "~/types";
 
-const studentStore = useStudentStore();
+const teacherStore = useTeacherStore();
 
-const { headers, paginationOptions, students, studentsTotalCount } =
-  storeToRefs(studentStore);
+const { headers, paginationOptions, teachers, teachersTotalCount } =
+  storeToRefs(teacherStore);
 
 const key = ref<string>("");
 
@@ -115,8 +113,8 @@ const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
-const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
-  studentStore.list()
+const { pending, data, refresh } = useLazyAsyncData<Teacher[]>(() =>
+  teacherStore.list()
 );
 
 const openDeleteDialog = (id: number) => {
@@ -128,7 +126,7 @@ const remove = async () => {
   deleteLoading.value = true;
 
   try {
-    await studentStore.remove(deletedId.value as number);
+    await teacherStore.remove(deletedId.value as number);
 
     await refresh();
   } finally {
@@ -138,8 +136,8 @@ const remove = async () => {
 };
 
 const search = () => {
-  data.value = students.value.filter((stud) =>
-    stud.first_name.includes(key.value)
+  data.value = teachers.value.filter((teacher) =>
+    teacher.first_name.includes(key.value)
   );
 };
 </script>

@@ -26,6 +26,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
 
+  imports: {
+    dirs: ['types/*.ts']
+  },
+
   vuetify: {
     moduleOptions: {
       styles: { configFile: '/assets/vuetify/settings.scss' }

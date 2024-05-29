@@ -13,7 +13,9 @@
 
       <div class="flex gap-2">
         <v-btn variant="plain" to="/students">إلغاء</v-btn>
-        <v-btn color="primary" :disabled="!form" :loading @click="submit">حفظ</v-btn>
+        <v-btn color="primary" :disabled="!form" :loading @click="submit"
+          >حفظ</v-btn
+        >
       </div>
     </div>
 
@@ -381,7 +383,6 @@
       <v-btn v-if="tab > 0" @click="tab--" color="grey">العودة</v-btn>
       <v-btn v-if="tab < 3" :disabled="!form" @click="tab++">التالي</v-btn>
     </div>
-
   </v-container>
 </template>
 
@@ -397,16 +398,16 @@ const studentStore = useStudentStore();
 const { student } = storeToRefs(studentStore);
 
 const route = useRoute();
-const router = useRouter()
+const router = useRouter();
 
-const studentId = route.params.student_id as string
+const studentId = route.params.student_id as string;
 
 const editMode = studentId != "create";
 
 const { pending } = useLazyAsyncData<Student>((): Promise<Student> => {
   if (editMode) return studentStore.get(Number(route.params.student_id));
 
-  studentStore.reset()
+  studentStore.reset();
 
   return Promise.resolve({} as Student);
 });
@@ -417,19 +418,19 @@ const submit = async () => {
   loading.value = true;
 
   try {
+    editMode
+      ? await studentStore.update(Number(studentId))
+      : await studentStore.create();
 
-    editMode ? await studentStore.update(Number(studentId)) : await studentStore.create()
-
-    goBack()
-
+    goBack();
   } finally {
     loading.value = false;
   }
 };
 
 const goBack = () => {
-  router.replace('/students')
-}
+  router.replace("/students");
+};
 
 const testData = {
   first_name: "ياسر",
