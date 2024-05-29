@@ -144,15 +144,21 @@
                   ></base-switch-input>
                 </v-col>
 
-                <v-col cols="12" class="mt-4">
-                  <base-label>أسماء الجوامع الأخرى</base-label>
+                <Transition>
+                  <v-col
+                    v-if="teacher.in_another_mosque"
+                    cols="12"
+                    class="mt-4"
+                  >
+                    <base-label>أسماء الجوامع الأخرى</base-label>
 
-                  <v-text-field
-                    v-model="teacher.other_mosque_names"
-                    density="compact"
-                    placeholder="النابلسي، الحاجبية،..."
-                  ></v-text-field>
-                </v-col>
+                    <v-text-field
+                      v-model="teacher.other_mosque_names"
+                      density="compact"
+                      placeholder="النابلسي، الحاجبية،..."
+                    ></v-text-field>
+                  </v-col>
+                </Transition>
               </v-row>
             </v-window-item>
 
@@ -191,21 +197,25 @@
                   ></base-switch-input>
                 </v-col>
 
-                <v-col cols="6">
-                  <base-label>اسم العمل</base-label>
-                  <v-text-field
-                    v-model="teacher.job_role"
-                    placeholder="طبيب"
-                  ></v-text-field>
-                </v-col>
+                <Transition>
+                  <v-col v-if="teacher.is_working" cols="6">
+                    <base-label>اسم العمل</base-label>
+                    <v-text-field
+                      v-model="teacher.job_role"
+                      placeholder="طبيب"
+                    ></v-text-field>
+                  </v-col>
+                </Transition>
 
-                <v-col cols="6">
-                  <base-label>اسم مكان العمل</base-label>
-                  <v-text-field
-                    v-model="teacher.workplace_name"
-                    placeholder="مشفى المواساة"
-                  ></v-text-field>
-                </v-col>
+                <Transition>
+                  <v-col v-if="teacher.is_working" cols="6">
+                    <base-label>اسم مكان العمل</base-label>
+                    <v-text-field
+                      v-model="teacher.workplace_name"
+                      placeholder="مشفى المواساة"
+                    ></v-text-field>
+                  </v-col>
+                </Transition>
               </v-row>
             </v-window-item>
           </v-window>

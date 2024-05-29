@@ -364,14 +364,16 @@
                   ></base-switch-input>
                 </v-col>
 
-                <v-col cols="12" class="mt-4">
-                  <base-label>أسماء الجوامع السابقة</base-label>
-
-                  <v-text-field
-                    v-model="student.other_mosque_names"
-                    density="compact"
-                  ></v-text-field>
-                </v-col>
+                <Transition>
+                  <v-col v-if="student.in_another_mosque" cols="12" class="mt-4">  
+                    <base-label>أسماء الجوامع السابقة</base-label>
+  
+                    <v-text-field
+                      v-model="student.other_mosque_names"
+                      density="compact"
+                    ></v-text-field>
+                  </v-col>
+                </Transition>
               </v-row>
             </v-card-text>
           </v-card>
