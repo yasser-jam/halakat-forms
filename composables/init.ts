@@ -5,8 +5,8 @@ export const initStudent = (): Student => ({
   last_name: "",
   student_mobile_number: "",
   in_another_mosque: false,
-  preserved_parts: [],
-  parts_tested_by_the_endowments: [],
+  preserved_parts: '',
+  parts_tested_by_the_endowments: '',
 });
 
 export const initPagination = (): PaginationOptions => ({

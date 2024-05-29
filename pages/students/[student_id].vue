@@ -154,13 +154,13 @@
                   <sys-health-select v-model="student.father_health_status" />
                 </v-col>
 
-                <v-col cols="6">
+                <v-col cols="12">
                   <base-label>رقم هاتف الأب</base-label>
 
                   <v-text-field
                     v-model="student.father_phone_number"
                     density="compact"
-                    placeholder="09********"
+                    placeholder="09******** (يجب توافر واتس اب)"
                   ></v-text-field>
                 </v-col>
 
@@ -218,12 +218,12 @@
                   <sys-health-select v-model="student.mother_health_status" />
                 </v-col>
 
-                <v-col cols="6">
-                  <base-label>رقم موبايل الأم</base-label>
+                <v-col cols="12">
+                  <base-label>رقم هاتف الأم</base-label>
 
                   <v-text-field
                     v-model="student.mother_phone_number"
-                    placeholder="09********"
+                    placeholder="09******** (الأفضل توافر واتس اب)"
                   ></v-text-field>
                 </v-col>
 

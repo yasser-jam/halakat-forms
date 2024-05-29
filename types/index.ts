@@ -51,7 +51,7 @@ export interface Student {
     current_residence_address_street?: string
     current_residence_address_building?: string
     current_residence_address_floor?: string
-    preserved_parts: any
-    parts_tested_by_the_endowments: any
+    preserved_parts?: string
+    parts_tested_by_the_endowments?: string
     image_url?: string    
 }

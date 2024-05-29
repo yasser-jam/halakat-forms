@@ -1,13 +1,35 @@
 <template>
   <v-select
-    :items="parts"
+    :items="parts"  
     multiple
-    chips
     placeholder="الأجزاء المحفوظة"
-  ></v-select>
+    :model-value="parsedOptions"
+    @update:model-value="emit('update:model-value', $event.join())"
+  >
+    <template v-slot:selection="{ item }">
+      <v-chip color="primary">الجزء {{ item.title }}</v-chip>
+    </template>
+  </v-select>
 </template>
 
 <script setup lang="ts">
+const emit = defineEmits(["update:model-value"]);
+
+ 
+const props = defineProps<{
+  modelValue: string;
+}>()
+
+const parsedOptions = computed(() => {
+  
+  if (!props.modelValue?.length) return []
+  
+  return props.modelValue?.split(',').map((item, index) => ({
+    title: parts.value.find(el => el.value == Number(item))?.title,
+    value: Number(item),
+  }));
+});
+
 const parts = ref<{ title: string; value: number }[]>([
   { title: "الأول", value: 1 },
   { title: "الثاني", value: 2 },

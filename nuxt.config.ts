@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: 'https://halakat-backend.vercel.app'
+      apiUrl: 'http://localhost:3002'
     }
   },
 

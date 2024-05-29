@@ -21,7 +21,7 @@
         <client-only>
           <v-data-table-server
             :headers="headers"
-            :items="data"
+            :items="students"
             :items-length="studentsTotalCount"
             :loading="pending"
             :items-per-page="10"
@@ -78,7 +78,7 @@
                   :rounded="false"
                   class="rounded-lg"
                   icon="mdi-trash-can"
-                  @click="openDeleteDialog(item.id)"
+                  @click="openDeleteDialog(item.id as number)"
                 ></v-btn>
               </div>
             </template>
