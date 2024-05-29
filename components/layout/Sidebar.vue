@@ -40,6 +40,11 @@ const links = ref<
     icon: "mdi-mosque",
   },
   {
+    title: "الدورات",
+    link: "/campaigns",
+    icon: "mdi-account-multiple",
+  },
+  {
     title: "الطلاب",
     link: "/students",
     icon: "mdi-account-school",
