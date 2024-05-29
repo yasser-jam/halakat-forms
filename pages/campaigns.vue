@@ -3,7 +3,7 @@
       <div class="flex justify-between mt-4 mb-6">
         <div class="text-3xl font-semibold">الدورات</div>
   
-        <v-btn color="primary" elevation="0" to="/students/create"
+        <v-btn color="primary" elevation="0" to="/campaigns/create"
           >إضافة دورة جديدة</v-btn
         >
       </div>

@@ -80,3 +80,9 @@ export interface Teacher {
   job_role?: string;
   workplace_name?: string;
 }
+
+export interface Campaign {
+  id?: number
+  name: string
+  startDate: string
+}

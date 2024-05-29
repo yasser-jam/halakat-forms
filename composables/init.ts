@@ -1,4 +1,4 @@
-import type { PaginationOptions, Student, Teacher } from "~/types";
+import type { Campaign, PaginationOptions, Student, Teacher } from "~/types";
 
 export const initStudent = (): Student => ({
   first_name: "",
@@ -37,3 +37,8 @@ export const initPagination = (): PaginationOptions => ({
   sortBy: [],
   orderBy: [],
 });
+
+export const initCampaign = (): Campaign => ({
+  name: '',
+  startDate: ''
+})
