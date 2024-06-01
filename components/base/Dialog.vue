@@ -31,6 +31,6 @@
 const emit = defineEmits(['close', 'save'])
 
 defineProps<{
-  loading: boolean;
+  loading?: boolean;
 }>();
 </script>
