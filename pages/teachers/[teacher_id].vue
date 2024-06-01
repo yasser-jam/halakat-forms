@@ -130,7 +130,7 @@
                 <v-col cols="12">
                   <base-switch-input
                     v-model="teacher.is_mojaz"
-                    title="هل حاصل الأستاذ على إجزة في القرآن الكريم"
+                    title="هل الأستاذ مجاز بالقرآن الكريم؟"
                     color="primary"
                   ></base-switch-input>
                 </v-col>
@@ -138,7 +138,7 @@
                 <v-col cols="12" class="mt-4">
                   <base-switch-input
                     v-model="teacher.in_another_mosque"
-                    title="هل للأستاذ جوامع أخرى"
+                    title="هل للأستاذ جوامع أخرى؟"
                     subtitle="هل ساعد الأستاذ في دورة أو حلقة في مسجد آخر"
                     color="warning"
                   ></base-switch-input>
@@ -192,7 +192,7 @@
                   <base-switch-input
                     v-model="teacher.is_working"
                     title="هل يعمل الأستاذ"
-                    subtitle="هل للأستاذ عمل أو وظيفة أو صنعة"
+                    subtitle="هل للأستاذ عمل أو وظيفة أو صنعة؟"
                     color="primary"
                   ></base-switch-input>
                 </v-col>
