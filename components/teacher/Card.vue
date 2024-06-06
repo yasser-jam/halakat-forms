@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-text class="flex items-center gap-4">
+        <v-card-text class="flex items-center gap-4 relative">
 
             <div class="w-12 h-12 rounded-full bg-gray-200"></div>
 

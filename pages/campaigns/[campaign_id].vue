@@ -30,51 +30,19 @@
         </v-card>
       </v-col>
 
-
-      <v-col cols="12 mt-6">
-
-        <div class="flex justify-between items-center mb-4">
-            <div class="text-2xl font-semibold">مدرسو الدورة</div>
-            <v-btn>إضافة مدرس</v-btn>
-        </div>
-
-        <v-row>
-            <v-col cols="4">
-                <teacher-card></teacher-card>
-            </v-col>
-
-            <v-col cols="4">
-                <teacher-card></teacher-card>
-            </v-col>
-
-            <v-col cols="4">
-                <teacher-card></teacher-card>
-            </v-col>
-        </v-row>
-
+      <v-col cols="12">
+        <v-tabs>
+          <v-tab :to="`/campaigns/${route.params.campaign_id}/general`">معلومات عامة</v-tab>
+          <v-tab :to="`/campaigns/${route.params.campaign_id}/stats`">إحصاءات</v-tab>
+        </v-tabs>
       </v-col>
 
-      <v-col cols="12 mt-6">
-        <div class="flex justify-between items-center mb-4">
-            <div class="text-2xl font-semibold">مناهج الدورة</div>
-            <v-btn>إضافة مقرر</v-btn>
-        </div>
 
-        <v-row>
-            <v-col cols="4">
-                <syllabus-card></syllabus-card>
-            </v-col>
-
-            <v-col cols="4">
-                <syllabus-card></syllabus-card>
-            </v-col>
-
-            <v-col cols="4">
-                <syllabus-card></syllabus-card>
-            </v-col>
-        </v-row>
-
-      </v-col>
+      <NuxtPage />
     </v-row>
   </v-container>
 </template>
+
+<script setup lang="ts">
+const route = useRoute()
+</script>
