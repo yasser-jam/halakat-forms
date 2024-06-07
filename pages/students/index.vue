@@ -7,6 +7,7 @@
         >إضافة طالب جديد</v-btn
       >
     </div>
+    
     <v-card>
       <v-card-text>
         <v-text-field
