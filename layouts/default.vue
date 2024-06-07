@@ -1,6 +1,6 @@
 <template>
   <v-app dir="rtl">
-    <v-navigation-drawer v-model="drawer" location="right" color="primary-darken-3" permanent>
+    <v-navigation-drawer v-model="drawer" location="right" color="primary-darken-3" :temporary="$vuetify.display.mobile">
       <layout-sidebar />
     </v-navigation-drawer>
 

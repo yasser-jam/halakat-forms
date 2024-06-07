@@ -8,14 +8,14 @@
         <v-card>
           <v-card-text>
             <v-row>
-              <v-col cols="6">
+              <v-col md="6">
                 <div class="flex items-center gap-2">
                   <div>:اسم الدورة</div>
                   <v-chip color="primary">دورة التقوية</v-chip>
                 </div>
               </v-col>
 
-              <v-col cols="6">
+              <v-col md="6">
                 <div class="flex items-center gap-2">
                   <div>تاريخ الدورة:</div>
                   <v-chip color="blue">12-2-2003</v-chip>

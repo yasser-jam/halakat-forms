@@ -31,7 +31,7 @@
 
 
       <div class="mt-6 mx-auto">
-          <v-btn color="primary">التفاصيل</v-btn>
+          <v-btn color="primary" :to="`/campaigns/1/general`">التفاصيل</v-btn>
       </div>
     </v-card-text>
   </v-card>
