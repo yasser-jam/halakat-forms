@@ -35,15 +35,15 @@
 
     <v-row>
       <v-col cols="4">
-        <halakat-card></halakat-card>
+        <halakat-inline-card></halakat-inline-card>
       </v-col>
 
       <v-col cols="4">
-        <halakat-card></halakat-card>
+        <halakat-inline-card></halakat-inline-card>
       </v-col>
 
       <v-col cols="4">
-        <halakat-card></halakat-card>
+        <halakat-inline-card></halakat-inline-card>
       </v-col>
     </v-row>
   </v-col>
