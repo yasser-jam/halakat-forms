@@ -2,11 +2,9 @@
   <v-list>
     <v-list-item>
       <div class="flex flex-col items-center justify-center py-8">
-        <v-responsive
-          width="100"
-          height="100"
-          class="bg-gray-200 rounded-[3rem]"
-        ></v-responsive>
+        <v-avatar size="5rem"  color="white">
+          <v-icon size="3rem" color="primary">mdi-mosque</v-icon>
+        </v-avatar>
 
         <div class="font-semibold text-sm text-center text-white mt-6">
           حلقات لإدارة الدورات القرآنية
@@ -42,7 +40,7 @@ const links = ref<
   {
     title: "الدورات",
     link: "/campaigns",
-    icon: "mdi-account-multiple",
+    icon: "mdi-book",
   },
   {
     title: "الطلاب",
@@ -53,6 +51,11 @@ const links = ref<
     title: "الأستاتذة",
     link: "/teachers",
     icon: "mdi-human-male-board",
+  },
+  {
+    title: "الحلقات",
+    link: "/halakat",
+    icon: "mdi-account-multiple",
   },
   {
     title: "المسابقات",

@@ -3,9 +3,9 @@
     <div class="flex justify-between mt-4 mb-6">
       <div class="text-3xl font-semibold">قائمة الحلقات</div>
 
-      <v-btn color="primary" elevation="0" to="/students/create"
-        >إضافة حلقة جديدة</v-btn
-      >
+      <v-btn color="primary" elevation="0" to="/students/create">
+        إضافة حلقة جديدة
+      </v-btn>
     </div>
 
     <v-row>
