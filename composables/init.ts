@@ -1,4 +1,4 @@
-import type { Campaign, PaginationOptions, Student, Teacher } from "~/types";
+import type { Campaign, PaginationOptions, Student, Teacher, Group } from "~/types";
 
 export const initStudent = (): Student => ({
   first_name: "",
@@ -41,4 +41,11 @@ export const initPagination = (): PaginationOptions => ({
 export const initCampaign = (): Campaign => ({
   name: '',
   startDate: ''
+})
+
+export const initGroup = (): Group => ({
+  title: '',
+  teacherId: undefined,
+  students: [],
+  campaigns: []
 })

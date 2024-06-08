@@ -8,11 +8,15 @@
         color="primary"
       ></v-avatar>
 
-      <div class="text-lg font-bold">حلقة الإمام النووي</div>
+      <div class="text-lg font-bold">حلقة {{ group.title }}</div>
 
-      <div class="text-md text-gray-500">أ. محمد مسوتي</div>
+      <div class="text-md text-gray-500">
+        أ. {{ `${group.teacher?.first_name} ${group.teacher?.last_name}` }}
+      </div>
 
-      <v-chip color="blue" class="mt-4">30 طالب</v-chip>
+      <v-chip color="blue" class="mt-4"
+        >{{ group.students?.length }} طالب</v-chip
+      >
 
       <div class="flex justify-between w-full gap-2 mt-4">
         <v-btn
@@ -22,8 +26,14 @@
           icon="mdi-delete"
           color="error"
         ></v-btn>
-        <v-btn variant="text">التفاصيل</v-btn>
+        <v-btn variant="text" :to="`halakat/${group.id}`">التفاصيل</v-btn>
       </div>
     </v-card-text>
   </v-card>
 </template>
+
+<script setup lang="ts">
+defineProps<{
+  group: Group;
+}>();
+</script>

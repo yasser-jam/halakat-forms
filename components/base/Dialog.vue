@@ -19,7 +19,7 @@
 
         <div class="flex justify-end gap-2 mt-4">
           <v-btn variant="text" @click="emit('close')">إلفاء</v-btn>
-          <v-btn @click="emit('save')">حفظ</v-btn>
+          <v-btn :loading @click="emit('save')">حفظ</v-btn>
         </div>
       </v-card-text>
 

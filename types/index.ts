@@ -86,3 +86,13 @@ export interface Campaign {
   name: string
   startDate: string
 }
+
+export interface Group {
+  id?: number
+  title: string
+  teacherId?: number
+  teacher?: Teacher
+  studentsIds?: number[]
+  students: Student[]
+  campaigns: Campaign[]
+}
