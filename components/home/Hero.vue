@@ -6,6 +6,18 @@
           <div class="text-lg text-gray-400 mb-2">دورة صيف</div>
           <div class="text-3xl font-semibold">الاثنين 12 / 21 / 1998</div>
         </v-col>
+        
+        <v-col cols="4">
+          <v-btn
+          variant="tonal"
+            color="primary"
+            size="x-large"
+            class="w-full"
+            to="/students/create"
+          >
+            طالب جديد
+          </v-btn>
+        </v-col>
 
         <v-col cols="4">
           <v-btn
@@ -21,18 +33,6 @@
         <v-col cols="4">
           <v-btn variant="tonal" color="error" size="x-large" class="w-full">
             مسابقة جديدة
-          </v-btn>
-        </v-col>
-
-        <v-col cols="4">
-          <v-btn
-          variant="tonal"
-            color="primary"
-            size="x-large"
-            class="w-full"
-            to="/students/create"
-          >
-            طالب جديد
           </v-btn>
         </v-col>
       </v-row>
