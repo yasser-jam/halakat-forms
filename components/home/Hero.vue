@@ -9,7 +9,7 @@
 
         <v-col cols="4">
           <v-btn
-            variant="outlined"
+          variant="tonal"
             color="secondary"
             size="x-large"
             class="w-full"
@@ -19,14 +19,14 @@
         </v-col>
 
         <v-col cols="4">
-          <v-btn variant="outlined" color="error" size="x-large" class="w-full">
+          <v-btn variant="tonal" color="error" size="x-large" class="w-full">
             مسابقة جديدة
           </v-btn>
         </v-col>
 
         <v-col cols="4">
           <v-btn
-            variant="outlined"
+          variant="tonal"
             color="primary"
             size="x-large"
             class="w-full"
