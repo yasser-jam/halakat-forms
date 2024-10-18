@@ -16,3 +16,7 @@ html, body {
 .v-leave-to {
   opacity: 0;
 }
+
+.home-title {
+  @apply text-xl font-semibold;
+}
