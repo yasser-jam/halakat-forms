@@ -21,7 +21,7 @@ export interface Student {
   birth_date?: string;
   student_mobile?: string;
   school?: string;
-  in_another_mosque?: boolean;
+  in_another_mosque: boolean;
   other_mosque_names?: string;
   student_health_status?: string;
   special_talent?: string;
@@ -51,8 +51,8 @@ export interface Student {
   current_residence_address_street?: string;
   current_residence_address_building?: string;
   current_residence_address_floor?: string;
-  preserved_parts?: string;
-  parts_tested_by_the_endowments?: string;
+  preserved_parts: string;
+  parts_tested_by_the_endowments: string;
   image_url?: string;
 }
 
