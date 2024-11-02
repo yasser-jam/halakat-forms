@@ -25,6 +25,13 @@
 </template>
 
 <script setup lang="ts">
+
+const route = useRoute()
+
+const campaignId = route.params.campaign_id
+
+const baseRoute = `/campaign/${campaignId}`
+
 const links = ref<
   {
     title: string;
@@ -34,33 +41,28 @@ const links = ref<
 >([
   {
     title: "الرئيسية",
-    link: "/",
+    link: `/${baseRoute}/dashboard`,
     icon: "mdi-mosque",
   },
   {
-    title: "الدورات",
-    link: "/campaigns",
-    icon: "mdi-book",
+    title: "إدارة الحلقات",
+    link: `/${baseRoute}/groups`,
+    icon: "mdi-account-multiple",
   },
   {
     title: "الطلاب",
-    link: "/students",
+    link: `/${baseRoute}/students`,
     icon: "mdi-account-school",
   },
   {
     title: "الأستاتذة",
-    link: "/teachers",
+    link: `/${baseRoute}/teachers`,
     icon: "mdi-human-male-board",
   },
   {
-    title: "الحلقات",
-    link: "/halakat",
-    icon: "mdi-account-multiple",
-  },
-  {
-    title: "المسابقات",
-    link: "/contests",
-    icon: "mdi-trophy-award",
+    title: "سياسة الدورة",
+    link: `/${baseRoute}/settings`,
+    icon: "mdi-cog",
   },
 ]);
 </script>

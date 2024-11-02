@@ -1,6 +1,5 @@
 <template>
-  <v-container>
-
+<!-- 
     <div class="text-3xl font-semibold mb-4">دورة التقوية</div>
 
     <v-row>
@@ -35,12 +34,11 @@
           <v-tab :to="`/campaigns/${route.params.campaign_id}/general`">معلومات عامة</v-tab>
           <v-tab :to="`/campaigns/${route.params.campaign_id}/stats`">إحصاءات</v-tab>
         </v-tabs>
-      </v-col>
+      </v-col> -->
 
 
       <NuxtPage />
-    </v-row>
-  </v-container>
+    <!-- </v-row> -->
 </template>
 
 <script setup lang="ts">
