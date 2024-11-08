@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between items-center border-1 border-dashed  md:py-4 px-4"
+    class="flex justify-between items-center border-1 border-dashed rounded-md md:py-3 px-4"
     :class="`${colorsClasses.text} ${colorsClasses.bg} ${colorsClasses.border}`"
   >
     <div>
