@@ -90,9 +90,10 @@ export interface Campaign {
 export interface Group {
   id?: number
   title: string
-  teacherId?: number
-  teacher?: Teacher
-  studentsIds?: number[]
-  students: Student[]
-  campaigns: Campaign[]
+  currentTeacherId: number
+  class: string
+  currentTeacher?: Teacher
+  students?: Student[]
+
+  created_at?: string
 }

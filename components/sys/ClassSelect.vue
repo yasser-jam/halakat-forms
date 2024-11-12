@@ -6,30 +6,30 @@
 </template>
 
 <script setup lang="ts">
-const classes = ref<{ title: string; value: string }[]>([
+const classes = ref<{ title: string; value: number }[]>([
   {
     title: "الصف السابع",
-    value: "7",
+    value: 7,
   },
   {
     title: "الصف الثامن",
-    value: "8",
+    value: 8,
   },
   {
     title: "الصف التاسع",
-    value: "9",
+    value: 9,
   },
   {
     title: "الصف العاشر",
-    value: "10",
+    value: 10,
   },
   {
     title: "الصف الحادي عشر",
-    value: "11",
+    value: 11,
   },
   {
     title: "بكالوريا",
-    value: "12",
+    value: 12,
   },
 ]);
 </script>

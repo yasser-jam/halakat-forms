@@ -5,7 +5,7 @@
   >
     <div>
       <div class="text-sm md:text-lg font-semibold">{{ title }}</div>
-      <div class="hidden md:block text-md text-gray-400 font-semibold mt-2">
+      <div class="hidden md:block text-md text-gray-400 font-semibold mt-1">
         {{ subtitle }}
       </div>
     </div>

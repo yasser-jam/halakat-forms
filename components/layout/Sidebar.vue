@@ -22,6 +22,7 @@
       ></v-list-item>
     </v-list>
   </v-list>
+
 </template>
 
 <script setup lang="ts">
@@ -30,7 +31,7 @@ const route = useRoute()
 
 const campaignId = route.params.campaign_id
 
-const baseRoute = `/campaign/${campaignId}`
+const baseRoute = `/campaigns/${campaignId}`
 
 const links = ref<
   {
@@ -41,27 +42,27 @@ const links = ref<
 >([
   {
     title: "الرئيسية",
-    link: `/${baseRoute}/dashboard`,
+    link: `${baseRoute}/dashboard`,
     icon: "mdi-mosque",
   },
   {
     title: "إدارة الحلقات",
-    link: `/${baseRoute}/groups`,
+    link: `${baseRoute}/groups-management`,
     icon: "mdi-account-multiple",
   },
   {
     title: "الطلاب",
-    link: `/${baseRoute}/students`,
+    link: `/students`,
     icon: "mdi-account-school",
   },
   {
     title: "الأستاتذة",
-    link: `/${baseRoute}/teachers`,
+    link: `/teachers`,
     icon: "mdi-human-male-board",
   },
   {
     title: "سياسة الدورة",
-    link: `/${baseRoute}/settings`,
+    link: `/settings`,
     icon: "mdi-cog",
   },
 ]);

@@ -11,25 +11,34 @@
           color="primary"
         ></v-avatar>
 
-        <div class="">
-          <div class="text-lg">اسم الحلقة</div>
-          
-          <div class="text-sm text-gray font-semibold">اسم الأستاذ</div>
+        <div class="flex justify-between items-center w-full">
+          <div>
+            <div class="text-lg">{{ group.title }}</div>
+            
+            <div class="text-sm text-gray font-semibold">{{ `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}` }}</div>
+          </div>
+
+          <v-btn rounded size="small" variant="tonal" icon="mdi-plus"></v-btn>
         </div>
 
-        <div class="flex justify-between items-center">
-          <!-- <v-btn variant="text" icon="mdi-information"></v-btn> -->
-        </div>
       </div>
 
 
-      <div class="flex flex-col max-h-[200px] p-4 overflow-auto">
-        <div class="text-sm font-semibold mb-4">طلاب الحلقة</div>
+      <div class="flex flex-col max-h-[400px] p-4 overflow-auto">
 
         <div class="flex flex-col gap-4">
-          <student-inline-card v-for="i in 10" />
+          <student-inline-card v-for="student in group.students" :student />
         </div>
       </div>
     </v-card-text>
   </v-card>
 </template>
+
+
+<script setup lang="ts">
+
+defineProps<{
+  group: Group
+}>()
+
+</script>

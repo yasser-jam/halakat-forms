@@ -16,16 +16,20 @@ export const useGroupStore = defineStore('group', () => {
         return group.value
     }
 
-    const list = async (): Promise<Group[]> => {
-        const res = await api('groups')
+    const list = async (campaignId: number): Promise<Group[]> => {
+        const res = await api('groups', {
+            query: {
+                campaignId
+            }
+        })
 
         groups.value = res
 
         return groups.value
     }
 
-    const create = async () => {
-        await api('groups', {
+    const create = async (campaignId: number) => {
+        await api(`groups/${campaignId}`, {
             method: 'POST',
             body: group.value
         })

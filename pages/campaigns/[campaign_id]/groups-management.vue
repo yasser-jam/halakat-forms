@@ -4,52 +4,44 @@
       <div class="text-3xl font-semibold">حلقات الدورة</div>
 
       <div class="flex gap-2">
-          <v-btn color="blue" variant="tonal" to="/students/create">إضافة حلقة جديدة</v-btn>
+        <v-btn color="blue" variant="tonal" :to="`${baseRoute}/create`"
+          >إضافة حلقة جديدة</v-btn
+        >
 
-          <v-btn color="primary" elevation="0">حفظ التعديلات</v-btn>
+        <v-btn color="primary" elevation="0">حفظ التعديلات</v-btn>
       </div>
-
     </div>
 
     <v-row>
-        <v-col cols="12" md="4">
-            <v-card>
-                <v-card-text>
-                    <div class="flex justify-between">
-                        <div class="text-xl font-semibold mb-8">قائمة الطلاب</div>
 
-                        <v-btn size="small" variant="outlined">توزيع حسب الصف</v-btn>
-                    </div>
+      <div v-if="pending">loading</div>
 
-                    <base-label>اختيار الصف</base-label>
-                    <sys-class-select />
-                    
-                    <div class="flex flex-col gap-4 max-h-[400px] overflow-auto">
-                        <student-inline-card class="shrink-0" v-for="i in 10" />
+      <!-- <v-col cols="12" md="4">
+        <v-card>
+          <v-card-text>
+            <div class="flex justify-between">
+              <div class="text-xl font-semibold mb-8">قائمة الطلاب</div>
 
-                    </div>
-                    
-                </v-card-text>
-            </v-card>
-        </v-col>
-        
-        <v-col cols="12" md="8">
-            <v-row>
-                <v-col md="6">
-                    <group-dist-card />
-                </v-col>
+              <v-btn size="small" variant="outlined">توزيع حسب الصف</v-btn>
+            </div>
 
-                <v-col md="6">
-                    <group-dist-card />
-                </v-col>
+            <base-label>اختيار الصف</base-label>
+            <sys-class-select />
 
-                <v-col md="6">
-                    <group-dist-card />
-                </v-col>
-            </v-row>
-        </v-col>
+            <div class="flex flex-col gap-4 max-h-[400px] overflow-auto">
+              <student-inline-card class="shrink-0" v-for="i in 10" />
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col> -->
 
-        
+      <v-col v-else cols="12" md="12">
+        <v-row>
+          <v-col v-for="group in groups" md="4">
+            <group-dist-card :group />
+          </v-col>
+        </v-row>
+      </v-col>
     </v-row>
   </v-container>
 
@@ -67,15 +59,19 @@ import { storeToRefs } from 'pinia';
 import { useStudentStore } from '~/stores/student';
 import type { Student } from '~/types';
 
+const groupStore = useGroupStore()
 const studentStore = useStudentStore();
 
-const route = useRoute()
-const campaignId = route.params.campaign_id
 
-const baseRoute = `/campaign/${campaignId}`
+const route = useRoute();
+const campaignId = route.params.campaign_id;
 
-const { headers, paginationOptions, students, studentsTotalCount } =
+const baseRoute = `/campaigns/${campaignId}/groups-management`;
+
+const { students } =
   storeToRefs(studentStore);
+
+  const { groups } = storeToRefs(groupStore)
 
 const key = ref<string>('');
 
@@ -86,6 +82,11 @@ const deleteLoading = ref<boolean>(false);
 const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
   studentStore.list()
 );
+
+// list groups
+const { pending: groupsLoading } = useLazyAsyncData(() => groupStore.list(Number(campaignId)))
+
+
 
 const openDeleteDialog = (id: number) => {
   deletedId.value = id;
