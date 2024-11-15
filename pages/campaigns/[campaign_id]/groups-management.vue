@@ -14,26 +14,29 @@
 
     <v-row>
 
-      <div v-if="pending">loading</div>
+      <div v-if="pending || groupsLoading">loading</div>
 
-      <!-- <v-col cols="12" md="4">
-        <v-card>
-          <v-card-text>
-            <div class="flex justify-between">
-              <div class="text-xl font-semibold mb-8">قائمة الطلاب</div>
+      <!-- <template v-else>
+        <v-col cols="12" md="4">
+          <v-card>
+            <v-card-text>
+              <div class="flex justify-between">
+                <div class="text-xl font-semibold mb-8">قائمة الطلاب</div>
+  
+                <v-btn size="small" variant="outlined">توزيع حسب الصف</v-btn>
+              </div>
+  
+              <base-label>اختيار الصف</base-label>
+              <sys-class-select />
+  
+              <div class="flex flex-col gap-4 max-h-[400px] overflow-auto">
+                <student-inline-card class="shrink-0" v-for="i in 10" />
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
 
-              <v-btn size="small" variant="outlined">توزيع حسب الصف</v-btn>
-            </div>
-
-            <base-label>اختيار الصف</base-label>
-            <sys-class-select />
-
-            <div class="flex flex-col gap-4 max-h-[400px] overflow-auto">
-              <student-inline-card class="shrink-0" v-for="i in 10" />
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col> -->
+      </template> -->
 
       <v-col v-else cols="12" md="12">
         <v-row>
@@ -80,11 +83,11 @@ const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
 const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
-  studentStore.list()
+  studentStore.listUnassigned(Number(campaignId))
 );
 
 // list groups
-const { pending: groupsLoading } = useLazyAsyncData(() => groupStore.list(Number(campaignId)))
+const { pending: groupsLoading } = useLazyAsyncData('list_groups', () => groupStore.list(Number(campaignId)))
 
 
 

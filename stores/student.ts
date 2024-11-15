@@ -66,6 +66,14 @@ export const useStudentStore = defineStore("student", () => {
     return students.value
   };
 
+  const listUnassigned = async (campaignId: number) : Promise<Student[]> => {
+    const res = await api(`students/unassigned/${campaignId}`);
+
+    students.value = res;
+
+    return students.value
+  };
+
   const create = async () => {
     await api("students", {
       method: "POST",
@@ -109,6 +117,7 @@ export const useStudentStore = defineStore("student", () => {
     reset,
     get,
     list,
+    listUnassigned,
     create,
     update,
     remove

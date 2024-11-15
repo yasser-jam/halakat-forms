@@ -17,7 +17,7 @@
 
         <slot />
 
-        <div class="flex justify-end gap-2 mt-4">
+        <div v-if="!hideActions" class="flex justify-end gap-2 mt-4">
           <v-btn variant="text" @click="emit('close')">إلفاء</v-btn>
           <v-btn :loading @click="emit('save')">حفظ</v-btn>
         </div>
@@ -32,5 +32,6 @@ const emit = defineEmits(['close', 'save'])
 
 defineProps<{
   loading?: boolean;
+  hideActions?: boolean
 }>();
 </script>

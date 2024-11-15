@@ -18,7 +18,7 @@
             <div class="text-sm text-gray font-semibold">{{ `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}` }}</div>
           </div>
 
-          <v-btn rounded size="small" variant="tonal" icon="mdi-plus"></v-btn>
+          <v-btn rounded size="small" variant="tonal" icon="mdi-plus" :to="`/campaigns/${$route.params.campaign_id}/groups-management/${group.id}/assign-student`"></v-btn>
         </div>
 
       </div>
