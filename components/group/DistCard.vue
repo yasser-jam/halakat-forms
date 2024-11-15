@@ -27,7 +27,7 @@
       <div class="flex flex-col max-h-[400px] p-4 overflow-auto">
 
         <div class="flex flex-col gap-4">
-          <student-inline-card v-for="student in group.students" :student />
+          <student-inline-card v-for="student in group.students" :student @unlink="unassign" />
         </div>
       </div>
     </v-card-text>
@@ -36,9 +36,31 @@
 
 
 <script setup lang="ts">
+const groupStore = useGroupStore()
 
-defineProps<{
+const props = defineProps<{
   group: Group
 }>()
 
+const loading = ref(false);
+
+const route = useRoute()
+
+const campaignId = route.params.campaign_id;
+
+const unassign = async (student: Student) => {
+  loading.value = true;
+
+  try {
+    await groupStore.unassign(
+      Number(props.group.id),
+      Number(student.id),
+      Number(campaignId)
+    );
+
+    await groupStore.list(Number(campaignId));
+  } finally {
+    loading.value = false;
+  }
+};
 </script>

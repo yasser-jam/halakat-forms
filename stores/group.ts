@@ -43,6 +43,12 @@ export const useGroupStore = defineStore('group', () => {
         toasterStore.success('تم إضافة الطالب بنجاح')
     }
 
+    const unassign = async (groupId: number, studentId: number, campaignId: number) => {
+        await api(`groups/unassign/${groupId}/${studentId}/${campaignId}`)
+
+        toasterStore.success('تم إزالة الطالب بنجاح')
+    }
+
     return {
         group,
         groups,
@@ -50,6 +56,7 @@ export const useGroupStore = defineStore('group', () => {
         create,
         reset,
         assign,
+        unassign,
         get
     }
 })
