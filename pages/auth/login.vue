@@ -35,53 +35,43 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "auth",
+  layout: 'auth',
 });
 
-const toasterStore = useToasterStore()
+const authStore = useAuthStore();
+const toasterStore = useToasterStore();
 
 const router = useRouter();
 
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
 
-const userName = ref<string>("");
-const password = ref<string>("");
+const userName = ref<string>('');
+const password = ref<string>('');
 
-const loading = ref<boolean>(false)
+const loading = ref<boolean>(false);
 
 const users = ref([
   {
-    userName: "عمار عنوز",
-    password: "password",
+    userName: 'عمار عنوز',
+    password: 'password',
   },
   {
-    userName: "محمد خير",
-    password: "password",
+    userName: 'محمد خير',
+    password: 'password',
   },
   {
-    userName: "ياسر جمال الدين",
-    password: "password",
+    userName: 'ياسر جمال الدين',
+    password: 'password',
   },
 ]);
 
-const token = useCookie("halakat_access_token");
-
 const login = async () => {
-  const selectedUser = users.value.find(
-    (user) => user.userName == userName.value && user.password == password.value
-  );
-
+  loading.value  = true
+  
   try {
-    // await authStore.login(userName.value, password.value)
-    if (selectedUser) {
-      token.value = "123456";
+    await authStore.login(userName.value, password.value);
 
-      toasterStore.success("تم تسجيل الدخول بنجاح");
-
-      router.push("/");
-    } else {
-      toasterStore.error("يوجد خطأ في اسم المستخدم أو كلمة المرور");
-    }
+    router.push('/');
   } finally {
     loading.value = false;
   }

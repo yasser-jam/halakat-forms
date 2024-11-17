@@ -22,7 +22,10 @@
 <script setup>
 const drawer = ref(true);
 
+const authStore = useAuthStore()
 const toasterStore = useToasterStore()
 
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore)
+
+useAsyncData(() => authStore.me())
 </script>

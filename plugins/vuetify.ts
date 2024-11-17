@@ -27,7 +27,6 @@
 //   },
 // }
 export default defineNuxtPlugin(() => {
-  console.log('test');
 })
 
 // export default defineNuxtPlugin((app) => {
