@@ -5,11 +5,11 @@
     </div>
 
     <div>
-      <base-label>اسم المستخدم</base-label>
+      <base-label>رقم الهاتف</base-label>
       <v-text-field
-        v-model="userName"
+        v-model="phoneNumber"
         prepend-inner-icon="mdi-account"
-        placeholder="أدخل اسم المستخدم"
+        placeholder="أدخل رقم الهاتف"
         color="primary"
         class="mb-4"
       ></v-text-field>
@@ -45,31 +45,16 @@ const router = useRouter();
 
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
 
-const userName = ref<string>('');
+const phoneNumber = ref<string>('');
 const password = ref<string>('');
 
 const loading = ref<boolean>(false);
-
-const users = ref([
-  {
-    userName: 'عمار عنوز',
-    password: 'password',
-  },
-  {
-    userName: 'محمد خير',
-    password: 'password',
-  },
-  {
-    userName: 'ياسر جمال الدين',
-    password: 'password',
-  },
-]);
 
 const login = async () => {
   loading.value  = true
   
   try {
-    await authStore.login(userName.value, password.value);
+    await authStore.login(phoneNumber.value, password.value);
 
     router.push('/');
   } finally {
