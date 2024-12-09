@@ -51,6 +51,11 @@ const links = ref<
     icon: "mdi-account-multiple",
   },
   {
+    title: "التفقد",
+    link: `${baseRoute.value}/attendance`,
+    icon: "mdi-check-outline",
+  },
+  {
     title: "الطلاب",
     link: `/students`,
     icon: "mdi-account-school",
