@@ -62,6 +62,7 @@ const assign = async () => {
 
   } finally {
     status.value = 'idle';
+    goBack()
   }
 };
 

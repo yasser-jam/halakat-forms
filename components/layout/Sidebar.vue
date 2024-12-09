@@ -29,9 +29,9 @@
 
 const route = useRoute()
 
-const campaignId = route.params.campaign_id
+const campaignId = computed(() => route.params.campaign_id)
 
-const baseRoute = `/campaigns/${campaignId}`
+const baseRoute = computed(() => `/campaigns/${campaignId.value}`)
 
 const links = ref<
   {
@@ -42,12 +42,12 @@ const links = ref<
 >([
   {
     title: "الرئيسية",
-    link: `${baseRoute}/dashboard`,
+    link: `${baseRoute.value}/dashboard`,
     icon: "mdi-mosque",
   },
   {
     title: "إدارة الحلقات",
-    link: `${baseRoute}/groups-management`,
+    link: `${baseRoute.value}/groups-management`,
     icon: "mdi-account-multiple",
   },
   {

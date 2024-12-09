@@ -7,7 +7,8 @@
             <v-btn>إضافة دورة جديدة</v-btn>
         </div>
 
-        <v-row>
+        <base-loader v-if="status == 'pending'" />
+        <v-row v-else>
             <v-col v-for="campaign in campaigns" cols="12" md="4">
                 <campaign-card :campaign :to="`/campaigns/${campaign.id}/dashboard`" />
             </v-col>
@@ -26,7 +27,7 @@ const campaignStore = useCampaignStore()
 
 const { campaigns } = storeToRefs(campaignStore)
 
-const {} = useLazyAsyncData(() =>
+const { status } = useLazyAsyncData(() =>
     campaignStore.list()
 )
 
