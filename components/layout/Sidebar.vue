@@ -67,7 +67,7 @@ const links = ref<
   },
   {
     title: "سياسة الدورة",
-    link: `/settings`,
+    link: `${baseRoute.value}/settings`,
     icon: "mdi-cog",
   },
 ]);
