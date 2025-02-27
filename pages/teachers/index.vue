@@ -39,6 +39,14 @@
               </div>
             </template>
 
+            <template #item.groups="{ item }">
+              <v-chip v-if="!item.groups?.length">غير مسجل بعد</v-chip>
+              
+              <div v-else>
+                <v-chip v-for="group in item.groups" color="success">{{ group.title }}</v-chip>
+              </div>
+            </template>
+
             <template #item.mojaz="{ item }">
               <v-chip :color="item.is_mojaz ? 'success' : 'error'">{{
                 item.is_mojaz ? 'حاصل على الإجازة' : 'غير حاصل على الإجازة'

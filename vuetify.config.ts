@@ -93,6 +93,7 @@ export default defineVuetifyConfiguration({
 
     VChip: {
       rounded: "lg",
+      density: 'compact',
       class: 'font-weight-bold'
     },
 

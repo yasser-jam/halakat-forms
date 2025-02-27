@@ -23,7 +23,7 @@ export const useTeacherStore = defineStore("teacher", () => {
     },
     {
       title: "اسم الحلقة",
-      key: "halakah_name",
+      key: "groups",
       sortable: false,
     },
     {
