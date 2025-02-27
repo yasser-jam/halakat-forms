@@ -1,6 +1,8 @@
 export const useCampaignStore = defineStore("campaign", () => {
   const toasterStore = useToasterStore();
 
+  const campaignId = useCookie('campaign_id')
+
   const campaign = ref<Campaign>(initCampaign());
 
   const campaigns = ref<Campaign[]>([]);

@@ -23,7 +23,7 @@
             :headers="headers"
             :items="teachers"
             :items-length="teachersTotalCount"
-            :loading="pending"
+            :loading="status == 'pending'"
             :items-per-page="10"
             :page="1"
           >
@@ -33,27 +33,16 @@
 
                 <div class="flex flex-col gap-1">
                   <div class="text-md font-weight-bold">
-                    {{ item.first_name + " " + item.last_name }}
-                  </div>
-                  <div class="text-xs font-bold text-gray-400">
-                    {{ item.educational_level }}
+                    {{ item.first_name + ' ' + item.last_name }}
                   </div>
                 </div>
               </div>
             </template>
 
-            <template #item.halakah_name="{ item }">
-              <v-chip color="blue">اسم الحلقة</v-chip>
-            </template>
-
-            <template #item.preserved_parts="{ item }">
-              <v-chip color="warning">{{
-                getParts(item.preserved_parts)
+            <template #item.mojaz="{ item }">
+              <v-chip :color="item.is_mojaz ? 'success' : 'error'">{{
+                item.is_mojaz ? 'حاصل على الإجازة' : 'غير حاصل على الإجازة'
               }}</v-chip>
-            </template>
-
-            <template #item.points="{ item }">
-              <v-chip color="info">250 نقطة</v-chip>
             </template>
 
             <template #item.phone_number="{ item }">
@@ -100,20 +89,20 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
+import { storeToRefs } from 'pinia';
 
 const teacherStore = useTeacherStore();
 
 const { headers, paginationOptions, teachers, teachersTotalCount } =
   storeToRefs(teacherStore);
 
-const key = ref<string>("");
+const key = ref<string>('');
 
 const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
-const { pending, data, refresh } = useLazyAsyncData<Teacher[]>(() =>
+const { status, data, refresh } = useLazyAsyncData<Teacher[]>(() =>
   teacherStore.list()
 );
 

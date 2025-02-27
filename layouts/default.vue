@@ -1,13 +1,20 @@
 <template>
   <v-app dir="rtl">
-    <v-navigation-drawer v-model="drawer" location="right" color="primary-darken-3" :temporary="$vuetify.display.mobile">
+    <v-navigation-drawer
+      v-model="drawer"
+      location="right"
+      color="primary-darken-3"
+      :temporary="$vuetify.display.mobile"
+    >
       <layout-sidebar />
     </v-navigation-drawer>
 
     <v-app-bar elevation="1">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>مسجد الشيخ علي الدقر</v-app-bar-title>
+      <v-app-bar-title>
+        <nuxt-link to="/" class="decoration-none text-dark font-semibold"> مسجد الشيخ علي الدقر </nuxt-link>
+      </v-app-bar-title>
     </v-app-bar>
 
     <v-main class="bg-background">
@@ -16,16 +23,15 @@
   </v-app>
 
   <base-toaster v-model="toasterShow">{{ toasterMsg }}</base-toaster>
-
 </template>
 
 <script setup>
 const drawer = ref(true);
 
-const authStore = useAuthStore()
-const toasterStore = useToasterStore()
+const authStore = useAuthStore();
+const toasterStore = useToasterStore();
 
-const { toasterMsg, toasterShow } = storeToRefs(toasterStore)
+const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
 
-useAsyncData(() => authStore.me())
+useAsyncData(() => authStore.me());
 </script>

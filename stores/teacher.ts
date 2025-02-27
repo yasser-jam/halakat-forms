@@ -3,6 +3,8 @@ import type { Teacher, Header, PaginationOptions } from "~/types";
 
 export const useTeacherStore = defineStore("teacher", () => {
 
+  const campaignId = useCookie('campaign_id')
+
   const toasterStore = useToasterStore()
 
   const teacher = ref<Teacher>(initTeacher());
@@ -52,7 +54,7 @@ export const useTeacherStore = defineStore("teacher", () => {
   }
 
   const list = async () : Promise<Teacher[]> => {
-    const res = await api("teachers");
+    const res = await api(`teachers/?campaignId=${campaignId.value}`);
 
     teachersTotalCount.value = res.length;
 

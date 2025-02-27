@@ -11,6 +11,7 @@
         </div>
       </div>
     </v-list-item>
+
     <v-divider></v-divider>
 
     <v-list nav>
@@ -29,9 +30,6 @@
 
 const route = useRoute()
 
-const campaignId = computed(() => route.params.campaign_id)
-
-const baseRoute = computed(() => `/campaigns/${campaignId.value}`)
 
 const links = ref<
   {
@@ -42,32 +40,32 @@ const links = ref<
 >([
   {
     title: "الرئيسية",
-    link: `${baseRoute.value}/dashboard`,
+    link: `dashboard`,
     icon: "mdi-mosque",
   },
   {
     title: "إدارة الحلقات",
-    link: `${baseRoute.value}/groups-management`,
+    link: `groups-management`,
     icon: "mdi-account-multiple",
   },
   {
     title: "التفقد",
-    link: `${baseRoute.value}/attendance`,
+    link: `attendance`,
     icon: "mdi-check-outline",
   },
   {
     title: "الطلاب",
-    link: `/students`,
+    link: `students`,
     icon: "mdi-account-school",
   },
   {
     title: "الأستاتذة",
-    link: `/teachers`,
+    link: `teachers`,
     icon: "mdi-human-male-board",
   },
   {
     title: "سياسة الدورة",
-    link: `${baseRoute.value}/settings`,
+    link: `settings`,
     icon: "mdi-cog",
   },
 ]);

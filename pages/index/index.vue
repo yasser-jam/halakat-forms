@@ -8,9 +8,10 @@
         </div>
 
         <base-loader v-if="status == 'pending'" />
+        
         <v-row v-else>
             <v-col v-for="campaign in campaigns" cols="12" md="4">
-                <campaign-card :campaign :to="`/campaigns/${campaign.id}/dashboard`" />
+                <campaign-card :campaign @click="selectCampaign(Number(campaign.id))" />
             </v-col>
         </v-row>
     </v-container>
@@ -18,10 +19,12 @@
     <NuxtPage />
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({
     layout: 'no-sidebar'
 })
+
+const campaignId = useCookie('campaign_id')
 
 const campaignStore = useCampaignStore()
 
@@ -30,5 +33,12 @@ const { campaigns } = storeToRefs(campaignStore)
 const { status } = useLazyAsyncData(() =>
     campaignStore.list()
 )
+
+const selectCampaign = (id: number) => {
+
+    campaignId.value = String(id)
+    
+    navigateTo(`dashboard`)
+}
 
 </script>
