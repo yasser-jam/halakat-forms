@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center">
             <div class="text-3xl font-semibold my-4 mb-8">دورات المسجد</div>
 
-            <v-btn>إضافة دورة جديدة</v-btn>
+            <v-btn to="/create-campaign/general">إضافة دورة جديدة</v-btn>
         </div>
 
         <base-loader v-if="status == 'pending'" />

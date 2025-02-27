@@ -25,5 +25,6 @@
 <script setup lang="ts">
 const route = useRoute()
 
+
 const baseRoute = `/campaigns/${route.params.campaign_id}/settings`
 </script>

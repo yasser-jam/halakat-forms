@@ -1,15 +1,21 @@
-import type { Campaign, PaginationOptions, Student, Teacher, Group } from "~/types";
+import type {
+  Campaign,
+  PaginationOptions,
+  Student,
+  Teacher,
+  Group,
+} from '~/types';
 
 export const initStudent = (): Student => ({
-  first_name: "",
-  last_name: "",
-  student_mobile_number: "",
+  first_name: '',
+  last_name: '',
+  student_mobile_number: '',
   in_another_mosque: false,
   preserved_parts: '',
   parts_tested_by_the_endowments: '',
 });
 
-export const initTeacher = () : Teacher => ({
+export const initTeacher = (): Teacher => ({
   first_name: '',
   last_name: '',
   father_name: '',
@@ -29,7 +35,7 @@ export const initTeacher = () : Teacher => ({
   is_working: false,
   job_role: '',
   workplace_name: '',
-})
+});
 
 export const initPagination = (): PaginationOptions => ({
   itemsPerPage: 0,
@@ -40,12 +46,18 @@ export const initPagination = (): PaginationOptions => ({
 
 export const initCampaign = (): Campaign => ({
   name: '',
-  startDate: ''
-})
+  startDate: '',
+  completeCountApproach: 'UNLIMIT_ASSIGN',
+  studentsCount: 0,
+  days: '',
+  startTime: '',
+  endTime: '',
+  timingApproach: 'hours',
+});
 
 export const initGroup = (): Group => ({
   title: '',
-  teacherId: undefined,
   students: [],
-  campaigns: []
-})
+  class: '',
+  currentTeacherId: 0,
+});
