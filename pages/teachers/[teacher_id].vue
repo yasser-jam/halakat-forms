@@ -225,8 +225,8 @@
 
     <div class="flex gap-4 mt-8">
       <v-spacer></v-spacer>
-      <v-btn v-if="tab > 0" @click="tab--" color="grey">العودة</v-btn>
-      <v-btn v-if="tab < 3" :disabled="!form" @click="tab++">التالي</v-btn>
+      <v-btn v-if="tab > 0" @click="--tab" color="grey">العودة</v-btn>
+      <v-btn v-if="tab < 2" :disabled="!form" @click="++tab">التالي</v-btn>
     </div>
   </v-container>
 </template>

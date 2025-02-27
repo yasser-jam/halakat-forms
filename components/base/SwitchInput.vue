@@ -10,14 +10,13 @@
       </div>
     </div>
 
-    <v-switch :model-value="modelValue" :color @update:model-value="$emit('update:model-value', $event)"></v-switch>
+    <v-switch v-model="model" :color />
   </div>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    modelValue: boolean,
     title: string;
     subtitle?: string;
     color?: "primary" | "secondary" | "warning";
@@ -26,6 +25,8 @@ const props = withDefaults(
     color: "primary",
   }
 );
+
+const model = defineModel({ default: false })
 
 const colorsClasses = computed(() => {
   switch (props.color) {
