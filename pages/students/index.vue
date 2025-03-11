@@ -20,13 +20,13 @@
         />
 
         <client-only>
-          <v-data-table-server
+          <v-data-table
             :headers="headers"
             :items="students"
-            :items-length="studentsTotalCount"
+            :items-length="100"
             :loading="pending"
-            :items-per-page="10"
             :page="1"
+            v-model:items-per-page="itemsPerPage"
           >
             <template #item.name="{ item }">
               <div class="flex items-center gap-4 my-2">
@@ -58,7 +58,7 @@
             </template>
 
             <template #item.phone_number="{ item }">
-              <v-chip color="success">{{ item.student_mobile_number }}</v-chip>
+              <v-chip color="success">{{ item.student_mobile_number || 'لا يوجد' }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">
@@ -85,7 +85,7 @@
             </template>
 
             <template #bottom></template>
-          </v-data-table-server>
+          </v-data-table>
         </client-only>
       </v-card-text>
     </v-card>
@@ -143,4 +143,6 @@ const search = () => {
     stud.first_name.includes(key.value)
   );
 };
+
+const itemsPerPage = ref(10)
 </script>

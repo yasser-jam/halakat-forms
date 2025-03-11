@@ -19,7 +19,7 @@
         />
 
         <client-only>
-          <v-data-table-server
+          <v-data-table-server 
             :headers="headers"
             :items="teachers"
             :items-length="teachersTotalCount"

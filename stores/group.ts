@@ -16,7 +16,9 @@ export const useGroupStore = defineStore('group', () => {
         return group.value
     }
 
-    const list = async (campaignId: number): Promise<Group[]> => {
+    const list = async (): Promise<Group[]> => {
+        const campaignId = useCookie('campaign_id')
+        
         const res = await api('groups', {
             query: {
                 campaignId
@@ -41,6 +43,7 @@ export const useGroupStore = defineStore('group', () => {
         await api(`groups/assign/${groupId}/${studentId}/${campaignId}`)
 
         toasterStore.success('تم إضافة الطالب بنجاح')
+
     }
 
     const unassign = async (groupId: number, studentId: number, campaignId: number) => {
