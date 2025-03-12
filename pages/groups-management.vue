@@ -4,11 +4,10 @@
       <div class="text-3xl font-semibold">حلقات الدورة</div>
 
       <div class="flex gap-2">
-        <v-btn color="blue" variant="tonal" :to="`${baseRoute}/create`"
+        <v-btn color="blue" variant="tonal" to="groups-management/create"
           >إضافة حلقة جديدة</v-btn
         >
 
-        <v-btn color="primary" elevation="0">حفظ التعديلات</v-btn>
       </div>
     </div>
 
@@ -35,7 +34,8 @@
 
       </template> -->
 
-      <v-col cols="12" md="3">
+      <!-- Todo: apply draggable -->
+      <v-col v-if="false" cols="12" md="3">
         <v-card :loading="pending || groupsLoading">
           <div class="flex justify-between bg-gray-100 p-4">
             <div class="text-lg font-semibold">أسماء الطلاب</div>
@@ -72,6 +72,7 @@
           </div>
 
           <div class="max-h-[500px] overflow-auto">
+            
               <template v-for="student in students">
                 <div class="flex items-center gap-2 bg-white px-4 py-3">
                   <v-icon>mdi-drag</v-icon>
@@ -96,42 +97,41 @@
         </v-row> -->
       </v-col>
 
-      <v-col cols="12" md="9">
-        <v-card>
-          <div class="bg-gray-100 p-4">
-            <div class="text-lg font-semibold">أسماء الحلقات</div>
-          </div>
+      <v-col cols="12">
+        <!-- <div class="text-lg font-semibold">أسماء الحلقات</div> -->
           
-          <div class="p-4">
-            <div v-for="group in groups" class="mb-4">
-              <div class="flex items-center">
-                <div>
-                  <v-icon size="small">mdi-account-multiple-outline</v-icon>
-                  <span class="text-lg font-semibold ms-2">{{ group.title }}</span>
-                  <!-- <v-chip size="small" color="secondary">{{ getClassName(Number(group.class)) }}</v-chip> -->
+            <v-card v-for="group in groups" class="mb-4">
+              <v-card-title>
+                <div class="flex items-center">
+                  <div>
+                    <v-icon size="small">mdi-account-multiple-outline</v-icon>
+                    <span class="text-lg font-semibold ms-2">{{ group.title }}</span>
+                    <!-- <v-chip size="small" color="secondary">{{ getClassName(Number(group.class)) }}</v-chip> -->
+                  </div>
+  
+                  <v-spacer></v-spacer>
+                
+                  <student-add-menu @select="assignStudents(group.id!, $event)"></student-add-menu>
+                </div>
+              </v-card-title>
+              <v-card-text>
+      
+                <div
+                  class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
+                >
+                  <template v-if="group.students?.length">
+                      <student-inline-card v-for="student in group.students" :student class="w-full shrink-0" @unlink="unAssignStudent(Number(group.id), Number(student.id))" />
+                      <!-- {{ `${student.first_name} ${student.last_name}` }} -->
+                  </template>
+      
+                  <template v-else>
+                    <div>لا يوجد أي طالب</div>
+                    <student-list-menu @select="assignStudents(group.id!, $event)"></student-list-menu>
+                  </template>
                 </div>
 
-                <v-spacer></v-spacer>
-              
-                <student-list-menu @select="assignStudents(group.id!, $event)"></student-list-menu>
-              </div>
-    
-              <div
-                class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
-              >
-                <template v-if="group.students?.length">
-                    <student-inline-card v-for="student in group.students" :student class="w-full shrink-0" @unlink="unAssignStudent(Number(group.id), Number(student.id))" />
-                    <!-- {{ `${student.first_name} ${student.last_name}` }} -->
-                </template>
-    
-                <template v-else>
-                  <div>لا يوجد أي طالب</div>
-                  <student-list-menu @select="assignStudents(group.id!, $event)"></student-list-menu>
-                </template>
-              </div>
-            </div>
-          </div>
-        </v-card>
+              </v-card-text>
+            </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -156,8 +156,6 @@ const studentStore = useStudentStore();
 
 const route = useRoute();
 const campaignId = useCookie('campaign_id');
-
-const baseRoute = `/campaigns/${campaignId}/groups-management`;
 
 const { students } = storeToRefs(studentStore);
 

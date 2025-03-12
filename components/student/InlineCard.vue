@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="outlined" elevation="0" color="blue">
+  <v-card variant="outlined" elevation="0" color="primary">
     <v-card-text class="py-2">
       <div class="flex items-center">
         <img
