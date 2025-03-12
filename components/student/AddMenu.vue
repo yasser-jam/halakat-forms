@@ -1,5 +1,11 @@
 <template>
-  <v-menu v-model="model" width="500" location="bottom" :close-on-content-click="false" @update:model-value="selected = []">
+  <v-menu
+    v-model="model"
+    width="500"
+    location="bottom"
+    :close-on-content-click="false"
+    @update:model-value="selected = []"
+  >
     <template #activator="{ props }">
       <v-btn v-bind="props" class="mt-2">إضافة طالب</v-btn>
     </template>
@@ -10,12 +16,12 @@
       <v-card-text>
         <v-autocomplete
           v-model="selected"
+          :items="computedValue"
           multiple
           chips
           density="compact"
           placeholder="اختر طالب"
           :loading="status == 'pending'"
-          :items="students"
           return-object
           :item-title="(val: any) => `${val.first_name} ${val.last_name}`"
         >
@@ -37,23 +43,38 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  selectedStudents?: Student[];
+}>();
+
 const studentStore = useStudentStore();
 
 const { students } = storeToRefs(studentStore);
 
 const { status } = useLazyAsyncData('list_students', () => studentStore.list());
 
-const selected = ref([])
+const selected = ref([]);
 
-const model = defineModel({ default: false })
-const emit = defineEmits(['update:model-value', 'select'])
+const model = defineModel({ default: false });
+const emit = defineEmits(['update:model-value', 'select']);
+
+// remove selected students from options
+const computedValue = computed(() => {
+  if (!props.selectedStudents?.length) return students.value;
+
+  const selected = students.value?.filter((el) =>
+    props.selectedStudents
+      ? props.selectedStudents?.findIndex((item) => item.id == el.id) == -1
+      : false
+  );
+
+  return selected;
+});
 
 const select = () => {
+  emit('select', selected.value);
 
-    emit('select', selected.value)
-
-    model.value = false
-    // emit('update:model-value', false)
-
-}
+  model.value = false;
+  // emit('update:model-value', false)
+};
 </script>

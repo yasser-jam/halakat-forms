@@ -7,7 +7,6 @@
         <v-btn color="blue" variant="tonal" to="groups-management/create"
           >إضافة حلقة جديدة</v-btn
         >
-
       </div>
     </div>
 
@@ -72,21 +71,20 @@
           </div>
 
           <div class="max-h-[500px] overflow-auto">
-            
-              <template v-for="student in students">
-                <div class="flex items-center gap-2 bg-white px-4 py-3">
-                  <v-icon>mdi-drag</v-icon>
-    
-                  <div class="">
-                    {{ `${student.first_name} ${student.last_name}` }}
-                  </div>
-                  <v-spacer></v-spacer>
-                  <v-chip size="small">{{
-                    getClassName(Number(student.educational_class))
-                  }}</v-chip>
+            <template v-for="student in students">
+              <div class="flex items-center gap-2 bg-white px-4 py-3">
+                <v-icon>mdi-drag</v-icon>
+
+                <div class="">
+                  {{ `${student.first_name} ${student.last_name}` }}
                 </div>
-                <v-divider></v-divider>
-              </template>
+                <v-spacer></v-spacer>
+                <v-chip size="small">{{
+                  getClassName(Number(student.educational_class))
+                }}</v-chip>
+              </div>
+              <v-divider></v-divider>
+            </template>
           </div>
         </v-card>
 
@@ -99,39 +97,52 @@
 
       <v-col cols="12">
         <!-- <div class="text-lg font-semibold">أسماء الحلقات</div> -->
-          
-            <v-card v-for="group in groups" class="mb-4">
-              <v-card-title>
-                <div class="flex items-center">
-                  <div>
-                    <v-icon size="small">mdi-account-multiple-outline</v-icon>
-                    <span class="text-lg font-semibold ms-2">{{ group.title }}</span>
-                    <!-- <v-chip size="small" color="secondary">{{ getClassName(Number(group.class)) }}</v-chip> -->
-                  </div>
-  
-                  <v-spacer></v-spacer>
-                
-                  <student-add-menu @select="assignStudents(group.id!, $event)"></student-add-menu>
-                </div>
-              </v-card-title>
-              <v-card-text>
-      
-                <div
-                  class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
-                >
-                  <template v-if="group.students?.length">
-                      <student-inline-card v-for="student in group.students" :student class="w-full shrink-0" @unlink="unAssignStudent(Number(group.id), Number(student.id))" />
-                      <!-- {{ `${student.first_name} ${student.last_name}` }} -->
-                  </template>
-      
-                  <template v-else>
-                    <div>لا يوجد أي طالب</div>
-                    <student-list-menu @select="assignStudents(group.id!, $event)"></student-list-menu>
-                  </template>
-                </div>
 
-              </v-card-text>
-            </v-card>
+        <v-card v-for="group in groups" class="mb-4">
+          <v-card-title>
+            <div class="flex items-center">
+              <div>
+                <v-icon size="small">mdi-account-multiple-outline</v-icon>
+                <span class="text-lg font-semibold ms-2">{{
+                  group.title
+                }}</span>
+                <!-- <v-chip size="small" color="secondary">{{ getClassName(Number(group.class)) }}</v-chip> -->
+              </div>
+
+              <v-spacer></v-spacer>
+
+              <student-add-menu
+                :selected-students="group.students"
+                @select="assignStudents(group.id!, $event)"
+              ></student-add-menu>
+            </div>
+          </v-card-title>
+          
+          <v-card-text>
+            <div
+              class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
+            >
+              <template v-if="group.students?.length">
+                <student-inline-card
+                  v-for="student in group.students"
+                  :student
+                  class="w-full shrink-0"
+                  @unlink="
+                    unAssignStudent(Number(group.id), Number(student.id))
+                  "
+                />
+                <!-- {{ `${student.first_name} ${student.last_name}` }} -->
+              </template>
+
+              <template v-else>
+                <div>لا يوجد أي طالب</div>
+                <student-list-menu
+                  @select="assignStudents(group.id!, $event)"
+                ></student-list-menu>
+              </template>
+            </div>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -167,7 +178,7 @@ const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
-const loading = ref(false)
+const loading = ref(false);
 
 const filterToggler = ref(false);
 
@@ -178,14 +189,10 @@ const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
 );
 
 // list groups
-const { pending: groupsLoading, refresh: refreshGroups } = useLazyAsyncData('list_groups', () =>
-  groupStore.list()
+const { pending: groupsLoading, refresh: refreshGroups } = useLazyAsyncData(
+  'list_groups',
+  () => groupStore.list()
 );
-
-const openDeleteDialog = (id: number) => {
-  deletedId.value = id;
-  deleteToggler.value = true;
-};
 
 const remove = async () => {
   deleteLoading.value = true;
@@ -206,39 +213,33 @@ const search = () => {
   );
 };
 
-
 const assignStudents = async (groupId: number, students: Student[]) => {
-  loading.value = true
+  loading.value = true;
+
   try {
+    for (let stud of students) {
+      await groupStore.assign(
+        groupId,
+        Number(stud.id),
+        Number(campaignId.value)
+      )
+    }
 
+    await refreshGroups();
 
-    students.forEach(async stud =>
-      await groupStore.assign(groupId, Number(stud.id), Number(campaignId.value))
-    )
-
-    await refreshGroups()
-
-    useToasterStore().success('تم إضافة الطالب بنجاح')
-
-  } catch {
-     
-    
-
-    } finally {
-    loading.value = false
-
+    useToasterStore().success('تم إضافة الطالب بنجاح');
+  
+  } finally {
+    loading.value = false;
   }
-}
+};
 
 const unAssignStudent = async (groupId: number, studentId: number) => {
   try {
+    await groupStore.unassign(groupId, studentId, Number(campaignId.value));
 
-    await groupStore.unassign(groupId, studentId, Number(campaignId.value))
-
-    await refreshGroups()
-    
+    await refreshGroups();
   } finally {
-
   }
-}
+};
 </script>
