@@ -8,15 +8,16 @@
       <v-card-title>اختر طالب</v-card-title>
 
       <v-card-text>
-        <v-select
-            v-model="selected"
+        <v-autocomplete
+          v-model="selected"
           multiple
           chips
+          density="compact"
           placeholder="اختر طالب"
           :loading="status == 'pending'"
           :items="students"
           return-object
-          item-title="first_name"
+          :item-title="(val: any) => `${val.first_name} ${val.last_name}`"
         >
           <!-- <template #item="{ item }">
                 <v-list-item @click="">
@@ -27,7 +28,7 @@
                     </div>
                 </v-list-item>
             </template> -->
-        </v-select>
+        </v-autocomplete>
 
         <v-btn block @click="select">إضافة</v-btn>
       </v-card-text>
