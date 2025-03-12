@@ -65,7 +65,7 @@ const links = ref<
   },
   {
     title: "سياسة الدورة",
-    link: `/settings`,
+    link: `/settings/general`,
     icon: "mdi-cog",
   },
 ]);
