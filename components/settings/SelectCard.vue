@@ -1,12 +1,12 @@
 <template>
     <v-card elevation="0" class="h-full">
-        <v-card-text class="h-full border-2 border-dashed border-opacity-50" :class="colorComputed.border">
+        <v-card-text class="h-full border-2 border-dashed border-opacity-100" :class="active ? 'border-blue' : 'border-gray'">
             <div class="flex space-between items-center gap-2">
-                <v-avatar :icon="icon" :color="color" class="self-start" />
+                <v-avatar :icon="icon" :color="active ? 'blue' : 'grey'" class="self-start" />
                 
                 <div>
                     
-                    <div class="text-lg font-semibold" :class="colorComputed.text">{{ title }}</div>
+                    <div class="text-lg font-semibold" :class="active ? 'text-blue' : ''">{{ title }}</div>
 
                     <div class="text-sm text-gray-500">
                         {{ subtitle }}
@@ -21,10 +21,11 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-    color: 'primary' | 'warning' | 'info' | 'error',
+    color?: 'primary' | 'warning' | 'info' | 'error',
     title: string,
     icon: string,
-    subtitle: string
+    subtitle: string,
+    active?: boolean
 }>()
 
 const colorComputed = computed(() => {
@@ -51,8 +52,8 @@ const colorComputed = computed(() => {
         }
     } else {
         return {
-            text: 'text-info',
-            border: 'border-violet'
+            text: 'text-gray-darken-1',
+            border: 'border-gray'
         }
     }
 })
