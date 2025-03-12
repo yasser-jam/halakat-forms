@@ -9,6 +9,14 @@ export const useCampaignStore = defineStore("campaign", () => {
 
   const reset = () => (campaign.value = initCampaign());
 
+  const get = async (id: number) : Promise<Campaign> => {
+    const res = await api(`campaigns/${id}`)
+
+    campaign.value = res
+
+    return campaign.value
+  }
+
   const list = async () => {
     const res = await api("campaigns");
 
@@ -54,5 +62,6 @@ export const useCampaignStore = defineStore("campaign", () => {
     list,
     create,
     remove,
+    get
   };
 });
