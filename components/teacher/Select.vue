@@ -1,7 +1,7 @@
 <template>
   <v-select
-    :items="teachers"
-    :item-title="(item) => `${item.first_name} ${item.last_name}`"
+    :items="computedValue"
+    :item-title="(item: Teacher) => `${item.first_name} ${item.last_name}`"
     item-value="id"
     :loading
     placeholder="اختر الأستاذ"
@@ -15,6 +15,10 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  onlyUnassigned: boolean;
+}>();
+
 const teacherStore = useTeacherStore();
 
 const { pending: loading } = useLazyAsyncData<Teacher[]>(() =>
@@ -22,4 +26,10 @@ const { pending: loading } = useLazyAsyncData<Teacher[]>(() =>
 );
 
 const { teachers } = storeToRefs(teacherStore);
+
+const computedValue = computed(() =>
+  props.onlyUnassigned
+    ? teachers.value.filter((el) => !el.groups?.length)
+    : teachers.value
+);
 </script>

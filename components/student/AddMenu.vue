@@ -7,7 +7,7 @@
     @update:model-value="selected = []"
   >
     <template #activator="{ props }">
-      <v-btn v-bind="props" class="mt-2">إضافة طالب</v-btn>
+      <v-btn v-bind="props">إضافة طالب</v-btn>
     </template>
 
     <v-card>

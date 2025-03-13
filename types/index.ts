@@ -79,6 +79,8 @@ export interface Teacher {
   is_working?: boolean;
   job_role?: string;
   workplace_name?: string;
+
+  groups?: Group[]
 }
 
 export interface Campaign {
@@ -110,7 +112,7 @@ export interface Campaign {
 export interface Group {
   id?: number;
   title: string;
-  currentTeacherId: number;
+  currentTeacherId?: number;
   class: string;
   currentTeacher?: Teacher;
   students?: Student[];

@@ -4,13 +4,13 @@
       <div class="text-3xl font-semibold">حلقات الدورة</div>
 
       <div class="flex gap-2">
-        <v-btn color="blue" variant="tonal" to="groups-management/create"
+        <v-btn color="blue" variant="tonal" to="/groups-management/create"
           >إضافة حلقة جديدة</v-btn
         >
       </div>
     </div>
 
-    <v-row>
+    <v-row v-if="groups?.length">
       <!-- <template v-else>
         <v-col cols="12" md="4">
           <v-card>
@@ -106,18 +106,28 @@
                 <span class="text-lg font-semibold ms-2">{{
                   group.title
                 }}</span>
-                <!-- <v-chip size="small" color="secondary">{{ getClassName(Number(group.class)) }}</v-chip> -->
+
+                <v-chip size="small" class="ms-1" color="secondary">
+                  {{
+                    `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}`
+                  }}
+                </v-chip>
               </div>
 
               <v-spacer></v-spacer>
 
-              <student-add-menu
-                :selected-students="group.students"
-                @select="assignStudents(group.id!, $event)"
-              ></student-add-menu>
+              <div class="flex items-center gap-2">
+                <v-btn color="error" @click="openDeleteDialog(Number(group.id))">إزالة الحلقة</v-btn>
+
+                <student-add-menu
+                  :selected-students="group.students"
+                  @select="assignStudents(group.id!, $event)"
+                ></student-add-menu>
+              </div>
+
             </div>
           </v-card-title>
-          
+
           <v-card-text>
             <div
               class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
@@ -145,6 +155,15 @@
         </v-card>
       </v-col>
     </v-row>
+
+    <template v-else>
+      <base-not-found>
+      <template #action>
+
+        <v-btn to="/groups-management/create" class="mt-4">إضافة حلقة</v-btn>
+      </template>
+    </base-not-found>
+    </template>
   </v-container>
 
   <base-delete-dialog
@@ -194,13 +213,19 @@ const { pending: groupsLoading, refresh: refreshGroups } = useLazyAsyncData(
   () => groupStore.list()
 );
 
+const openDeleteDialog = (id: number) => {
+  deletedId.value = id
+
+  deleteToggler.value = true
+}
+
 const remove = async () => {
   deleteLoading.value = true;
 
   try {
-    await studentStore.remove(deletedId.value as number);
+    await groupStore.remove(deletedId.value as number);
 
-    await refresh();
+    await refreshGroups();
   } finally {
     deleteLoading.value = false;
     deleteToggler.value = false;
@@ -222,13 +247,12 @@ const assignStudents = async (groupId: number, students: Student[]) => {
         groupId,
         Number(stud.id),
         Number(campaignId.value)
-      )
+      );
     }
 
     await refreshGroups();
 
     useToasterStore().success('تم إضافة الطالب بنجاح');
-  
   } finally {
     loading.value = false;
   }

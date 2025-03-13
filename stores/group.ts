@@ -21,7 +21,7 @@ export const useGroupStore = defineStore('group', () => {
         
         const res = await api('groups', {
             query: {
-                campaignId
+                campaignId: campaignId.value
             }
         })
 
@@ -30,8 +30,10 @@ export const useGroupStore = defineStore('group', () => {
         return groups.value
     }
 
-    const create = async (campaignId: number) => {
-        await api(`groups/${campaignId}`, {
+
+    const create = async () => {
+        const campaignId = useCookie('campaign_id')
+        await api(`groups/${campaignId.value}`, {
             method: 'POST',
             body: group.value
         })
@@ -52,6 +54,15 @@ export const useGroupStore = defineStore('group', () => {
         toasterStore.success('تم إزالة الطالب بنجاح')
     }
 
+
+    const remove = async (id: number) => {
+        await api(`groups/${id}`, {
+            method: 'DELETE'
+        })
+    
+        toasterStore.success('تم إزالة الحلقة بنجاح')
+    }
+
     return {
         group,
         groups,
@@ -60,6 +71,7 @@ export const useGroupStore = defineStore('group', () => {
         reset,
         assign,
         unassign,
+        remove,
         get
     }
 })

@@ -1,4 +1,3 @@
-import { defineStore } from "pinia";
 import type { Teacher, Header, PaginationOptions } from "~/types";
 
 export const useTeacherStore = defineStore("teacher", () => {
@@ -63,6 +62,16 @@ export const useTeacherStore = defineStore("teacher", () => {
     return teachers.value
   };
 
+  const listUnassigned = async () : Promise<Teacher[]> => {
+    const res = await api(`teachers/unassigned/?campaignId=${campaignId.value}`);
+
+    teachersTotalCount.value = res.length;
+
+    teachers.value = res;
+
+    return teachers.value
+  }
+
   const create = async () => {
     await api("teachers", {
       method: "POST",
@@ -106,6 +115,7 @@ export const useTeacherStore = defineStore("teacher", () => {
     reset,
     get,
     list,
+    listUnassigned,
     create,
     update,
     remove

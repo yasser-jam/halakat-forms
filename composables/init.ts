@@ -59,5 +59,5 @@ export const initGroup = (): Group => ({
   title: '',
   students: [],
   class: '',
-  currentTeacherId: 0,
+  currentTeacherId: undefined,
 });
