@@ -101,8 +101,8 @@ export interface Campaign {
     | 'STOP_ASSIGN';
 
     days: string
-    startTime: string
-    endTime: string
+    startTime?: string
+    endTime?: string
     timingApproach: 'hours' | 'pray_time'
 
   createdAt?: string;

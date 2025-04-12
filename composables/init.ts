@@ -50,8 +50,6 @@ export const initCampaign = (): Campaign => ({
   completeCountApproach: 'UNLIMIT_ASSIGN',
   studentsCount: 0,
   days: '',
-  startTime: '',
-  endTime: '',
   timingApproach: 'hours',
 });
 

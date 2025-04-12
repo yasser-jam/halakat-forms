@@ -28,7 +28,8 @@ export const useCampaignStore = defineStore("campaign", () => {
       method: "POST",
       body: {
         ...campaign.value,
-        startDate: new Date(campaign.value.startDate)
+        startDate: new Date(campaign.value.startDate).toISOString(),
+        endDate: new Date(campaign.value.endDate as string).toISOString(),
       },
     });
 
