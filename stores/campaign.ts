@@ -146,6 +146,42 @@ export const useCampaignStore = defineStore("campaign", () => {
     toasterStore.success("تم حذف الدورة بنجاح");
   };
 
+  const current = async () => {
+
+    const campaignId = useCookie('campaign_id')
+
+    const res = await api(`campaigns/current/${Number(campaignId.value)}`)
+  
+    if (res) return campaign.value = res
+    
+    return false
+
+  };
+
+  const isCampaignCurrent = computed(() => {
+    const currentTime = new Date(); // Get current time
+    const currentTimeInMinutes = currentTime.getHours() * 60 + currentTime.getMinutes(); // Current time in minutes
+    
+    // Convert startTime and endTime into minutes from the start of the day
+    const convertToMinutes = (timeString: string) => {
+      const [hours, minutes] = timeString.split(':').map(Number);
+      return hours * 60 + minutes;
+    };
+  
+    const startTime = convertToMinutes(campaign.value?.startTime as string);
+    const endTime = convertToMinutes(campaign.value?.endTime as string);
+  
+
+    // Handle the case where the end time might be after midnight
+    if (startTime <= endTime) {
+      // Normal case where startTime is before endTime on the same day
+      return currentTimeInMinutes >= startTime && currentTimeInMinutes <= endTime;
+    } else {
+      // If the endTime is before the startTime (crosses midnight), adjust accordingly
+      return currentTimeInMinutes >= startTime || currentTimeInMinutes <= endTime;
+    }
+  });
+
   return {
     campaign,
     campaigns,
@@ -155,6 +191,8 @@ export const useCampaignStore = defineStore("campaign", () => {
     remove,
     update,
     get,
+    current,
+    isCampaignCurrent,
     oppositeTime
   };
 });

@@ -1,5 +1,8 @@
 <template>
-    <v-container>
+
+<base-loader v-if="status == 'pending'" />
+
+<v-container v-else>
       <v-row>
         <v-col cols="12" class="mt-2">
           <home-hero />
@@ -26,23 +29,33 @@
         </v-col>
       </v-row> -->
   
-      <div class="text-xl font-semibold mt-6 mb-4">قائمة الحلقات</div>
+      <!-- <template v-if="!campaign?.id">
+
+        <dashboard-no-current-campaign class="mt-4" />
+      
+      
+        <div class="text-xl font-semibold mt-6 mb-4">قائمة الدورات المقامة</div>
+      </template> -->
   
-      <v-row>
-        <v-col cols="4">
-          <halakat-inline-card />
-        </v-col>
-  
-        <v-col cols="4">
-          <halakat-inline-card />
-        </v-col>
-  
-        <v-col cols="4">
-          <halakat-inline-card />
-        </v-col>
-      </v-row>
-  
-      <div class="text-xl font-semibold mt-6 mb-4">أهم الإحصاءات</div>
+      <home-settings class="mt-6"></home-settings>
+
+      <div class="text-xl font-semibold mt-6 mb-4">حلقات الدورة</div>
+
+        <v-row>
+          <v-col v-for="group in groups" cols="4">
+            <halakat-inline-card :group :is-active="Boolean(isCampaignCurrent)" />
+          </v-col>
+    
+          <!-- <v-col cols="4">
+            <halakat-inline-card />
+          </v-col>
+    
+          <v-col cols="4">
+            <halakat-inline-card />
+          </v-col> -->
+        </v-row>
+
+        <div class="text-xl font-semibold mt-6 mb-4">أهم الإحصاءات</div>
   
       <v-row>
         <v-col cols="6">
@@ -63,11 +76,21 @@
           </v-card>
         </v-col>
       </v-row>
-  
-      <home-settings class="mt-6"></home-settings>
     </v-container>
   </template>
   
   <script setup lang="ts">
+    const campaignStore = useCampaignStore()
+
+    const campaignId = useCookie('campaign_id')
+
+    const { status } = useLazyAsyncData(() => campaignStore.get(Number(campaignId.value)))
     
+    useLazyAsyncData(() => groupStore.list())
+    
+    const groupStore = useGroupStore()
+
+    const { groups } = storeToRefs(groupStore)
+
+    const { campaign, campaigns, isCampaignCurrent } = storeToRefs(campaignStore)
   </script>

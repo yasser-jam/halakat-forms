@@ -170,23 +170,26 @@
                   <sys-education-select v-model="teacher.educational_level" />
                 </v-col>
 
-                <v-col cols="6">
-                  <base-label>اسم المدرسة / الجامعة</base-label>
+                <template v-if="['college', 'master', 'phd'].includes(teacher.educational_level)">
+                  <v-col  cols="6">
+                    <base-label>اسم المدرسة / الجامعة</base-label>
+  
+                    <v-text-field
+                      v-model="teacher.university_name"
+                      placeholder="جامعة دمشق"
+                    ></v-text-field>
+                  </v-col>
+  
+                  <v-col cols="6">
+                    <base-label>اسم الكلية</base-label>
+  
+                    <v-text-field
+                      v-model="teacher.college_name"
+                      placeholder="كلية الطب البشري"
+                    ></v-text-field>
+                  </v-col>
 
-                  <v-text-field
-                    v-model="teacher.university_name"
-                    placeholder="جامعة دمشق"
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="6">
-                  <base-label>اسم الكلية</base-label>
-
-                  <v-text-field
-                    v-model="teacher.college_name"
-                    placeholder="كلية الطب البشري"
-                  ></v-text-field>
-                </v-col>
+                </template>
 
                 <v-col cols="12" class="mb-4">
                   <base-switch-input

@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <div class="flex flex-col gap-2 text-sm text-gray-500">
+      <div v-if="isActive" class="flex flex-col gap-2 text-sm text-gray-500">
         <div class="flex items-center justify-between" :class="{ 'text-success': isLessonStart }">
           <div>بدأ الدرس</div>
           <v-icon>{{ isLessonStart ? 'mdi-check-circle' : 'mdi-circle-outline' }}</v-icon>
@@ -31,9 +31,19 @@
 </template>
 
 <script setup lang="ts">
+import Group from '~/pages/settings/group.vue'
+
 const isAttendenceCheck = ref(false)
 const isLessonStart = ref(true)
 const isHospitalityGive = ref(false)
+
+const props = defineProps<{
+  group: Group
+  isActive: boolean
+}>()
+
+const campaignStore = useCampaignStore()
+
 </script>
 
 <style scoped>

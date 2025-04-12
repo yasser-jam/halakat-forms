@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <v-btn>تعديل الإعدادات</v-btn>
+        <v-btn to="/settings/general">تعديل الإعدادات</v-btn>
       </div>
     </v-card-text>
   </v-card>
