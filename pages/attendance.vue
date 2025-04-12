@@ -1,17 +1,20 @@
 <template>
-    <v-container>
+
+<base-loader v-if="status == 'pending'" />
+
+<v-container v-else>
         <div class="text-3xl font-semibold mb-8">سجل التفقد</div>
 
 
 
-        <template v-for="i in 3">
+        <template v-for="group in groups">
             <div class="my-4">
                 <div class="text-gray-800 font-semibold text-2xl">
-                    حلقة الصف الثامن
+                    {{ group.title }}
                 </div>
 
                 <div class="text-gray-500">
-                    الأستاذ سعيد السعدان
+                    {{ `الأستاذ ${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}` }}
                 </div>
             </div>
 
@@ -21,8 +24,9 @@
                         <div class="text-base font-semibold shrink-0 me-4 p-4 h-16">
                             الطالب \ التاريخ
                         </div>
-                        <div v-for="i in 5" class="text-base font-semibold shrink-0 me-4 p-4 h-16">
-                            أحمد المساهم
+
+                        <div v-for="students in group.students" class="text-sm font-semibold shrink-0 me-4 px-4 py-2 leading-none h-14">
+                            {{ `${students.first_name} ${students.last_name}` }}
                         </div>
                     </div>
                 </v-col>
@@ -31,13 +35,14 @@
                     <div class="bg-white overflow-auto">
     
                         <div class="flex space-between items-center gap-2 p-4">
-                            <v-chip v-for="i in 20" color="success" class="shrink-0">12/2/2024</v-chip>
+                            <v-chip v-for="date in campaignDates" :key="date.date.toISOString()" color="success" class="shrink-0">
+                                {{ `${date.dayName} ${date.formattedDate}` }}
+                            </v-chip>
                         </div>
     
                         <div>
-                            <div v-for="i in 5" class="flex justify-between gap-2 p-4">
-    
-                                <attend-chip v-for="i in 20" status="MISSED" class="mx-2 shrink-0" />
+                            <div v-for="student in group.students" :key="student.id" class="flex justify-between gap-2 p-4">
+                                <attend-chip v-for="date in campaignDates" :key="date.date.toISOString()" status="MISSED" class="mx-2 shrink-0" />
                             </div>
     
                             <v-divider></v-divider>
@@ -56,12 +61,46 @@
 
 <script setup lang="ts">
 
+const campaignStore = useCampaignStore()
+const groupStore = useGroupStore()
 const attendanceStore = useAttendanceStore();
 
-const route = useRoute();
-const campaignId = route.params.campaign_id;
+const campaignId = useCookie('campaign_id');
+const { campaign } = storeToRefs(campaignStore)
 
-const baseRoute = `/campaigns/${campaignId}/groups-management`;
+const { groups } = storeToRefs(groupStore)
+
+const { status: campaignStatus } = useLazyAsyncData(() => campaignStore.get(Number(campaignId.value)))
+const { status } = useLazyAsyncData(() => groupStore.list())
+
+const generateCampaignDates = () => {
+  if (!campaign.value?.startDate || !campaign.value?.days) return [];
+
+  const startDate = new Date(campaign.value.startDate);
+  const endDate = campaign.value.endDate ? new Date(campaign.value.endDate) : new Date();
+  const selectedDays = campaign.value.days.split(',').map(day => day.trim().toLowerCase());
+  
+  const dates = [];
+  const currentDate = new Date(startDate);
+  
+  while (currentDate <= endDate) {
+    const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase();
+    
+    if (selectedDays.includes(dayName)) {
+      dates.push({
+        date: new Date(currentDate),
+        dayName: currentDate.toLocaleDateString('ar-SA', { weekday: 'long' }),
+        formattedDate: currentDate.toLocaleDateString('ar-SA', { day: 'numeric', month: 'numeric' })
+      });
+    }
+    
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return dates;
+};
+
+const campaignDates = computed(() => generateCampaignDates());
 
 const groupBy = ref([
     {
