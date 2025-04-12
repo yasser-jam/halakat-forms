@@ -10,7 +10,7 @@
               </v-col> -->
       </v-row>
   
-      <div class="text-xl font-semibold mt-6 mb-4">أساتذة الحلقات</div>
+      <!-- <div class="text-xl font-semibold mt-6 mb-4">أساتذة الحلقات</div>
   
       <v-row>
         <v-col cols="4">
@@ -24,7 +24,7 @@
         <v-col cols="4">
           <teacher-card></teacher-card>
         </v-col>
-      </v-row>
+      </v-row> -->
   
       <div class="text-xl font-semibold mt-6 mb-4">قائمة الحلقات</div>
   
@@ -68,3 +68,6 @@
     </v-container>
   </template>
   
+  <script setup lang="ts">
+    
+  </script>
