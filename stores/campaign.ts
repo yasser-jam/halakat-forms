@@ -63,6 +63,7 @@ export const useCampaignStore = defineStore("campaign", () => {
     list,
     create,
     remove,
+    update,
     get
   };
 });

@@ -46,7 +46,7 @@ const save = async () => {
     loading.value = true
     
     try {
-
+        await campaignStore.update(Number(campaignId.value))
     } finally {
         loading.value = false
     }
