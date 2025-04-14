@@ -5,7 +5,7 @@
 <script setup lang="ts">
 const props = defineProps<{
     status: 'ATTEND' | 'MISSED' | string
-}>()
+}>() 
 
 const info = computed(() => {
     if (props.status == 'ATTEND') {
