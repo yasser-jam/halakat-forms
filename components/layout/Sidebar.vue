@@ -54,6 +54,11 @@ const links = ref<
     icon: "mdi-check-outline",
   },
   {
+    title: "التسميع",
+    link: `/savings`,
+    icon: "mdi-book-outline",
+  },
+  {
     title: "الطلاب",
     link: `/students`,
     icon: "mdi-account-school",
