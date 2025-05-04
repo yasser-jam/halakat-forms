@@ -4,6 +4,7 @@ import type {
   Student,
   Teacher,
   Group,
+  Mistake,
 } from '~/types';
 
 export const initStudent = (): Student => ({
@@ -59,3 +60,8 @@ export const initGroup = (): Group => ({
   class: '',
   currentTeacherId: undefined,
 });
+
+export const initMistake = () : Mistake => ({
+  title: '',
+  removed_points: undefined
+})

@@ -32,7 +32,7 @@
                 </v-col>
 
                 <v-col cols="2" class="flex gap-1 justify-end">
-                    <v-btn size="x-small" color="blue" variant="tonal" rounded icon="mdi-eye-outline"></v-btn>
+                    <v-btn size="x-small" color="blue" variant="tonal" rounded icon="mdi-eye-outline" to="/savings/1"></v-btn>
                     <v-btn size="x-small" color="error" variant="tonal" rounded icon="mdi-trash-can-outline"></v-btn>
                 </v-col>
             </v-row>
