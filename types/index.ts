@@ -140,3 +140,29 @@ export interface Mistake {
   title: string
   removed_points?: number
 }
+
+export interface SavingSession {
+  id?: number
+  teacherId?: number
+  studentId?: number
+  campaignId?: number
+  start: number
+  end: number
+  rating: number
+  duration: number
+  created_at?: string
+  mistakes: Mistake[]
+
+  teacher?: Teacher
+  student?: Student
+  campaign?: Campaign
+}
+
+export interface SavingSessionFilter {
+  dateFrom?: string
+  dateTo?: string
+  campaignId?: number
+  teacherId?: number
+  studentId?: number
+  mistakeId?: number
+}
