@@ -51,7 +51,7 @@ export const initCampaign = (): Campaign => ({
   startDate: '',
   completeCountApproach: 'UNLIMIT_ASSIGN',
   studentsCount: 0,
-  days: '',
+  days: [],
   timingApproach: 'hours',
 });
 

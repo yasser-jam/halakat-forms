@@ -36,6 +36,14 @@
           />
         </v-col>
     
+        <v-col cols="12">
+
+          <base-label>أيام الدورة</base-label>
+
+          <sys-days-select v-model="campaign.days"></sys-days-select>
+
+        </v-col>
+
         <v-col cols="12" md="6">
           <base-label>وقت البداية</base-label>
     

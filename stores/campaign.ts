@@ -68,7 +68,11 @@ export const useCampaignStore = defineStore("campaign", () => {
       res.endTime = endPrayer || endTime
     }
 
+    // turn days from string to array
     campaign.value = res
+
+    campaign.value.days = res.days.split(',')
+
 
     return campaign.value
   }
@@ -91,6 +95,7 @@ export const useCampaignStore = defineStore("campaign", () => {
 
     const body = {
       ...campaign.value,
+      days: undefined,
       startDate: new Date(campaign.value.startDate).toISOString(),
       endDate: new Date(campaign.value.endDate as string).toISOString(),
       startTime: campaign.value.timingApproach === 'pray_time' 
@@ -121,6 +126,7 @@ export const useCampaignStore = defineStore("campaign", () => {
 
     const body = {
       ...campaign.value,
+      days: campaign.value?.days?.join(),
       startDate: new Date(campaign.value.startDate).toISOString(),
       startTime: campaign.value.timingApproach === 'pray_time' 
         ? formatTime(timeValues?.startTime) 

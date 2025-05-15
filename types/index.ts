@@ -100,7 +100,7 @@ export interface Campaign {
     | "PEND_ASSIGN"
     | "STOP_ASSIGN";
 
-  days: string;
+  days: string[];
   startTime?: string;
   endTime?: string;
   timingApproach: "hours" | "pray_time";
