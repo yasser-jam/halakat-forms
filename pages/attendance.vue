@@ -28,8 +28,7 @@
           </template>
 
           <template #item.date="{ item, column }">
-            <v-chip size="small">{{ item.attendances?.find(attend => dayjs(attend.takenDate).format('MM-DD') == column.title)?.status  }}</v-chip>            
-            
+            <attend-chip :status="String(item.attendances?.find(attend => dayjs(attend.takenDate).format('MM-DD') == column.title)?.status)" />
           </template>
 
         </v-data-table>
