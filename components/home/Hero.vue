@@ -20,7 +20,7 @@
 
           </div>
         
-          <v-chip v-if="isCurrent" color="primary">جار الآن</v-chip>
+          <v-chip v-if="isCampaignCurrent" color="primary">جار الآن</v-chip>
         
         </v-col>
         
@@ -67,8 +67,8 @@
 <script setup lang="ts">
 const campaignStore = useCampaignStore()
 
-const { campaign } = storeToRefs(campaignStore)
+const { campaign, isCampaignCurrent } = storeToRefs(campaignStore)
 
-const { data:isCurrent } = useLazyAsyncData(() => campaignStore.isCurrent(Number(campaign.value?.id)))
+// const { data:isCurrent } = useLazyAsyncData(() => campaignStore.isCurrent(Number(campaign.value?.id)))
 
 </script>

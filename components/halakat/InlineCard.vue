@@ -2,11 +2,11 @@
   <v-card>
     <v-card-text class="flex justify-between items-center relative">
       <div>
-        <div class="text-lg font-semibold mb-1">حلقة الإمام النووي</div>
+        <div class="text-lg font-semibold mb-1">حلقة {{ group.title }}</div>
 
         <div class="flex gap-2 mt-4">
-          <v-chip color="primary">أ. محمد مسوتي</v-chip>
-          <v-chip color="info">12 طالب</v-chip>
+          <v-chip color="primary">أ. {{ `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}` }}</v-chip>
+          <v-chip color="info">{{ group.students?.length }} طالب</v-chip>
         </div>
       </div>
 
