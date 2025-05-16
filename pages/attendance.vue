@@ -17,7 +17,25 @@
         </div>
       </div>
 
-      <v-row>
+
+      <div>
+        <v-data-table :headers :items="computedData">
+
+          <template #item.name="{ item }">
+            <div class="font-semibold">
+              {{ `${item.student?.first_name} ${item.student?.last_name}` }}
+            </div>
+          </template>
+
+          <template #item.date="{ item, column }">
+            <v-chip size="small">{{ item.attendances?.find(attend => dayjs(attend.takenDate).format('MM-DD') == column.title)?.status  }}</v-chip>            
+            
+          </template>
+
+        </v-data-table>
+      </div>
+
+      <!-- <v-row>
         <v-col cols="2" class="m-0">
           <div class="bg-white">
             <div class="text-base font-semibold shrink-0 me-4 p-4 h-16">
@@ -63,7 +81,7 @@
             </div>
           </div>
         </v-col>
-      </v-row>
+      </v-row> -->
     </template>
   </v-container>
 
@@ -71,57 +89,64 @@
 </template>
 
 <script setup lang="ts">
-const campaignStore = useCampaignStore();
+import dayjs from 'dayjs';
 const groupStore = useGroupStore();
 const attendanceStore = useAttendanceStore();
 
-const campaignId = useCookie("campaign_id");
-const { campaign } = storeToRefs(campaignStore);
 
 const { groups } = storeToRefs(groupStore);
 
 const { attendances } = storeToRefs(attendanceStore);
 
-// Compute unique dates from attendances
-const dates = computed(() => {
-  return new Set(attendances.value?.map((el) => el.takenDate));
-});
+const headers = computed(() => {
+  const dates = attendances.value?.map(el => ({
+    title: dayjs(el.takenDate).format('MM-DD'),
+    key: 'date',
+    sortable: false
+  }))
+
+  if (dates.length) {
+    return [
+      {
+        title: 'الاسم',
+        key: 'name',
+        sortable: false
+      },
+      ...dates
+    ]
+
+}
+
+return [
+{
+      title: 'الاسم',
+      key: 'name',
+      sortable: false
+    },
+]
+})
+
+const computedData = computed(() => {
+  let students: Student[] = []
+  
+  attendances.value.forEach((el) => {
+    if (students.findIndex(item => item.id == el.studentId) == -1) {
+      students.push(el.student as Student)
+    }
+  })
+
+  return students?.map(el => ({
+    student: el,
+    attendances: attendances.value?.filter(attend => attend.studentId == el.id)
+  }))
+})
 
 
-// Get attendances filtered by student ID
-const getAttendances = (id: number) =>
-  attendances.value.filter((el) => el.studentId == id);
-
-// Get attendance status for specific student and date
-const getAttendanceStatus = (studentId: number, date: string) => {
-  // Check if attendances.value exists before using it
-  if (!attendances.value) return "MISSED";
-
-  const studentAttendance = attendances.value.find(
-    (attend) =>
-      attend.studentId === studentId &&
-      String(attend.takenDate) === String(date)
-  );
-
-  return studentAttendance ? studentAttendance.status : "MISSED";
-};
-
-const { status: campaignStatus } = useLazyAsyncData(() =>
-  campaignStore.get(Number(campaignId.value))
-);
 useLazyAsyncData(() => groupStore.list());
 
 const { status: attendanceStatus } = useLazyAsyncData("list_attendance", () =>
-  attendanceStore.list(Number(groups.value?.[0]?.id))
+  attendanceStore.list(Number(groups.value?.[0]?.id || 1))
 );
-
-const getFormatDate = (date: string) =>
-  `${new Date(date).toLocaleDateString("ar-SA", {
-    weekday: "long",
-  })} ${new Date(date).toLocaleDateString("en", {
-    day: "numeric",
-    month: "numeric",
-  })}`;
 
 const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
