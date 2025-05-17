@@ -1,24 +1,37 @@
-import type { Attendance } from "~/types"
+import type { Attendance } from '~/types';
 
 export const useAttendanceStore = defineStore('attnedance', () => {
+  const campaignId = useCookie('campaign_id');
 
-    const campaignId = useCookie('campaign_id')
+  const attendances = ref<Attendance[]>([]);
+
+  const list = async (groupId: number): Promise<Attendance[]> => {
+    const res = await api(`attendance/${groupId}/${campaignId.value}`);
+
+    attendances.value = res;
+
+    return attendances.value;
+  };
 
 
-    const attendances = ref<Attendance[]>([])
+  const attendState = ref([])
 
-    const list = async (groupId: number) : Promise<Attendance[]> => {
-        const res = await api(`attendance/${groupId}/${campaignId.value}`)
-    
-        attendances.value = res
+  const stat = async (
+    groupId: number,
+    startDate: string = new Date().toISOString(),
+    endDate: string = new Date().toISOString()
+  ) => {
+    const res = await api(
+      `attendance/${groupId}/${campaignId.value}/stats/${campaignId.value}?startDate=${startDate}&endDate=${endDate}`
+    );
 
-        return attendances.value
-    
-    }
-    
-    
-    return {
-        attendances,
-        list
-    }
-})
+    attendState.value = res
+  };
+
+  return {
+    attendances,
+    list,
+    stat,
+    attendState
+  };
+});
