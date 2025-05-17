@@ -39,6 +39,35 @@
   
       <home-settings class="mt-6"></home-settings>
 
+      <v-row class="mt-6">
+        <v-col cols="12" md="6">
+          <v-card>
+            <v-card-text>
+
+              <div class="text-xl font-semibold mb-2">سجل الأنشطة</div>
+              
+              <div class="flex flex-col gap-2 max-h-[200px] overflow-auto">
+                <attend-log-card v-for="i in 10" class="shrink-0" />
+              </div>
+            </v-card-text>
+          </v-card>
+
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-card>
+            <v-card-text>
+
+              <div class="text-xl font-semibold mb-2">الأساتذة الحاضرون</div>
+              
+              <div class="max-h-[400px]">
+              </div>
+            </v-card-text>
+          </v-card>
+
+        </v-col>
+      </v-row>
+
       <div class="text-xl font-semibold mt-6 mb-4">حلقات الدورة</div>
 
         <v-row>
