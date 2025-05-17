@@ -60,8 +60,12 @@
 
               <div class="text-xl font-semibold mb-2">الأساتذة الحاضرون</div>
               
-              <div class="max-h-[400px]">
+              <div v-if="teachers?.length" class="flex flex-col gap-2 max-h-[200px] overflow-auto">
+                <teacher-inline-card v-for="teacher in teachers" :teacher />
+                
               </div>
+
+              <base-not-found v-else />
             </v-card-text>
           </v-card>
 
@@ -122,4 +126,16 @@
     const { groups } = storeToRefs(groupStore)
 
     const { campaign, campaigns, isCampaignCurrent } = storeToRefs(campaignStore)
+  
+    const teachers = computed<Teacher[]>(() => {
+      let data : Teacher[] = []
+      
+      groups.value?.forEach(group => {
+        if (group.currentTeacher) data.push(group.currentTeacher)
+      })
+
+      return data
+    })
+  
+  
   </script>
