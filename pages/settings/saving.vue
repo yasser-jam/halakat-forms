@@ -1,6 +1,16 @@
 <template>
   <v-container>
     <v-row>
+
+      <v-col cols="12">
+        <!-- <base-info-card>
+          <div class="text-xl">
+              كل صفحة مُسمعة تحسب لها علامة من 100 درجة
+          </div>
+        </base-info-card> -->
+
+      </v-col>
+
       <v-col cols="12" md="6">
         <v-card>
           <v-card-text>
@@ -24,7 +34,7 @@
                 </v-col>
 
                 <v-col cols="4">
-                  <base-label>النقاط</base-label>
+                  <base-label>الدرجات المخصومة (من 100)</base-label>
 
                   <v-text-field
                     v-model.number="mistake.removed_points"
@@ -66,65 +76,74 @@
       <v-col cols="12" md="6">
         <v-card>
           <v-card-text>
-            <div class="text-xl font-semibold mb-6">توصيف نتيجة الصفحة</div>
+            <div class="flex items-center justify-between mb-6">
+              <div class="text-xl font-semibold">التقييمات المتاحة</div>
 
-            <v-form ref="resultForm" v-model="resultFormValid">
+              <v-btn variant="tonal" color="primary" @click="addEvaluation">إضافة تقييم</v-btn>
+
+            </div>
+
+            <!-- <v-form ref="resultForm"> -->
               <v-row
-                v-for="(result, idx) in resultLevels"
-                class="mb-2"
+                v-for="(evaluation, idx) in evaluationsData"
+                class="mb-2 items-center"
               >
                 <v-col cols="6">
                   <base-label>النتيجة</base-label>
 
                   <v-text-field
-                    v-model="result.label"
-                    :error-messages="useValidate(result.label, ['required'])"
+                    v-model="evaluation.title"
+                    :error-messages="useValidate(evaluation.title, ['required'])"
                   />
                 </v-col>
                 <v-col cols="2">
-                  <base-label>التقييم</base-label>
+                  <base-label>العلامة الدنيا</base-label>
 
                   <v-text-field
-                    v-model.number="result.points"
+                    v-model.number="evaluation.reducedAmount"
                     type="number"
                     :error-messages="
-                      useValidate(String(result.points), ['required'])
+                      useValidate(String(evaluation.reducedAmount), ['required'])
                     "
                   />
                 </v-col>
                 
-                <v-col cols="3">
+                <v-col cols="2">
                   <base-label>النقاط</base-label>
 
                   <v-text-field
-                    v-model.number="result.points"
+                    v-model.number="evaluation.points"
                     type="number"
                     :error-messages="
-                      useValidate(String(result.points), ['required'])
+                      useValidate(String(evaluation.points), ['required'])
                     "
                   />
                 </v-col>
 
                 <v-col cols="2">
                   <v-btn
+                    v-if="evaluationsData?.length"
                     variant="tonal"
                     rounded
                     size="small"
-                    icon="mdi-delete"
+                    icon="mdi-minus"
                     color="red"
-                    class="mt-6"
-                    @click="removeResult(idx)"
-                    v-if="errorPoints.length > 1"
+                    @click="removeEvaluation(evaluation.title)"
                   >
                   </v-btn>
                 </v-col>
 
               </v-row>
-              <v-btn color="primary" @click="addRating" class="mt-2">
-                <v-icon left>mdi-plus</v-icon>
-                إضافة مستوى
+              <v-btn
+                color="primary"
+                :loading="evaluationLoading"
+                block
+                @click="createEvaluations"
+                class="mt-2"
+              >
+                حفظ
               </v-btn>
-            </v-form>
+            <!-- </v-form> -->
           </v-card-text>
         </v-card>
       </v-col>
@@ -135,15 +154,21 @@
 <script setup lang="ts">
 import type { Mistake } from "~/types";
 
+import useValidate from "@/composables/useValidate";
+
 const mistakeStore = useMistakeStore();
+const evaluationStore = useEvaluationStore()
 
 const { mistakes } = storeToRefs(mistakeStore);
+const { evaluations } = storeToRefs(evaluationStore)
 
 const mistakeFormValid = ref(false);
 
+const evaluationLoading = ref(false)
 const loading = ref(false);
 
 const { status } = useLazyAsyncData(() => mistakeStore.list());
+const { status: evStatus } = useLazyAsyncData(() => evaluationStore.list());
 
 const mistakesData = ref<Mistake[]>(
   mistakes.value?.length
@@ -156,6 +181,18 @@ const mistakesData = ref<Mistake[]>(
       ]
 );
 
+const evaluationsData = ref<Evaluation[]>(
+  evaluations.value?.length
+    ? evaluations.value
+    : [
+        {
+          title: "",
+          points: 0,
+          reducedAmount: 0,
+        },
+      ]
+)
+
 const addMistake = () => {
   mistakesData.value?.push({
     title: "",
@@ -163,13 +200,21 @@ const addMistake = () => {
   });
 };
 
-const addRating = () => {
-  
+const addEvaluation = () => {
+  evaluationsData.value?.push({
+    title: "",
+    points: 0,
+    reducedAmount: 0
+  });
 }
 
 // Todo: change title to something unique
 const removeMistake = (title: string) => {
   mistakesData.value = mistakesData.value.filter((el) => el.title != title);
+};
+
+const removeEvaluation = (title: string) => {
+  evaluationsData.value = evaluationsData.value.filter((el) => el.title != title);
 };
 
 // Handle create by better api that takes array and delete and create
@@ -182,6 +227,19 @@ const create = async () => {
     await mistakeStore.list();
   } finally {
     loading.value = false;
+  }
+};
+
+// Handle create by better api that takes array and delete and create
+const createEvaluations = async () => {
+  evaluationLoading.value = true;
+
+  try {
+    await evaluationStore.assert(evaluationsData.value);
+  } catch {
+    await evaluationStore.list();
+  } finally {
+    evaluationLoading.value = false;
   }
 };
 </script>
