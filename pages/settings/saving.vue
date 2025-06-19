@@ -68,12 +68,12 @@
           <v-card-text>
             <div class="text-xl font-semibold mb-6">توصيف نتيجة الصفحة</div>
 
-            <!-- <v-form ref="resultForm" v-model="resultFormValid">
+            <v-form ref="resultForm" v-model="resultFormValid">
               <v-row
                 v-for="(result, idx) in resultLevels"
                 class="mb-2"
               >
-                <v-col cols="7">
+                <v-col cols="6">
                   <base-label>النتيجة</base-label>
 
                   <v-text-field
@@ -81,6 +81,18 @@
                     :error-messages="useValidate(result.label, ['required'])"
                   />
                 </v-col>
+                <v-col cols="2">
+                  <base-label>التقييم</base-label>
+
+                  <v-text-field
+                    v-model.number="result.points"
+                    type="number"
+                    :error-messages="
+                      useValidate(String(result.points), ['required'])
+                    "
+                  />
+                </v-col>
+                
                 <v-col cols="3">
                   <base-label>النقاط</base-label>
 
@@ -108,11 +120,11 @@
                 </v-col>
 
               </v-row>
-              <v-btn color="primary" @click="addMistake" class="mt-2">
+              <v-btn color="primary" @click="addRating" class="mt-2">
                 <v-icon left>mdi-plus</v-icon>
                 إضافة مستوى
               </v-btn>
-            </v-form> -->
+            </v-form>
           </v-card-text>
         </v-card>
       </v-col>
@@ -150,6 +162,10 @@ const addMistake = () => {
     removed_points: 0,
   });
 };
+
+const addRating = () => {
+  
+}
 
 // Todo: change title to something unique
 const removeMistake = (title: string) => {

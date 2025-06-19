@@ -26,7 +26,7 @@ export interface Student {
   student_health_status?: string;
   special_talent?: string;
   father_name?: string;
-  father_status?: "ALIVE" | "MISSED" | "DEAD";
+  father_status?: 'ALIVE' | 'MISSED' | 'DEAD';
   father_job?: string;
   father_income_level?: string;
   father_education_level?: string;
@@ -34,14 +34,14 @@ export interface Student {
   father_phone_number?: string;
   father_work_number?: string;
   mother_name?: string;
-  mother_status?: "ALIVE" | "MISSED" | "DEAD";
+  mother_status?: 'ALIVE' | 'MISSED' | 'DEAD';
   mother_job?: string;
   mother_income_level?: string;
   mother_education_level?: string;
   mother_health_status?: string;
   mother_phone_number?: string;
   mother_home_number?: string;
-  parent_marital_status?: "MARRIED" | "SEPARATED" | "DIVORCED";
+  parent_marital_status?: 'MARRIED' | 'SEPARATED' | 'DIVORCED';
   student_home_number?: string;
   original_residence_address_area?: string;
   original_residence_address_street?: string;
@@ -95,15 +95,15 @@ export interface Campaign {
   studentsCount: number;
   assignByLink?: boolean;
   completeCountApproach:
-    | "UNLIMIT_ASSIGN"
-    | "HOLD_ASSIGN"
-    | "PEND_ASSIGN"
-    | "STOP_ASSIGN";
+    | 'UNLIMIT_ASSIGN'
+    | 'HOLD_ASSIGN'
+    | 'PEND_ASSIGN'
+    | 'STOP_ASSIGN';
 
   days: string[];
   startTime?: string;
   endTime?: string;
-  timingApproach: "hours" | "pray_time";
+  timingApproach: 'hours' | 'pray_time';
 
   createdAt?: string;
   updatedAt?: string;
@@ -135,34 +135,43 @@ export interface Attendance {
 }
 
 export interface Mistake {
-  id?: number
-  campaignId?: number
-  title: string
-  removed_points?: number
+  id?: number;
+  campaignId?: number;
+  title: string;
+  removed_points?: number;
+}
+
+export interface Evaluation {
+  id?: number;
+  campaignId?: number;
+  title: string;
+  points: number;
+  reducedAmount: number;
 }
 
 export interface SavingSession {
-  id?: number
-  teacherId?: number
-  studentId?: number
-  campaignId?: number
-  start: number
-  end: number
-  rating: number
-  duration: number
-  created_at?: string
-  mistakes: Mistake[]
+  id?: number;
+  teacherId?: number;
+  studentId?: number;
+  campaignId?: number;
+  start: number;
+  end: number;
+  rating: number;
+  duration: number;
+  created_at?: string;
+  mistakes: Mistake[];
+  evaluation?: Evaluation;
 
-  teacher?: Teacher
-  student?: Student
-  campaign?: Campaign
+  teacher?: Teacher;
+  student?: Student;
+  campaign?: Campaign;
 }
 
 export interface SavingSessionFilter {
-  dateFrom?: string
-  dateTo?: string
-  campaignId?: number
-  teacherId?: number
-  studentId?: number
-  mistakeId?: number
+  dateFrom?: string;
+  dateTo?: string;
+  campaignId?: number;
+  teacherId?: number;
+  studentId?: number;
+  mistakeId?: number;
 }

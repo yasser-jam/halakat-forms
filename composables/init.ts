@@ -6,6 +6,7 @@ import type {
   Group,
   Mistake,
   SavingSessionFilter,
+  Evaluation,
 } from '~/types';
 
 export const initStudent = (): Student => ({
@@ -62,16 +63,21 @@ export const initGroup = (): Group => ({
   currentTeacherId: undefined,
 });
 
-export const initMistake = () : Mistake => ({
+export const initMistake = (): Mistake => ({
   title: '',
-  removed_points: undefined
-})
+  removed_points: undefined,
+});
 
+export const initEvaluation = (): Evaluation => ({
+  title: '',
+  points: 0,
+  reducedAmount: 0,
+});
 
-export const initSavingSession = () : SavingSession => ({
+export const initSavingSession = (): SavingSession => ({
   start: 0,
   end: 0,
   rating: 0,
   duration: 0,
   mistakes: [],
-})
+});
