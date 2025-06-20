@@ -98,31 +98,25 @@ const { groups } = storeToRefs(groupStore);
 const { attendances } = storeToRefs(attendanceStore);
 
 const headers = computed(() => {
-  const dates = attendances.value?.map(el => ({
-    title: dayjs(el.takenDate).format('MM-DD'),
+  // Get unique dates
+  const uniqueDates = Array.from(
+    new Set(attendances.value?.map(el => dayjs(el.takenDate).format('MM-DD')))
+  );
+
+  const dateHeaders = uniqueDates.map(date => ({
+    title: date,
     key: 'date',
     sortable: false
-  }))
+  }));
 
-  if (dates.length) {
-    return [
-      {
-        title: 'الاسم',
-        key: 'name',
-        sortable: false
-      },
-      ...dates
-    ]
-
-}
-
-return [
-{
+  return [
+    {
       title: 'الاسم',
       key: 'name',
       sortable: false
     },
-]
+    ...dateHeaders
+  ];
 })
 
 const computedData = computed(() => {
