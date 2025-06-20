@@ -17,17 +17,17 @@
             text="التسجيل"
             to="/settings/assign"
           ></v-tab>
-          <v-tab
+          <!-- <v-tab
             prepend-icon="mdi-account-group-outline"
             text="الحلقات"
             to="/settings/group"
-          ></v-tab>
+          ></v-tab> -->
           <v-tab
             prepend-icon="mdi-book-outline"
             text="التسميع"
             to="/settings/saving"
           ></v-tab>
-          <v-tab
+          <!-- <v-tab
             prepend-icon="mdi-help-box-multiple-outline"
             text="المسابقات"
             to="/settings/contest"
@@ -36,7 +36,7 @@
             prepend-icon="mdi-license"
             text="المكافآت"
             to="/settings/award"
-          ></v-tab>
+          ></v-tab> -->
         </v-tabs>
 
         <v-btn :loading @click="save">حفظ التغييرات</v-btn>
