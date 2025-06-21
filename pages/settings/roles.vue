@@ -9,11 +9,10 @@
           </template>
 
           <template v-for="(permission, index) in permissions" v-slot:[`item.${permission.key}`]="{item}">
-              <div>
-                <!-- {{ item.permissions.includes(headers[index + 1].key as any) }} -->
-                <v-checkbox :model-value="hasAccess(item.id as number, permission)" color="primary" @update:model-value=""></v-checkbox>
-                <!-- {{ item.permissions }} -->
-              </div>
+              <!-- {{ item.permissions.includes(headers[index + 1].key as any) }} -->
+              <v-checkbox :model-value="hasAccess(item.id as number, permission)" color="primary" 
+              @update:model-value="updatePermission(item.id!, permission.key)"></v-checkbox>
+              <!-- {{ item.permissions }} -->
           </template>
         </v-data-table>
       </v-card-text>
@@ -22,6 +21,8 @@
   </template>
   
   <script setup lang="ts">
+import { Permission } from '~/types';
+
   const campaignStore = useCampaignStore();
   const roleStore = useRoleStore()
 
@@ -38,41 +39,41 @@
     return selectedRole?.permissions?.includes(permission.key)
   }
 
-  const permissions = [
+  const permissions : { name: string, key: Permission }[] = [
     {
-      key: 'STUDENT_MANAGEMENT',
+      key: Permission.STUDENT_MANAGEMENT,
       name: 'إدارة الطلاب'
     },
     {
-      key: 'TEACHER_MANAGEMENT',
+      key: Permission.TEACHER_MANAGEMENT,
       name: 'إدارة الأساتذة' 
     },
     {
-      key: 'ROLES_MANAGEMENT',
+      key: Permission.ROLES_MANAGEMENT,
       name: 'إدارة الأدوار'
     },
     {
-      key: 'SAVING_SESSION_MANAGEMENT',
+      key: Permission.SAVING_SESSION_MANAGEMENT,
       name: 'إدارة التسميع'
     },
     {
-      key: 'ATTENDANCE_MANAGEMENT',
+      key: Permission.ATTENDANCE_MANAGEMENT,
       name: 'إدارة الحضور'
     },
     {
-      key: 'CIRRUCULUM_MANAGEMENT',
+      key: Permission.CIRRUCULUM_MANAGEMENT,
       name: 'إدارة المناهج'
     },
     {
-      key: 'SETTINGS_MANAGEMENT',
+      key: Permission.SETTINGS_MANAGEMENT,
       name: 'إدارة الإعدادات'
     },
     {
-      key: 'POINTS_MANAGEMENT',
+      key: Permission.POINTS_MANAGEMENT,
       name: 'إدارة النقاط'
     },
     {
-      key: 'AWARDS_MANAGEMENT',
+      key: Permission.AWARDS_MANAGEMENT,
       name: 'إدارة الجوائز'
     }
   ]
@@ -90,9 +91,31 @@
     }))
   ])
 
-  const updatePermission = (role: Role, permission: any) => {
-    
+  const updatePermission = (roleId: number, permission: Permission) => {
+  const selectedRole = roles.value.find(role => role.id === roleId);
+  if (!selectedRole) return;
+
+  const hasAccess = selectedRole.permissions.includes(permission);
+
+  if (hasAccess) {
+    selectedRole.permissions = selectedRole.permissions.filter(p => p !== permission);
+  } else {
+    selectedRole.permissions.push(permission);
   }
+};
+
+
+const save = async () => {
+  status.value = 'pending'
+
+  try {
+
+    await roleStore.bulkUpdate()
+
+  } finally {
+    status.value = 'idle'
+  }
+}
 
   </script>
   

@@ -1,3 +1,5 @@
+import type { Permission } from "~/types"
+
 export const useRoleStore = defineStore('role', () => {
     
     const toasterStore = useToasterStore()
@@ -15,10 +17,12 @@ export const useRoleStore = defineStore('role', () => {
 
     }
 
-    const bulkUpdate = async (roles: { role_id: number, permissions: string[] }) : Promise<void> => {
+    const bulkUpdate = async () : Promise<void> => {
         await api('/roles/bulk-update-permissions', {
-            body: roles
+            body: roles.value
         })
+
+        toasterStore.success('تم تعديل الأدوار بنجاح')
     }
 
 
