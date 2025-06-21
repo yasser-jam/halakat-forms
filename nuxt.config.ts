@@ -1,3 +1,5 @@
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -20,21 +22,29 @@ export default defineNuxtConfig({
     }
   },
 
+  build: {
+    transpile: ['vuetify'],
+  },
   modules: [
     '@unocss/nuxt',
-    'vuetify-nuxt-module',
     '@pinia/nuxt',
+    (_options, nuxt) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true, styles: { configFile: '/assets/vuetify/settings.scss' } }))
+      })
+    },
+    //...
   ],
+  vite: {
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  },
 
   imports: {
     dirs: ['types/*.ts']
   },
-
-  vuetify: {
-    moduleOptions: {
-      styles: { configFile: '/assets/vuetify/settings.scss' }
-    },
-
-    vuetifyOptions: './vuetify.config.ts'
-  },  
 });
