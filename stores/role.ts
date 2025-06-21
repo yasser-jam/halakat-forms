@@ -18,8 +18,12 @@ export const useRoleStore = defineStore('role', () => {
     }
 
     const bulkUpdate = async () : Promise<void> => {
-        await api('/roles/bulk-update-permissions', {
-            body: roles.value
+        await api('roles/bulk-update-permissions', {
+            method: 'POST',
+            body: roles.value?.map(el => ({
+                role_id: el.id,
+                permissions: el.permissions
+            })),
         })
 
         toasterStore.success('تم تعديل الأدوار بنجاح')

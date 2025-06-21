@@ -15,6 +15,11 @@
               <!-- {{ item.permissions }} -->
           </template>
         </v-data-table>
+
+        <teleport to='#actions'>
+          <v-btn :loading="status == 'pending'" @click="save">حفظ التغييرات</v-btn>
+        </teleport>
+
       </v-card-text>
     </v-card>
   

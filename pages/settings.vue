@@ -44,7 +44,9 @@
           ></v-tab> -->
         </v-tabs>
 
-        <v-btn :loading @click="save">حفظ التغييرات</v-btn>
+        <div id="actions">
+          <v-btn v-if="route.path != '/settings/roles'" :loading @click="save">حفظ التغييرات</v-btn>
+        </div>
       </div>
 
       <v-tabs-window>
