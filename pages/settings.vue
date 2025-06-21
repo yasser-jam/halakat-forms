@@ -27,6 +27,11 @@
             text="التسميع"
             to="/settings/saving"
           ></v-tab>
+          <v-tab
+            prepend-icon="mdi-key-outline"
+            text="الأدوار"
+            to="/settings/roles"
+          ></v-tab>
           <!-- <v-tab
             prepend-icon="mdi-help-box-multiple-outline"
             text="المسابقات"

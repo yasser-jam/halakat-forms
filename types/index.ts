@@ -175,3 +175,22 @@ export interface SavingSessionFilter {
   studentId?: number;
   mistakeId?: number;
 }
+
+type Permissions = [
+  'STUDENT_MANAGEMENT',
+  'TEACHER_MANAGEMENT',
+  'ROLES_MANAGEMENT',
+  'SAVING_SESSION_MANAGEMENT',
+  'ATTENDANCE_MANAGEMENT',
+  'CIRRUCULUM_MANAGEMENT',
+  'SETTINGS_MANAGEMENT',
+  'POINTS_MANAGEMENT',
+  'AWARDS_MANAGEMENT',
+];
+
+export interface Role {
+  id?: number;
+  campaign_id: number;
+  name: string;
+  permissions: Permissions;
+}

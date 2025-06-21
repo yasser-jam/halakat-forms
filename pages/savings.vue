@@ -33,7 +33,7 @@
 
                 <div class="flex flex-col gap-1">
                   <div class="text-md font-weight-bold">
-                    {{ item.student.first_name + " " + item.student.last_name }}
+                    {{ item.student?.first_name + " " + item.student?.last_name }}
                   </div>
                 </div>
               </div>
@@ -50,16 +50,16 @@
             </template>
 
             <template #item.rating="{ item }">
-              <v-chip>{{ item.rating }}</v-chip>
+              <v-chip>{{ item.evaluation?.title }}</v-chip>
             </template>
 
             <template #item.content="{ item }">
               <div class="flex items-center">
-                <v-chip>الصفحة {{ item.from }}</v-chip>
+                <v-chip>الصفحة {{ item.start }}</v-chip>
   
                 <v-icon size="small">mdi-chevron-left</v-icon>
               
-                <v-chip>الصفحة {{ item.to }}</v-chip>
+                <v-chip>الصفحة {{ item.end }}</v-chip>
               </div>
             </template>
 

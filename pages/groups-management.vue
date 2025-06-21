@@ -98,7 +98,7 @@
       <v-col cols="12">
         <!-- <div class="text-lg font-semibold">أسماء الحلقات</div> -->
 
-        <v-card v-for="group in groups" class="mb-4" @click="navigateTo(`/groups/details/${group.id}`)">
+        <v-card v-for="group in groups" class="mb-4"">
           <v-card-title>
             <div class="flex items-center">
               <div>
