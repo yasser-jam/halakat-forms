@@ -17,12 +17,12 @@
     </v-tabs> -->
 
     <v-form v-model="form">
-      <v-card elevation="0" width="700">        
+      <v-card elevation="0">        
         <v-card-text>
             <v-window v-model="tab">
               <v-window-item>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>الاسم</base-label>
   
                     <v-text-field
@@ -32,7 +32,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>الكنية</base-label>
   
                     <v-text-field
@@ -42,7 +42,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>اسم الأب</base-label>
   
                     <v-text-field
@@ -52,7 +52,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>تاريخ الميلاد</base-label>
   
                     <v-text-field
@@ -63,7 +63,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>رقم موبايل الأستاذ</base-label>
   
                     <v-text-field
@@ -74,7 +74,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>منطقة السكن الحالي</base-label>
   
                     <v-text-field
@@ -102,7 +102,7 @@
   
               <v-window-item>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>الأجزاء المحفوظة</base-label>
                     <sys-parts-select
                       v-model="teacher.preserved_parts"
@@ -110,8 +110,8 @@
                     ></sys-parts-select>
                   </v-col>
   
-                  <v-col cols="6">
-                    <base-label>الأجزاء المختبرة بالأوقاف</base-label>
+                  <v-col cols="12" md="6">
+                    <base-label>الأجزاء المختبرة بالأوقاف (إن وُجد)</base-label>
                     <sys-parts-select
                       v-model="teacher.parts_tested_by_the_endowments"
                       placeholder="الأجزاء المختبرة بالأوقاف"
@@ -161,7 +161,7 @@
                     <sys-education-select v-model="teacher.educational_level" />
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>اسم المدرسة / الجامعة</base-label>
   
                     <v-text-field
@@ -170,7 +170,7 @@
                     ></v-text-field>
                   </v-col>
   
-                  <v-col cols="6">
+                  <v-col cols="12" md="6">
                     <base-label>اسم الكلية</base-label>
   
                     <v-text-field
@@ -189,7 +189,7 @@
                   </v-col>
   
                   <Transition>
-                    <v-col v-if="teacher.is_working" cols="6">
+                    <v-col v-if="teacher.is_working" cols="12" md="6">
                       <base-label>اسم العمل</base-label>
                       <v-text-field
                         v-model="teacher.job_role"
@@ -199,7 +199,7 @@
                   </Transition>
   
                   <Transition>
-                    <v-col v-if="teacher.is_working" cols="6">
+                    <v-col v-if="teacher.is_working" cols="12" md="6">
                       <base-label>اسم مكان العمل</base-label>
                       <v-text-field
                         v-model="teacher.workplace_name"
