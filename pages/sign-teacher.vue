@@ -227,7 +227,7 @@
 <script setup lang="ts">
 
 definePageMeta({
-layout: "public",
+layout: "public"
 });
 
 const tab = ref<number>(0);
