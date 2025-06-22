@@ -218,7 +218,7 @@
               <v-btn v-if="tab == 2" :disabled="!form" :loading type="button" @click="submit">حفظ</v-btn>
             </div>
           </v-card-text>
-      </v-card>  
+      </v-card>
     </v-form>
 
   </v-container>
