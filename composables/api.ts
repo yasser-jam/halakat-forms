@@ -6,7 +6,7 @@ export default async (url: string, options?: any) => {
   const token = useCookie('halakat_access_token');
 
   try {
-    const res = await $fetch(`${config.public.apiUrl}/${url}`, {
+    const res = await $fetch(`${config.public.apiUrl}${url}`, {
       headers: {
         Authorization: `Bearer ${token.value}`,
       },
