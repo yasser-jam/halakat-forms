@@ -12,11 +12,21 @@
         {{ campaign.name }}
       </div>
 
-      <div class="text-base text-gray-400">
-        بدأت في:
-        <v-chip color="blue">{{
-          dayjs(campaign.startDate).format('YYYY-MM-DD')
-        }}</v-chip>
+      <div class="flex items-center gap-2">
+        <div class="text-base text-gray-400">
+          بدأت في:
+          <v-chip color="blue">{{
+            dayjs(campaign.startDate).format('YYYY-MM-DD')
+          }}</v-chip>
+        </div>
+  
+        <div class="text-base text-gray-400">
+          المسجد
+          <v-chip color="success">{{
+            campaign.mosque?.name
+          }}</v-chip>
+        </div>
+
       </div>
     </v-card-text>
   </v-card>

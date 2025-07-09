@@ -11,6 +11,28 @@ export interface PaginationOptions {
   orderBy: [];
 }
 
+export interface Organization {
+  name: string;
+  description: string;
+  contact_email: string;
+  contact_phone: string;
+  address: string;
+  is_active: boolean;
+  metadata: any;
+}
+
+export interface Mosque {
+  name: string;
+  city: string;
+  address_area: string;
+  address_details: string;
+  contact_phone: string;
+  contact_email: string;
+  is_active: boolean;
+  organization_id: number;
+  metadata: any;
+}
+
 export interface Student {
   id?: number;
   first_name: string;
@@ -104,6 +126,8 @@ export interface Campaign {
   startTime?: string;
   endTime?: string;
   timingApproach: 'hours' | 'pray_time';
+
+  mosque: Mosque
 
   createdAt?: string;
   updatedAt?: string;
