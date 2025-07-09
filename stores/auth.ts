@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = useCookie('halakat_access_token')
 
     const login = async (phoneNumber: string, password: string) => {
-        const res = await api('auth/admin/login', {
+        const res = await api('auth/login/teacher', {
             method: 'POST',
             body: {
                 mobile_phone_number: phoneNumber,
