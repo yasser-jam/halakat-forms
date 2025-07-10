@@ -42,9 +42,23 @@ export const useAuthStore = defineStore('auth', () => {
 
         user.value = res
     }
+
+    const permissions = ref([])
+
+    const campaignId = useCookie('campaign_id')
+
+    const listPermissions = async () => {
+        const data = await api('auth/my-permissions', {
+            method: 'POST',
+        })
+
+        permissions.value = data.permissions
+    }
     
     return {
         login,
-        me
+        me,
+        listPermissions,
+        permissions
     }
 })
