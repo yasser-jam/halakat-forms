@@ -56,7 +56,7 @@ const login = async () => {
   try {
     await authStore.login(phoneNumber.value, password.value);
 
-    router.push('/auth/campaigns');
+    router.push('/campaigns');
   } finally {
     loading.value = false;
   }
