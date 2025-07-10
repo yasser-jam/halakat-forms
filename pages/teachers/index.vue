@@ -39,12 +39,8 @@
               </div>
             </template>
 
-            <template #item.groups="{ item }">
-              <v-chip v-if="!item.groups?.length">غير مسجل بعد</v-chip>
-              
-              <div v-else>
-                <v-chip v-for="group in item.groups" color="success">{{ group.title }}</v-chip>
-              </div>
+            <template #item.birth_date="{ item }">
+                <v-chip color="info">{{ getAge(item.birth_date) }} عاماً</v-chip>
             </template>
 
             <template #item.mojaz="{ item }">
@@ -54,7 +50,7 @@
             </template>
 
             <template #item.phone_number="{ item }">
-              <v-chip color="success">{{ item.mobile_phone_number }}</v-chip>
+              <v-chip color="primary">{{ item.mobile_phone_number }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">
@@ -97,6 +93,7 @@
 </template>
 
 <script setup lang="ts">
+import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 
 const teacherStore = useTeacherStore();

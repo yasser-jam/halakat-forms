@@ -21,13 +21,13 @@ export const useTeacherStore = defineStore("teacher", () => {
       sortable: false,
     },
     {
-      title: "اسم الحلقة",
-      key: "groups",
+      title: "مجاز",
+      key: "mojaz",
       sortable: false,
     },
     {
-      title: "مجاز",
-      key: "mojaz",
+      title: "العمر",
+      key: "birth_date",
       sortable: false,
     },
     {
