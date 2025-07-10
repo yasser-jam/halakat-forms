@@ -40,10 +40,15 @@ export const useAuthStore = defineStore('auth', () => {
             method: 'POST'
         })
 
+        await listPermissions()
+
+        // redirect the user if he has no access to dashboard
+        if (!permissions.value?.includes('DASHBOARD_ACCESS')) navigateTo('/has-no-access')
+
         user.value = res
     }
 
-    const permissions = ref([])
+    const permissions = ref<string[]>([])
 
     const campaignId = useCookie('campaign_id')
 

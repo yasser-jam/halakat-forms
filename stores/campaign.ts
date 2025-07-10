@@ -78,7 +78,6 @@ export const useCampaignStore = defineStore("campaign", () => {
   }
 
   const list = async ()  => {
-    console.log('list campaings');
     const res = await api("campaigns/my-campaigns");
 
     campaigns.value = res

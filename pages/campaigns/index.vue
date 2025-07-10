@@ -60,12 +60,10 @@ const { pending, data, refresh } = useLazyAsyncData<Campaign[]>(() =>
 const selectCampaign = async (id: string) => {
   campaignId.value = id
 
-  console.log(id);
-
   loading.value = true
 
   try {
-    await authStore.listPermissions()
+
     navigateTo('/')
   } finally {
     loading.value = false
