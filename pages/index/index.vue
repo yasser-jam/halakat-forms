@@ -5,7 +5,7 @@
     <v-container v-else>
           <v-row>
             <v-col cols="12" class="mt-2">
-              <home-hero />
+              <!-- <home-hero /> -->
             </v-col>
       
             <!-- <v-col cols="4">
@@ -75,9 +75,12 @@
           <div class="text-xl font-semibold mt-6 mb-4">حلقات الدورة</div>
     
             <v-row>
-              <v-col v-for="group in groups" cols="4">
-                <halakat-inline-card :group :is-active="Boolean(isCampaignCurrent)" />
-              </v-col>
+              <template v-if="groups?.length">
+                <v-col v-for="group in groups" cols="4">
+                  <halakat-inline-card :group :is-active="Boolean(isCampaignCurrent)" />
+                </v-col>
+
+              </template>
         
               <!-- <v-col cols="4">
                 <halakat-inline-card />

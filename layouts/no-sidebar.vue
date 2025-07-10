@@ -24,7 +24,5 @@
   
   const { toasterMsg, toasterShow } = storeToRefs(toasterStore)
 
-  useAsyncData(() => authStore.me())
-
   </script>
   

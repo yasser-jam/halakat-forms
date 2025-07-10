@@ -31,6 +31,8 @@ export const useAuthStore = defineStore('auth', () => {
         })
 
         token.value = res.access_token
+
+        // Todo: check for user type before enter
         
         toasterStore.success("تم تسجيل الدخول بنجاح");
     }
