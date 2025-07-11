@@ -66,12 +66,15 @@ export const useStudentStore = defineStore("student", () => {
     return students.value
   };
 
-  const listUnassigned = async (campaignId: number) : Promise<Student[]> => {
-    const res = await api(`students/unassigned/${campaignId}`);
 
-    students.value = res;
+  const unassignedStudents = ref<Student[]>([])
 
-    return students.value
+  const listUnassigned = async () : Promise<Student[]> => {
+    const res = await api(`students/unassigned`);
+
+    unassignedStudents.value = res?.data;
+
+    return unassignedStudents.value
   };
 
   const create = async () => {
@@ -113,6 +116,7 @@ export const useStudentStore = defineStore("student", () => {
     headers,
     student,
     students,
+    unassignedStudents,
     studentsTotalCount,
     reset,
     get,

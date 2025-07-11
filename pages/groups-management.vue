@@ -202,9 +202,9 @@ const loading = ref(false);
 const filterToggler = ref(false);
 
 const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
-  // studentStore.listUnassigned(Number(campaignId))
+  studentStore.listUnassigned()
 
-  studentStore.list()
+  // studentStore.list()
 );
 
 // list groups
@@ -249,6 +249,8 @@ const assignStudents = async (groupId: number, students: Student[]) => {
         Number(campaignId.value)
       );
     }
+
+    await refreshNuxtData('list_unassigned_students')
 
     await refreshGroups();
 

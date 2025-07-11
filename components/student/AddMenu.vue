@@ -16,7 +16,7 @@
       <v-card-text>
         <v-autocomplete
           v-model="selected"
-          :items="computedValue"
+          :items="unassignedStudents"
           multiple
           chips
           density="compact"
@@ -49,9 +49,9 @@ const props = defineProps<{
 
 const studentStore = useStudentStore();
 
-const { students } = storeToRefs(studentStore);
+const { students, unassignedStudents } = storeToRefs(studentStore);
 
-const { status } = useLazyAsyncData('list_students', () => studentStore.list());
+const { status } = useLazyAsyncData('list_unassigned_students', () => studentStore.listUnassigned());
 
 const selected = ref([]);
 
@@ -59,17 +59,17 @@ const model = defineModel({ default: false });
 const emit = defineEmits(['update:model-value', 'select']);
 
 // remove selected students from options
-const computedValue = computed(() => {
-  if (!props.selectedStudents?.length) return students.value;
+// const computedValue = computed(() => {
+//   if (!props.selectedStudents?.length) return students.value;
 
-  const selected = students.value?.filter((el) =>
-    props.selectedStudents
-      ? props.selectedStudents?.findIndex((item) => item.id == el.id) == -1
-      : false
-  );
+//   const selected = students.value?.filter((el) =>
+//     props.selectedStudents
+//       ? props.selectedStudents?.findIndex((item) => item.id == el.id) == -1
+//       : false
+//   );
 
-  return selected;
-});
+//   return selected;
+// });
 
 const select = () => {
   emit('select', selected.value);
