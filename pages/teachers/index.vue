@@ -68,6 +68,7 @@
                   color="error"
                   variant="tonal"
                   size="x-small"
+                  disabled
                   :rounded="false"
                   class="rounded-lg"
                   icon="mdi-trash-can"
