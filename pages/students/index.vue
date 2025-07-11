@@ -44,7 +44,7 @@
             </template>
 
             <template #item.halakah_name="{ item }">
-              <v-chip color="blue">اسم الحلقة</v-chip>
+              <v-chip color="blue">{{ item.group_title }}</v-chip>
             </template>
 
             <template #item.preserved_parts="{ item }">
@@ -58,7 +58,7 @@
             </template>
 
             <template #item.phone_number="{ item }">
-              <v-chip color="success">{{ item.student_mobile_number || 'لا يوجد' }}</v-chip>
+              <v-chip color="success">{{ item.student_mobile || 'لا يوجد' }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">

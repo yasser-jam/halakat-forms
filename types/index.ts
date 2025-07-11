@@ -76,6 +76,7 @@ export interface Student {
   preserved_parts: string;
   parts_tested_by_the_endowments: string;
   image_url?: string;
+  group_title?: string
 }
 
 export interface Teacher {

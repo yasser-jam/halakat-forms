@@ -78,8 +78,8 @@
                   <base-label>رقم موبايل الطالب</base-label>
 
                   <v-text-field
-                    v-model="student.student_mobile_number"
-                    :rules="useValidate(student.student_mobile_number)"
+                    v-model="student.student_mobile"
+                    :rules="useValidate(String(student.student_mobile))"
                     density="compact"
                     placeholder="09********"
                   ></v-text-field>
