@@ -28,8 +28,7 @@ export const useGroupStore = defineStore('group', () => {
 
 
     const create = async () => {
-        const campaignId = useCookie('campaign_id')
-        await api(`groups/${campaignId.value}`, {
+        await api(`groups`, {
             method: 'POST',
             body: group.value
         })

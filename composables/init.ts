@@ -59,7 +59,6 @@ export const initCampaign = (): Campaign => ({
 export const initGroup = (): Group => ({
   title: '',
   students: [],
-  class: '',
   currentTeacherId: undefined,
 });
 

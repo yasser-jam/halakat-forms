@@ -61,7 +61,7 @@ const create = async () => {
   try {
     await groupStore.create();
 
-    await refreshNuxtData('list_groups');
+    await groupStore.list()
 
     navigateTo('/groups-management');
   } finally {

@@ -104,7 +104,7 @@
               <div>
                 <v-icon size="small">mdi-account-multiple-outline</v-icon>
                 <span class="text-lg font-semibold ms-2">{{
-                  group.title
+                  group?.title
                 }}</span>
 
                 <v-chip size="small" class="ms-1" color="secondary">
@@ -120,7 +120,7 @@
                 <v-btn color="error" @click="openDeleteDialog(Number(group.id))">إزالة الحلقة</v-btn>
 
                 <student-add-menu
-                  :selected-students="group.students"
+                  :selected-students="group?.students"
                   @select="assignStudents(group.id!, $event)"
                 ></student-add-menu>
               </div>
@@ -245,8 +245,7 @@ const assignStudents = async (groupId: number, students: Student[]) => {
     for (let stud of students) {
       await groupStore.assign(
         groupId,
-        Number(stud.id),
-        Number(campaignId.value)
+        Number(stud.id)
       );
     }
 
@@ -262,7 +261,7 @@ const assignStudents = async (groupId: number, students: Student[]) => {
 
 const unAssignStudent = async (groupId: number, studentId: number) => {
   try {
-    await groupStore.unassign(groupId, studentId, Number(campaignId.value));
+    await groupStore.unassign(groupId, studentId);
 
     await refreshGroups();
   } finally {

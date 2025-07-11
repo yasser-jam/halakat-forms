@@ -62,14 +62,17 @@ export const useTeacherStore = defineStore("teacher", () => {
     return teachers.value
   };
 
+
+  const unassignedTeachers = ref<Teacher[]>([])
+
   const listUnassigned = async () : Promise<Teacher[]> => {
-    const res = await api(`teachers/unassigned/?campaignId=${campaignId.value}`);
+    const res = await api(`teachers/unassigned`);
 
-    teachersTotalCount.value = res.length;
+    // teachersTotalCount.value = res.length;
 
-    teachers.value = res;
+    unassignedTeachers.value = res;
 
-    return teachers.value
+    return unassignedTeachers.value
   }
 
   const create = async () => {
@@ -116,6 +119,7 @@ export const useTeacherStore = defineStore("teacher", () => {
     get,
     list,
     listUnassigned,
+    unassignedTeachers,
     create,
     update,
     remove

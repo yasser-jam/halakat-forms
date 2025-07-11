@@ -138,7 +138,7 @@ export interface Group {
   id?: number;
   title: string;
   currentTeacherId?: number;
-  class: string;
+  class?: string;
   currentTeacher?: Teacher;
   students?: Student[];
 
