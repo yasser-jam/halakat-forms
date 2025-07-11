@@ -19,11 +19,7 @@ export const useGroupStore = defineStore('group', () => {
     const list = async (): Promise<Group[]> => {
         const campaignId = useCookie('campaign_id')
         
-        const res = await api('groups', {
-            query: {
-                campaignId: campaignId.value
-            }
-        })
+        const res = await api('groups')
 
         groups.value = res
 
