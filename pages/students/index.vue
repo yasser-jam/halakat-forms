@@ -95,7 +95,13 @@
     v-model="deleteToggler"
     :loading="deleteLoading"
     @delete="remove"
-  ></base-delete-dialog>
+  >
+  <template #subtitle>
+    <div class="text-center">
+      عند حذف الطالب سيتم حذف جميع البيانات المرتبطة بالطالب
+    </div>
+  </template>
+</base-delete-dialog>
 
   <NuxtPage />
 </template>

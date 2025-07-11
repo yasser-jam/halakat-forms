@@ -6,7 +6,10 @@
                 <v-avatar color="error" icon="mdi-close" size="x-large" class="text-2xl mb-4" />
                 
                 <div class="text-3xl text-gray-800">هل أنت متأكد؟</div>
-                <div class="text-md text-gray-500 font-weight-bold mt-4">لا يمكن استرجاع العنصر بعد حذفه</div>
+                <slot name="subtitle">
+
+                    <div class="text-md text-gray-500 font-weight-bold mt-4">لا يمكن استرجاع العنصر بعد حذفه</div>
+                </slot>
 
                 <div class="flex gap-2 mt-8">
                     <v-btn color="gray" variant="text">إلغاء</v-btn>
