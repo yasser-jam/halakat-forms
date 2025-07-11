@@ -6,7 +6,7 @@ export const useAttendanceStore = defineStore('attnedance', () => {
   const attendances = ref<Attendance[]>([]);
 
   const list = async (groupId: number): Promise<Attendance[]> => {
-    const res = await api(`attendance/${groupId}/${campaignId.value}`);
+    const res = await api(`attendance/${groupId}`);
 
     attendances.value = res;
 
