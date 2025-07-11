@@ -44,7 +44,8 @@
             </template>
 
             <template #item.halakah_name="{ item }">
-              <v-chip color="blue">{{ item.group_title }}</v-chip>
+              <v-chip v-if="item.group_title" color="blue">{{ item.group_title }}</v-chip>
+              <v-chip v-else>غير مسجل بعد</v-chip>
             </template>
 
             <template #item.preserved_parts="{ item }">
