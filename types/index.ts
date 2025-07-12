@@ -109,26 +109,26 @@ export interface Teacher {
 export interface Campaign {
   id?: number;
   name: string;
-  startDate: string;
-  endDate?: string;
-  assignEndDate?: string;
-  assignStartDate?: string;
-  isCampaignContinous?: boolean;
-  limitedStudentsCount?: boolean;
-  studentsCount: number;
-  assignByLink?: boolean;
-  completeCountApproach:
+  start_date: string;
+  end_date?: string;
+  assign_end_date?: string;
+  assign_start_date?: string;
+  is_campaign_continuous?: boolean;
+  limited_students_count?: boolean;
+  students_count: number;
+  assign_by_link?: boolean;
+  complete_count_approach:
     | 'UNLIMIT_ASSIGN'
     | 'HOLD_ASSIGN'
     | 'PEND_ASSIGN'
     | 'STOP_ASSIGN';
 
   days: string[];
-  startTime?: string;
-  endTime?: string;
-  timingApproach: 'hours' | 'pray_time';
+  start_time?: string;
+  end_time?: string;
+  timing_approach: 'hours' | 'pray_time';
 
-  mosque: Mosque
+  mosque?: Mosque
 
   createdAt?: string;
   updatedAt?: string;

@@ -18,21 +18,21 @@ export const useCampaignStore = defineStore("campaign", () => {
   }
 
   const oppositeTime = computed(() => {
-    if (campaign.value.timingApproach === 'pray_time') {
-      const startTime = prayerTimes[campaign.value.startTime as keyof typeof prayerTimes]
-      const endTime = prayerTimes[campaign.value.endTime as keyof typeof prayerTimes]
+    if (campaign.value.timing_approach === 'pray_time') {
+      const startTime = prayerTimes[campaign.value.start_time as keyof typeof prayerTimes]
+      const endTime = prayerTimes[campaign.value.end_time as keyof typeof prayerTimes]
 
       if (!startTime || !endTime) return null
 
       // Convert to ISO time string (HH:mm:ss)
       return {
-        startTime: `${startTime}:00`,
-        endTime: `${endTime}:00`
+        start_time: `${startTime}:00`,
+        end_time: `${endTime}:00`
       }
     } else {
       // Find prayer times that match the given hours
-      const startTime = campaign.value.startTime
-      const endTime = campaign.value.endTime
+      const startTime = campaign.value.start_time
+      const endTime = campaign.value.end_time
 
       if (!startTime || !endTime) return null
 
@@ -41,11 +41,9 @@ export const useCampaignStore = defineStore("campaign", () => {
       // Find prayer name for end time
       const endPrayer = Object.entries(prayerTimes).find(([_, time]) => time === endTime)?.[0]
 
-      console.log(startPrayer);
-
       return {
-        startTime: startPrayer,
-        endTime: endPrayer
+        start_time: startPrayer,
+        end_time: endPrayer
       }
     }
   })
@@ -56,16 +54,16 @@ export const useCampaignStore = defineStore("campaign", () => {
     const res = await api(`campaigns/${id}`)
 
     // If timing approach is pray_time, convert the time values
-    if (res.timingApproach === 'pray_time') {
-      const startTime = res.startTime?.split(':').slice(0, 2).join(':')
-      const endTime = res.endTime?.split(':').slice(0, 2).join(':')
+    if (res.timing_approach === 'pray_time') {
+      const startTime = res.start_time?.split(':').slice(0, 2).join(':')
+      const endTime = res.end_time?.split(':').slice(0, 2).join(':')
 
       // Find matching prayer names for the times
       const startPrayer = Object.entries(prayerTimes).find(([_, time]) => time === startTime)?.[0]
       const endPrayer = Object.entries(prayerTimes).find(([_, time]) => time === endTime)?.[0]
 
-      res.startTime = startPrayer || startTime
-      res.endTime = endPrayer || endTime
+      res.start_time = startPrayer || startTime
+      res.end_time = endPrayer || endTime
     }
 
     // turn days from string to array
@@ -98,14 +96,14 @@ export const useCampaignStore = defineStore("campaign", () => {
     const body = {
       ...campaign.value,
       days: undefined,
-      startDate: new Date(campaign.value.startDate).toISOString(),
-      endDate: new Date(campaign.value.endDate as string).toISOString(),
-      startTime: campaign.value.timingApproach === 'pray_time' 
-        ? formatTime(timeValues?.startTime) 
-        : formatTime(campaign.value.startTime),
-      endTime: campaign.value.timingApproach === 'pray_time' 
-        ? formatTime(timeValues?.endTime) 
-        : formatTime(campaign.value.endTime),
+      start_date: new Date(campaign.value.start_date).toISOString(),
+      end_date: new Date(campaign.value.end_date as string).toISOString(),
+      start_time: campaign.value.timing_approach === 'pray_time' 
+        ? formatTime(timeValues?.start_time) 
+        : formatTime(campaign.value.start_time),
+      end_time: campaign.value.timing_approach === 'pray_time' 
+        ? formatTime(timeValues?.end_time) 
+        : formatTime(campaign.value.end_time),
     }
 
     await api("campaigns", {
@@ -128,14 +126,16 @@ export const useCampaignStore = defineStore("campaign", () => {
 
     const body = {
       ...campaign.value,
+      id: undefined,
+      mosque_id: undefined,
       days: campaign.value?.days?.join(),
-      startDate: new Date(campaign.value.startDate).toISOString(),
-      startTime: campaign.value.timingApproach === 'pray_time' 
-        ? formatTime(timeValues?.startTime) 
-        : formatTime(campaign.value.startTime),
-      endTime: campaign.value.timingApproach === 'pray_time' 
-        ? formatTime(timeValues?.endTime) 
-        : formatTime(campaign.value.endTime),
+      start_date: new Date(campaign.value.start_date).toISOString(),
+      start_time: campaign.value.timing_approach === 'pray_time' 
+        ? formatTime(timeValues?.start_time) 
+        : formatTime(campaign.value.start_time),
+      end_time: campaign.value.timing_approach === 'pray_time' 
+        ? formatTime(timeValues?.end_time) 
+        : formatTime(campaign.value.end_time),
     }
 
     await api(`campaigns/${id}`, {
@@ -176,8 +176,8 @@ export const useCampaignStore = defineStore("campaign", () => {
       return hours * 60 + minutes;
     };
   
-    const startTime = convertToMinutes(campaign.value?.startTime as string);
-    const endTime = convertToMinutes(campaign.value?.endTime as string);
+    const startTime = convertToMinutes(campaign.value?.start_time as string);
+    const endTime = convertToMinutes(campaign.value?.end_time as string);
   
 
     // Handle the case where the end time might be after midnight

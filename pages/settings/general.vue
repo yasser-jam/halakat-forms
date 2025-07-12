@@ -13,20 +13,20 @@
         <v-col cols="12" md="6">
           <base-label>تاريخ البداية</base-label>
     
-          <base-datepicker v-model="campaign.startDate" />
+          <base-datepicker v-model="campaign.start_date" />
         </v-col>
     
         <v-col cols="12" md="6">
           <base-label>تاريخ النهاية</base-label>
     
-          <base-datepicker v-model="campaign.endDate" />
+          <base-datepicker v-model="campaign.end_date" />
         </v-col>
     
         <v-col cols="12">
           <base-label>تحديد وقت الدوام عن طريق</base-label>
     
           <v-select
-            v-model="campaign.timingApproach"
+            v-model="campaign.timing_approach"
             :items="[
               { title: 'الساعات', value: 'hours' },
               { title: 'أوقات الصلاة', value: 'pray_time' }
@@ -48,14 +48,14 @@
           <base-label>وقت البداية</base-label>
     
           <v-text-field
-            v-if="campaign.timingApproach === 'hours'"
-            v-model="campaign.startTime"
+            v-if="campaign.timing_approach === 'hours'"
+            v-model="campaign.start_time"
             type="time"
             placeholder="وقت البداية"
           />
           <v-select
             v-else
-            v-model="campaign.startTime"
+            v-model="campaign.start_time"
             :items="[
               { title: 'الفجر', value: 'FAJR' },
               { title: 'الشروق', value: 'SUNRISE' },
@@ -74,14 +74,14 @@
           <base-label>وقت النهاية</base-label>
     
           <v-text-field
-            v-if="campaign.timingApproach === 'hours'"
-            v-model="campaign.endTime"
+            v-if="campaign.timing_approach === 'hours'"
+            v-model="campaign.end_time"
             type="time"
             placeholder="وقت النهاية"
           />
           <v-select
             v-else
-            v-model="campaign.endTime"
+            v-model="campaign.end_time"
             :items="[
               { title: 'الفجر', value: 'FAJR' },
               { title: 'الشروق', value: 'SUNRISE' },
@@ -98,7 +98,7 @@
     
         <v-col cols="12">
           <base-switch-input
-            v-model="campaign.isCampaignContinous"
+            v-model="campaign.is_campaign_continuous"
             title="الدورة مستمرة"
             subtitle="في حال كانت الدورة مستمرة سيتم نقل الحلقات تلقائياً وإلغاء تاريخ النهاية"
           />

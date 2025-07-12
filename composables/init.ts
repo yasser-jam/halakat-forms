@@ -49,11 +49,11 @@ export const initPagination = (): PaginationOptions => ({
 
 export const initCampaign = (): Campaign => ({
   name: '',
-  startDate: '',
-  completeCountApproach: 'UNLIMIT_ASSIGN',
-  studentsCount: 0,
+  start_date: '',
+  complete_count_approach: 'UNLIMIT_ASSIGN',
+  students_count: 0,
   days: [],
-  timingApproach: 'hours',
+  timing_approach: 'hours',
 });
 
 export const initGroup = (): Group => ({
