@@ -4,7 +4,7 @@
   
   <script setup lang="ts">
   const props = defineProps<{
-    status: "NOT_TAKEN" | "DELAY" | "ATTEND" | "MISSED" | string;
+    status: "NOT_TAKEN" | "DELAY" | "ATTEND" | "MISS" | string;
     delayTime?: number;
   }>();
   
@@ -14,7 +14,7 @@
         color: "success",
         title: "حاضر",
       };
-    } else if (props.status == "MISSED") {
+    } else if (props.status == "MISS") {
       return {
         color: "error",
         title: "غائب",

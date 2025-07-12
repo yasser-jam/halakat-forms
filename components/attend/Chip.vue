@@ -14,7 +14,7 @@ const info = computed(() => {
       color: "success",
       title: "حاضر",
     };
-  } else if (props.status == "MISSED") {
+  } else if (props.status == "MISS") {
     return {
       color: "error",
       title: "غائب",

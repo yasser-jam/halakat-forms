@@ -80,3 +80,10 @@ export const initSavingSession = (): SavingSession => ({
   duration: 0,
   mistakes: [],
 });
+
+export const initAttendance = () : Attendance => ({
+  status: 'NOT_TAKEN',
+  delayTime: -1,
+  takenDate: new Date(),
+  createdAt: new Date()
+})

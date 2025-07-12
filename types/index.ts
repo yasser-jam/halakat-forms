@@ -150,8 +150,8 @@ export interface Attendance {
   studentId?: number;
   groupId?: number;
   campaignId?: number;
-  takenDate: Date;
-  delayTime: number;
+  taken_date: Date;
+  delay_time: number;
   status: string;
   createdAt: Date;
   student?: Student;

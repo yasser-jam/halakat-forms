@@ -10,151 +10,70 @@
       </div>
     </div>
 
-    <v-row v-if="groups?.length">
-      <!-- <template v-else>
-        <v-col cols="12" md="4">
-          <v-card>
-            <v-card-text>
-              <div class="flex justify-between">
-                <div class="text-xl font-semibold mb-8">قائمة الطلاب</div>
+    <template v-if="status == 'pending'">
+      <base-loader />
+    </template>
+
+
+
+    <template v-else-if="groups?.length">
+      <v-card v-for="group in groups" class="mb-4"">
+        <v-card-title>
+          <div class="flex items-center">
+            <div>
+              <v-icon size="small">mdi-account-multiple-outline</v-icon>
+              <span class="text-lg font-semibold ms-2">{{
+                group?.title
+              }}</span>
   
-                <v-btn size="small" variant="outlined">توزيع حسب الصف</v-btn>
-              </div>
+              <v-chip size="small" class="ms-1" color="secondary">
+                {{
+                  `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}`
+                }}
+              </v-chip>
+            </div>
   
-              <base-label>اختيار الصف</base-label>
-              <sys-class-select />
+            <v-spacer></v-spacer>
   
-              <div class="flex flex-col gap-4 max-h-[400px] overflow-auto">
-                <student-inline-card class="shrink-0" v-for="i in 10" />
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-col>
-
-      </template> -->
-
-      <!-- Todo: apply draggable -->
-      <v-col v-if="false" cols="12" md="3">
-        <v-card :loading="pending || groupsLoading">
-          <div class="flex justify-between bg-gray-100 p-4">
-            <div class="text-lg font-semibold">أسماء الطلاب</div>
-
-            <v-menu
-              v-model="filterToggler"
-              width="300"
-              :close-on-content-click="false"
-            >
-              <template #activator="{ props }">
-                <v-btn
-                  v-bind="props"
-                  variant="tonal"
-                  rounded
-                  size="small"
-                  icon="mdi-filter-outline"
-                ></v-btn>
-              </template>
-
-              <v-card>
-                <v-card-text>
-                  <div>
-                    <div class="label mb-1">الاسم</div>
-                    <v-text-field placeholder="اسم الطالب"></v-text-field>
-                  </div>
-
-                  <div>
-                    <div class="label mb-1">الصف</div>
-                    <sys-class-select />
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-menu>
+            <div class="flex items-center gap-2">
+              <v-btn color="error" @click="openDeleteDialog(Number(group.id))">إزالة الحلقة</v-btn>
+  
+              <student-add-menu
+                :selected-students="group?.students"
+                @select="assignStudents(group.id!, $event)"
+              ></student-add-menu>
+            </div>
+  
           </div>
-
-          <div class="max-h-[500px] overflow-auto">
-            <template v-for="student in students">
-              <div class="flex items-center gap-2 bg-white px-4 py-3">
-                <v-icon>mdi-drag</v-icon>
-
-                <div class="">
-                  {{ `${student.first_name} ${student.last_name}` }}
-                </div>
-                <v-spacer></v-spacer>
-                <v-chip size="small">{{
-                  getClassName(Number(student.educational_class))
-                }}</v-chip>
-              </div>
-              <v-divider></v-divider>
+        </v-card-title>
+  
+        <v-card-text>
+          <div
+            class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
+          >
+            <template v-if="group.students?.length">
+              <student-inline-card
+                v-for="student in group.students"
+                :student
+                class="w-full shrink-0"
+                @unlink="
+                  unAssignStudent(Number(group.id), Number(student.id))
+                "
+              />
+              <!-- {{ `${student.first_name} ${student.last_name}` }} -->
+            </template>
+  
+            <template v-else>
+              <div>لا يوجد أي طالب</div>
+              <student-list-menu
+                @select="assignStudents(group.id!, $event)"
+              ></student-list-menu>
             </template>
           </div>
-        </v-card>
+        </v-card-text>
+      </v-card>
+    </template>
 
-        <!-- <v-row>
-          <v-col v-for="group in groups" md="4">
-            <group-dist-card :group />
-          </v-col>
-        </v-row> -->
-      </v-col>
-
-      <v-col cols="12">
-        <!-- <div class="text-lg font-semibold">أسماء الحلقات</div> -->
-
-        <v-card v-for="group in groups" class="mb-4"">
-          <v-card-title>
-            <div class="flex items-center">
-              <div>
-                <v-icon size="small">mdi-account-multiple-outline</v-icon>
-                <span class="text-lg font-semibold ms-2">{{
-                  group?.title
-                }}</span>
-
-                <v-chip size="small" class="ms-1" color="secondary">
-                  {{
-                    `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}`
-                  }}
-                </v-chip>
-              </div>
-
-              <v-spacer></v-spacer>
-
-              <div class="flex items-center gap-2">
-                <v-btn color="error" @click="openDeleteDialog(Number(group.id))">إزالة الحلقة</v-btn>
-
-                <student-add-menu
-                  :selected-students="group?.students"
-                  @select="assignStudents(group.id!, $event)"
-                ></student-add-menu>
-              </div>
-
-            </div>
-          </v-card-title>
-
-          <v-card-text>
-            <div
-              class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
-            >
-              <template v-if="group.students?.length">
-                <student-inline-card
-                  v-for="student in group.students"
-                  :student
-                  class="w-full shrink-0"
-                  @unlink="
-                    unAssignStudent(Number(group.id), Number(student.id))
-                  "
-                />
-                <!-- {{ `${student.first_name} ${student.last_name}` }} -->
-              </template>
-
-              <template v-else>
-                <div>لا يوجد أي طالب</div>
-                <student-list-menu
-                  @select="assignStudents(group.id!, $event)"
-                ></student-list-menu>
-              </template>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
 
     <template v-else>
       <base-not-found>
@@ -201,7 +120,7 @@ const loading = ref(false);
 
 const filterToggler = ref(false);
 
-const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
+const { status, data, refresh } = useLazyAsyncData<Student[]>(() =>
   studentStore.listUnassigned()
 
   // studentStore.list()
