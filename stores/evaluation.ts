@@ -10,7 +10,7 @@ export const useEvaluationStore = defineStore('evaluation', () => {
   const evaluations = ref<Evaluation[]>([]);
 
   const list = async (): Promise<Evaluation[]> => {
-    const res = await api(`evaluations/campaign/${campaign_id.value}`);
+    const res = await api(`evaluations`);
 
     evaluations.value = res;
 

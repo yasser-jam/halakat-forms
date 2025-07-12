@@ -161,17 +161,19 @@ export interface Attendance {
 
 export interface Mistake {
   id?: number;
-  campaignId?: number;
+  campaign_id?: number;
   title: string;
-  removed_points?: number;
+  reduced_marks?: number;
+  is_related?: boolean
 }
 
 export interface Evaluation {
   id?: number;
-  campaignId?: number;
+  campaign_id?: number;
   title: string;
   points: number;
-  reducedAmount: number;
+  minimum_marks: number;
+  is_related?: boolean
 }
 
 export interface SavingSession {

@@ -64,13 +64,13 @@ export const initGroup = (): Group => ({
 
 export const initMistake = (): Mistake => ({
   title: '',
-  removed_points: undefined,
+  reduced_marks: undefined,
 });
 
 export const initEvaluation = (): Evaluation => ({
   title: '',
   points: 0,
-  reducedAmount: 0,
+  minimum_marks: 0,
 });
 
 export const initSavingSession = (): SavingSession => ({
