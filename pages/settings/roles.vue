@@ -41,6 +41,7 @@ import { Permission } from '~/types';
   const hasAccess = (roleId: number, permission: any) => {
     const selectedRole = roles.value.find(item => item.id == roleId)
 
+
     return selectedRole?.permissions?.includes(permission.key)
   }
 
