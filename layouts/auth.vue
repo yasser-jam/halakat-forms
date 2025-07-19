@@ -4,7 +4,7 @@
       <div class="flex flex-col justify-center items-center h-full">
         <v-icon color="white" size="6rem">mdi-mosque</v-icon>
 
-        <div class="text-white text-6xl mt-4">جامع الشيخ علي الدقر</div>
+        <div class="text-white text-6xl mt-4">منصة حلقات</div>
 
         <div class="font-weight-bold text-sm text-gray-200 mt-12">
           تطبيق حلقات لإدارة الدورات القرآنية
