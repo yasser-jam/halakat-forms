@@ -3,9 +3,13 @@
     <div class="flex justify-between mt-4 mb-6">
       <div class="text-3xl font-semibold">سجلات التسميع</div>
 
-      <v-btn color="primary" elevation="0" to="/savings/create"
-        >إضافة جلسة تسميع</v-btn
-      >
+      <div class="flex items-center gap-2">
+        <saving-filter />
+
+        <v-btn color="primary" elevation="0" to="/savings/create"
+          >إضافة جلسة تسميع</v-btn
+        >
+      </div>
     </div>
     <v-card>
       <v-card-text>
@@ -33,7 +37,9 @@
 
                 <div class="flex flex-col gap-1">
                   <div class="text-md font-weight-bold">
-                    {{ item.student?.first_name + " " + item.student?.last_name }}
+                    {{
+                      item.student?.first_name + ' ' + item.student?.last_name
+                    }}
                   </div>
                 </div>
               </div>
@@ -44,7 +50,7 @@
 
               <div v-else>
                 <v-chip color="success">{{
-                  item.teacher.first_name + " " + item.teacher.last_name
+                  item.teacher.first_name + ' ' + item.teacher.last_name
                 }}</v-chip>
               </div>
             </template>
@@ -56,20 +62,21 @@
             <template #item.content="{ item }">
               <div class="flex items-center">
                 <v-chip>الصفحة {{ item.start }}</v-chip>
-  
+
                 <v-icon size="small">mdi-chevron-left</v-icon>
-              
+
                 <v-chip>الصفحة {{ item.end }}</v-chip>
               </div>
             </template>
-
 
             <template #item.duration="{ item }">
               <v-chip color="success">{{ item.duration }}</v-chip>
             </template>
 
             <template #item.date="{ item }">
-              <v-chip color="blue">{{ dayjs(item.created_at).format('YYYY-mm-d / hh:mm') }}</v-chip>
+              <v-chip color="blue">{{
+                dayjs(item.created_at).format('YYYY-mm-d / hh:mm')
+              }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">
@@ -112,8 +119,8 @@
 </template>
 
 <script setup lang="ts">
-import dayjs from "dayjs";
-import type { SavingSession } from "~/types";
+import dayjs from 'dayjs';
+import type { SavingSession } from '~/types';
 
 const savingSessionStore = useSavingSessionStore();
 
@@ -125,7 +132,7 @@ const {
   filters,
 } = storeToRefs(savingSessionStore);
 
-const key = ref<string>("");
+const key = ref<string>('');
 
 const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
