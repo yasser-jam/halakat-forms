@@ -7,7 +7,7 @@
             <v-icon size="4rem">mdi-mosque</v-icon>
           </div>
 
-          <div class="text-2xl font-bold">جامع الشيخ علي الدقر</div>
+          <div class="text-2xl font-bold">منصة حلقات</div>
         </div>
         <NuxtPage />
       </v-card-text>
@@ -18,16 +18,7 @@
         <div class="flex gap-2 items-center">
           <div class="text-gray-500">للتواصل:</div>
           <div dir="ltr" class="text-base tracking-widest font-bold">
-            <a href="tel:0944705208" class="text-black decoration-none">0944-705-208</a>
-            / 
-            <a href="tel:0934612625" class="text-black decoration-none">0934-612-625</a>
-          </div>
-        </div>
-
-        <div class="flex gap-2 items-center">
-          <div class="text-gray-500">العنوان:</div>
-          <div class="font-bold text-xs">
-            كفرسوسة - ساحة - مقابل المقبرة
+            <a href="tel:0944705208" class="text-black decoration-none">0986-365-515</a>
           </div>
         </div>
       </div>
