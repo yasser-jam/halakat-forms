@@ -132,8 +132,8 @@
               <div class="flex gap-4 mt-4">
                 <v-spacer></v-spacer>
                 <v-btn v-if="tab > 0" @click="--tab" type="button" color="grey">العودة</v-btn>
-                <v-btn v-if="tab < 2" :disabled="!form" type="button" @click="++tab">التالي</v-btn>
-                <v-btn v-if="tab == 2" :disabled="!form" :loading type="button" @click="submit">حفظ</v-btn>
+                <v-btn v-if="tab < 1" :disabled="!form" type="button" @click="++tab">التالي</v-btn>
+                <v-btn v-if="tab == 1" :disabled="!form" :loading type="button" @click="submit">حفظ</v-btn>
               </div>
             </v-card-text>
         </v-card>
