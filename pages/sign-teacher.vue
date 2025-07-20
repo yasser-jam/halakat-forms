@@ -64,7 +64,7 @@
                   </v-col>
   
                   <v-col cols="6">
-                    <base-label>رقم موبايل الأستاذ</base-label>
+                    <base-label>رقم موبايل الأستاذ (مع واتس)</base-label>
   
                     <v-text-field
                       v-model="teacher.mobile_phone_number"
@@ -87,37 +87,11 @@
                       placeholder="الميدان"
                     ></v-text-field>
                   </v-col>
-  
-                  <v-col cols="12">
-                    <base-label>مواهب مميزة</base-label>
-  
-                    <v-text-field
-                      v-model="teacher.special_talent"
-                      density="compact"
-                      placeholder="كرة قدم، شعر، رسم..."
-                    ></v-text-field>
-                  </v-col>
                 </v-row>
               </v-window-item>
   
               <v-window-item>
                 <v-row>
-                  <v-col cols="6">
-                    <base-label>الأجزاء المحفوظة</base-label>
-                    <sys-parts-select
-                      v-model="teacher.preserved_parts"
-                      placeholder="الأجزاء المحفوظة"
-                    ></sys-parts-select>
-                  </v-col>
-  
-                  <v-col cols="6">
-                    <base-label>الأجزاء المختبرة بالأوقاف</base-label>
-                    <sys-parts-select
-                      v-model="teacher.parts_tested_by_the_endowments"
-                      placeholder="الأجزاء المختبرة بالأوقاف"
-                    ></sys-parts-select>
-                  </v-col>
-  
                   <v-col cols="12">
                     <base-switch-input
                       v-model="teacher.is_mojaz"
@@ -125,31 +99,6 @@
                       color="primary"
                     ></base-switch-input>
                   </v-col>
-  
-                  <v-col cols="12" class="mt-4">
-                    <base-switch-input
-                      v-model="teacher.in_another_mosque"
-                      title="هل للأستاذ جوامع أخرى؟"
-                      subtitle="هل ساعد الأستاذ في دورة أو حلقة في مسجد آخر"
-                      color="warning"
-                    ></base-switch-input>
-                  </v-col>
-  
-                  <Transition>
-                    <v-col
-                      v-if="teacher.in_another_mosque"
-                      cols="12"
-                      class="mt-4"
-                    >
-                      <base-label>أسماء الجوامع الأخرى</base-label>
-  
-                      <v-text-field
-                        v-model="teacher.other_mosque_names"
-                        density="compact"
-                        placeholder="النابلسي، الحاجبية،..."
-                      ></v-text-field>
-                    </v-col>
-                  </Transition>
                 </v-row>
               </v-window-item>
   
@@ -178,36 +127,7 @@
                       placeholder="كلية الطب البشري"
                     ></v-text-field>
                   </v-col>
-  
-                  <v-col cols="12" class="mb-4">
-                    <base-switch-input
-                      v-model="teacher.is_working"
-                      title="هل يعمل الأستاذ"
-                      subtitle="هل للأستاذ عمل أو وظيفة أو صنعة؟"
-                      color="primary"
-                    ></base-switch-input>
-                  </v-col>
-  
-                  <Transition>
-                    <v-col v-if="teacher.is_working" cols="6">
-                      <base-label>اسم العمل</base-label>
-                      <v-text-field
-                        v-model="teacher.job_role"
-                        placeholder="طبيب"
-                      ></v-text-field>
-                    </v-col>
-                  </Transition>
-  
-                  <Transition>
-                    <v-col v-if="teacher.is_working" cols="6">
-                      <base-label>اسم مكان العمل</base-label>
-                      <v-text-field
-                        v-model="teacher.workplace_name"
-                        placeholder="مشفى المواساة"
-                      ></v-text-field>
-                    </v-col>
-                  </Transition>
-                </v-row>
+                  </v-row>
               </v-window-item>
             </v-window>
             
@@ -237,6 +157,12 @@ const loading = ref<boolean>(false);
 const teacherStore = useTeacherStore();
 
 const { teacher } = storeToRefs(teacherStore);
+
+
+// assign campaign id cookie
+const campaignId = useCookie('campaign_id')
+
+
 
 // reset
 teacherStore.reset()
