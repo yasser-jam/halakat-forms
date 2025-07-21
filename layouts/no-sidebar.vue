@@ -4,7 +4,7 @@
       <v-app-bar elevation="1">
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
   
-        <v-app-bar-title>مسجد الشيخ علي الدقر</v-app-bar-title>
+        <v-app-bar-title>منصة حلقات</v-app-bar-title>
       </v-app-bar>
   
       <v-main class="bg-background">

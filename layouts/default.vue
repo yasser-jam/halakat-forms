@@ -13,7 +13,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-app-bar-title>
-        <nuxt-link to="/" class="decoration-none text-dark font-semibold"> مسجد الشيخ علي الدقر </nuxt-link>
+        <nuxt-link to="/" class="decoration-none text-dark font-semibold"> منصة حلقات</nuxt-link>
       </v-app-bar-title>
     </v-app-bar>
 
