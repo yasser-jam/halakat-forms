@@ -18,7 +18,7 @@
         <div class="flex gap-2 items-center">
           <div class="text-gray-500">للتواصل:</div>
           <div dir="ltr" class="text-base tracking-widest font-bold">
-            <a href="tel:0944705208" class="text-black decoration-none">0986-365-515</a>
+            <a href="tel:0962941204" class="text-black decoration-none">0962-941-204</a>
           </div>
         </div>
       </div>
