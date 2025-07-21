@@ -83,6 +83,7 @@ export const useStudentStore = defineStore("student", () => {
       body: {
         ...student.value,
         birth_date: new Date(student.value.birth_date as string),
+        student_mobile: student.value?.student_mobile ?student.value.student_mobile : student.value.student_mobile_number 
       },
     });
 
