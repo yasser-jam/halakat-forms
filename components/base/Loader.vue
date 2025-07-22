@@ -1,5 +1,5 @@
 <template>
     <div>
-        loading...
+        <v-progress-circular indeterminate></v-progress-circular>
     </div>
 </template>

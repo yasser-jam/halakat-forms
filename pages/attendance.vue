@@ -1,8 +1,9 @@
 <template>
-  <base-loader v-if="status == 'pending'" />
-
+  
   <v-container>
     <div class="text-3xl font-semibold mb-8">سجل التفقد</div>
+    
+    <base-loader v-if="status == 'pending' && !campaignAttednace?.length" />
 
     <template v-for="(item, index) in campaignAttednace">
       <div class="my-4">
