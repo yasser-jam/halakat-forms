@@ -84,8 +84,6 @@
                 ></v-btn>
               </div>
             </template>
-
-            <template #bottom></template>
           </v-data-table>
         </client-only>
       </v-card-text>
