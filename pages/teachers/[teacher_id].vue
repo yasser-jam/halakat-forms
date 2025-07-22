@@ -64,12 +64,7 @@
                 <v-col cols="6">
                   <base-label>تاريخ الميلاد</base-label>
 
-                  <v-text-field
-                    v-model="teacher.birth_date"
-                    :rules="useValidate(String(teacher.birth_date))"
-                    type="date"
-                    placeholder="تاريخ ميلاد الأستاذ"
-                  ></v-text-field>
+                  <base-datepicker v-model="teacher.birth_date" />
                 </v-col>
 
                 <v-col cols="6">

@@ -93,6 +93,9 @@ export const useTeacherStore = defineStore("teacher", () => {
       body: {
         ...teacher.value,
         birth_date: new Date(teacher.value.birth_date as string),
+        // Todo: should be handeled from the backend
+        groups: undefined,
+        roles: undefined
       },
     });
 
