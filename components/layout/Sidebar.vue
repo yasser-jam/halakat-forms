@@ -68,7 +68,7 @@ const links = ref<
     icon: 'mdi-account-school-outline',
   },
   {
-    title: 'الأستاتذة',
+    title: 'الأساتذة',
     link: `/teachers`,
     key: 'teachers',
     icon: 'mdi-human-male-board',
