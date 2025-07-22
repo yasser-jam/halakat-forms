@@ -52,5 +52,9 @@ const classes = ref<{ title: string; value: number }[]>([
     title: 'بكالوريا',
     value: 12,
   },
+  {
+    title: 'جامعة',
+    value: 13,
+  },
 ]);
 </script>
