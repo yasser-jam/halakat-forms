@@ -102,6 +102,8 @@ const teacherStore = useTeacherStore();
 const { headers, paginationOptions, teachers, teachersTotalCount } =
   storeToRefs(teacherStore);
 
+const allTeachers = ref(teachers.value)
+
 const key = ref<string>('');
 
 const deleteToggler = ref<boolean>(false);
@@ -131,7 +133,10 @@ const remove = async () => {
 };
 
 const search = () => {
-  data.value = teachers.value.filter((teacher) =>
+  
+  if (!key.value) return teachers.value = allTeachers.value
+  
+  teachers.value = teachers.value.filter((teacher) =>
     teacher.first_name.includes(key.value)
   );
 };

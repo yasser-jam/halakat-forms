@@ -115,6 +115,8 @@ const studentStore = useStudentStore();
 const { headers, paginationOptions, students, studentsTotalCount } =
   storeToRefs(studentStore);
 
+const allStudents = ref(students.value)
+
 const key = ref<string>("");
 
 const deleteToggler = ref<boolean>(false);
@@ -144,7 +146,10 @@ const remove = async () => {
 };
 
 const search = () => {
-  data.value = students.value.filter((stud) =>
+
+  if (!key.value) return students.value = allStudents.value
+
+  students.value = students.value.filter((stud) =>
     stud.first_name.includes(key.value)
   );
 };
