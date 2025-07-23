@@ -26,11 +26,15 @@ export const useGroupStore = defineStore('group', () => {
         return groups.value
     }
 
+    const mosqueId = useCookie('mosque_id')
 
     const create = async () => {
         await api(`groups`, {
             method: 'POST',
-            body: group.value
+            body: {
+                ...group.value,
+                mosque_id: Number(mosqueId.value)
+            }
         })
 
         toasterStore.success('تم إضافة الحلقة بنجاح')
