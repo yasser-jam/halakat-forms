@@ -17,70 +17,68 @@
     <template v-else-if="groups?.length">
       <v-card v-for="group in groups" class="mb-4">
         <v-card-title>
-            <div class="flex items-center">
-              <div>
-                <v-icon size="small">mdi-account-multiple-outline</v-icon>
-                <span class="text-lg font-semibold ms-2">{{
-                  group?.title
-                }}</span>
-    
-                <v-chip size="small" class="ms-1" color="secondary">
-                  {{
-                    `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}`
-                  }}
-                </v-chip>
-              </div>
-    
-              <v-spacer></v-spacer>
-    
-              <div class="flex items-center gap-2">
-                <v-btn color="error" @click="openDeleteDialog(Number(group.id))">إزالة الحلقة</v-btn>
-    
-                <student-add-menu
-                  :selected-students="group?.students"
-                  @select="assignStudents(group.id!, $event)"
-                ></student-add-menu>
-              </div>
-    
+          <div class="flex items-center">
+            <div>
+              <v-icon size="small">mdi-account-multiple-outline</v-icon>
+              <span class="text-lg font-semibold ms-2">{{ group?.title }}</span>
+
+              <v-chip
+                size="small"
+                class="ms-1"
+                color="secondary"
+                @click="navigateTo(`/teachers/${group.currentTeacher?.id}`)"
+              >
+                {{
+                  `${group.currentTeacher?.first_name} ${group.currentTeacher?.last_name}`
+                }}
+              </v-chip>
             </div>
-          </v-card-title>
-          <v-card-text>
-            <div
-              class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
-            >
-              <template v-if="group.students?.length">
-                <student-inline-card
-                  v-for="student in group.students"
-                  :student
-                  class="w-full shrink-0"
-                  @unlink="
-                    unAssignStudent(Number(group.id), Number(student.id))
-                  "
-                />
-                <!-- {{ `${student.first_name} ${student.last_name}` }} -->
-              </template>
-    
-              <template v-else>
-                <div>لا يوجد أي طالب</div>
-                <student-list-menu
-                  @select="assignStudents(group.id!, $event)"
-                ></student-list-menu>
-              </template>
+
+            <v-spacer></v-spacer>
+
+            <div class="flex items-center gap-2">
+              <v-btn color="error" @click="openDeleteDialog(Number(group.id))"
+                >إزالة الحلقة</v-btn
+              >
+
+              <student-add-menu
+                :selected-students="group?.students"
+                @select="assignStudents(group.id!, $event)"
+              ></student-add-menu>
             </div>
-          </v-card-text>
+          </div>
+        </v-card-title>
+        <v-card-text>
+          <div
+            class="flex flex-col items-center gap-2 max-h-[300px] overflow-auto mt-2"
+          >
+            <template v-if="group.students?.length">
+              <student-inline-card
+                v-for="student in group.students"
+                :student
+                class="w-full shrink-0"
+                @unlink="unAssignStudent(Number(group.id), Number(student.id))"
+              />
+              <!-- {{ `${student.first_name} ${student.last_name}` }} -->
+            </template>
+
+            <template v-else>
+              <div>لا يوجد أي طالب</div>
+              <student-list-menu
+                @select="assignStudents(group.id!, $event)"
+              ></student-list-menu>
+            </template>
+          </div>
+        </v-card-text>
       </v-card>
-  
-
     </template>
-
 
     <template v-else>
       <base-not-found>
-      <template #action>
-
-        <v-btn to="/groups-management/create" class="mt-4">إضافة حلقة</v-btn>
-      </template>
-    </base-not-found>
+        <template #action>
+          <v-btn to="/groups-management/create" class="mt-4">إضافة حلقة</v-btn>
+        </template>
+      </base-not-found>
     </template>
   </v-container>
 
@@ -119,8 +117,8 @@ const loading = ref(false);
 
 const filterToggler = ref(false);
 
-const { status, data, refresh } = useLazyAsyncData<Student[]>(() =>
-  studentStore.listUnassigned()
+const { status, data, refresh } = useLazyAsyncData<Student[]>(
+  () => studentStore.listUnassigned()
 
   // studentStore.list()
 );
@@ -132,10 +130,10 @@ const { pending: groupsLoading, refresh: refreshGroups } = useLazyAsyncData(
 );
 
 const openDeleteDialog = (id: number) => {
-  deletedId.value = id
+  deletedId.value = id;
 
-  deleteToggler.value = true
-}
+  deleteToggler.value = true;
+};
 
 const remove = async () => {
   deleteLoading.value = true;
@@ -161,13 +159,10 @@ const assignStudents = async (groupId: number, students: Student[]) => {
 
   try {
     for (let stud of students) {
-      await groupStore.assign(
-        groupId,
-        Number(stud.id)
-      );
+      await groupStore.assign(groupId, Number(stud.id));
     }
 
-    await refreshNuxtData('list_unassigned_students')
+    await refreshNuxtData('list_unassigned_students');
 
     await refreshGroups();
 
