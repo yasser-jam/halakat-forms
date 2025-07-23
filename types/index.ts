@@ -22,6 +22,7 @@ export interface Organization {
 }
 
 export interface Mosque {
+  id?: string;
   name: string;
   city: string;
   address_area: string;

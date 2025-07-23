@@ -10,7 +10,7 @@
 
     <v-row>
       <v-col v-for="campaign in campaigns" cols="6">
-          <campaign-card :campaign @click="selectCampaign(String(campaign.id))" />
+          <campaign-card :campaign @click="selectCampaign(campaign)" />
       </v-col>
 
     </v-row>
@@ -50,6 +50,7 @@ const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
 const campaignId = useCookie('campaign_id')
+const mosqueId = useCookie('mosque_id')
 
 const loading = ref(false)
 
@@ -57,8 +58,10 @@ const { pending, data, refresh } = useLazyAsyncData<Campaign[]>(() =>
   campaignStore.list()
 );
 
-const selectCampaign = async (id: string) => {
-  campaignId.value = id
+const selectCampaign = async (campaign: Campaign) => {
+  campaignId.value = String(campaign.id)
+
+  mosqueId.value = String(campaign.mosque?.id)
 
   loading.value = true
 
