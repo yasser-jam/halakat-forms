@@ -7,6 +7,8 @@ import type {
   Mistake,
   SavingSessionFilter,
   Evaluation,
+  Category,
+  Curriculum,
 } from '~/types';
 
 export const initStudent = (): Student => ({
@@ -86,4 +88,24 @@ export const initAttendance = () : Attendance => ({
   delayTime: -1,
   takenDate: new Date(),
   createdAt: new Date()
+})
+
+export const initCategory = (): Category => ({
+  id: 0,
+  name: '',
+  description: '',
+  color: '#000000',
+  organization_id: 0,
+  created_at: '',
+  updated_at: '',
+})
+
+export const initCurriculum = (): Curriculum => ({
+  id: 0,
+  name: '',
+  description: '',
+  organization_id: 0,
+  created_at: '',
+  updated_at: '',
+  categories: [],
 })

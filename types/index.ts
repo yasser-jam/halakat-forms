@@ -77,7 +77,7 @@ export interface Student {
   preserved_parts: string;
   parts_tested_by_the_endowments: string;
   image_url?: string;
-  group_title?: string
+  group_title?: string;
 }
 
 export interface Teacher {
@@ -129,7 +129,7 @@ export interface Campaign {
   end_time?: string;
   timing_approach: 'hours' | 'pray_time';
 
-  mosque?: Mosque
+  mosque?: Mosque;
 
   createdAt?: string;
   updatedAt?: string;
@@ -165,7 +165,7 @@ export interface Mistake {
   campaign_id?: number;
   title: string;
   reduced_marks?: number;
-  is_related?: boolean
+  is_related?: boolean;
 }
 
 export interface Evaluation {
@@ -174,7 +174,7 @@ export interface Evaluation {
   title: string;
   points: number;
   minimum_marks: number;
-  is_related?: boolean
+  is_related?: boolean;
 }
 
 export interface SavingSession {
@@ -202,6 +202,27 @@ export interface SavingSessionFilter {
   teacherId?: number;
   studentId?: number;
   mistakeId?: number;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  description: string;
+  color: string;
+  organization_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
+
+export interface Curriculum {
+  id: number;
+  name: string;
+  description: string;
+  organization_id: number;
+  created_at: string;
+  updated_at: string;
+  categories: Category[]
 }
 
 export enum Permission {
