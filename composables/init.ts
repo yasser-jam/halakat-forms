@@ -9,6 +9,9 @@ import type {
   Evaluation,
   Category,
   Curriculum,
+  CurriculumTemplate,
+  CurriculumTemplateNode,
+  NodeStatus,
 } from '~/types';
 
 export const initStudent = (): Student => ({
@@ -108,4 +111,26 @@ export const initCurriculum = (): Curriculum => ({
   created_at: '',
   updated_at: '',
   categories: [],
+})
+
+export const initCurriculumTemplate = (): CurriculumTemplate => ({
+  curriculum_id: 0,
+  campaign_id: 0,
+  name: '',
+  notes: '',
+  nodes: [],
+})
+
+export const initCurriculumTemplateNode = (): CurriculumTemplateNode => ({
+  template_id: 0,
+  parent_id: undefined,
+  name: '',
+  description: '',
+  node_type: '',
+  order_index: 0,
+  estimated_lessons_count: undefined,
+  estimated_duration_minutes: undefined,
+  lesson_span: undefined,
+  status: 'PLANNED' as NodeStatus,
+  children: [],
 })

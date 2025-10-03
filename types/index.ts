@@ -243,3 +243,42 @@ export interface Role {
   name: string;
   permissions: Permission[];
 }
+
+export enum NodeStatus {
+  PLANNED = 'PLANNED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETED = 'COMPLETED',
+  SKIPPED = 'SKIPPED'
+}
+
+export interface CurriculumTemplate {
+  id?: number;
+  curriculum_id: number;
+  campaign_id: number;
+  name?: string;
+  notes?: string;
+  created_at?: string;
+  updated_at?: string;
+  curriculum?: Curriculum;
+  campaign?: Campaign;
+  nodes?: CurriculumTemplateNode[];
+}
+
+export interface CurriculumTemplateNode {
+  id?: number;
+  template_id: number;
+  parent_id?: number;
+  name: string;
+  description?: string;
+  node_type?: string;
+  order_index: number;
+  estimated_lessons_count?: number;
+  estimated_duration_minutes?: number;
+  lesson_span?: number;
+  status: NodeStatus;
+  created_at?: string;
+  updated_at?: string;
+  template?: CurriculumTemplate;
+  parent?: CurriculumTemplateNode;
+  children?: CurriculumTemplateNode[];
+}
