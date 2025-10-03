@@ -44,13 +44,13 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   const reset = () => (curriculum.value = initCurriculum());
 
   const get = async (id: number): Promise<Curriculum> => {
-    curriculum.value = await api(`curriculums/${id}`);
+    curriculum.value = await api(`curriculum/${id}`);
     
     return curriculum.value;
   };
 
   const list = async (): Promise<Curriculum[]> => {
-    const res = await api("curriculums");
+    const res = await api("curriculum");
 
     curriculumsTotalCount.value = res.length;
 
@@ -60,7 +60,7 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   };
 
   const create = async () => {
-    await api("curriculums", {
+    await api("curriculum", {
       method: "POST",
       body: {
         ...curriculum.value,
@@ -71,7 +71,7 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   };
 
   const update = async (id: number) => {
-    await api(`curriculums/${id}`, {
+    await api(`curriculum/${id}`, {
       method: "PUT",
       body: {
         ...curriculum.value,
@@ -84,7 +84,7 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   };
 
   const remove = async (id: number) => {
-    await api(`curriculums/${id}`, {
+    await api(`curriculum/${id}`, {
       method: 'DELETE'
     });
 

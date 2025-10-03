@@ -15,13 +15,39 @@
     <v-divider></v-divider>
 
     <v-list nav>
-      <v-list-item
-        v-for="item in links"
-        :prepend-icon="item.icon"
-        :title="item.title"
-        :to="item.link"
-        :active="isActive(item.key)"
-      ></v-list-item>
+      <template v-for="item in links" :key="item.key">
+        <!-- Regular menu item without children -->
+        <v-list-item
+          v-if="!item.children"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :to="item.link"
+          :active="isActive(item.key)"
+        ></v-list-item>
+        
+        <!-- Menu group with children -->
+        <v-list-group
+          v-else
+          :value="item.key"
+        >
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              :prepend-icon="item.icon"
+              :title="item.title"
+            ></v-list-item>
+          </template>
+          
+          <v-list-item
+            v-for="child in item.children"
+            :key="child.key"
+            :prepend-icon="child.icon"
+            :title="child.title"
+            :to="child.link"
+            :active="isActive(child.key)"
+          ></v-list-item>
+        </v-list-group>
+      </template>
     </v-list>
   </v-list>
 </template>
@@ -29,14 +55,15 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const links = ref<
-  {
-    title: string;
-    link: string;
-    key: string;
-    icon: string;
-  }[]
->([
+interface MenuItem {
+  title: string;
+  link?: string;
+  key: string;
+  icon: string;
+  children?: MenuItem[];
+}
+
+const links = ref<MenuItem[]>([
   {
     title: 'الرئيسية',
     link: `/`,
@@ -72,6 +99,25 @@ const links = ref<
     link: `/teachers`,
     key: 'teachers',
     icon: 'mdi-human-male-board',
+  },
+  {
+    title: 'المناهج',
+    key: 'curriculum',
+    icon: 'mdi-book-multiple',
+    children: [
+      {
+        title: 'المناهج',
+        link: `/curriculums`,
+        key: 'curriculums',
+        icon: 'mdi-book-outline',
+      },
+      {
+        title: 'الفئات',
+        link: `/categories`,
+        key: 'categories',
+        icon: 'mdi-tag-multiple',
+      },
+    ],
   },
   {
     title: 'سياسة الدورة',
