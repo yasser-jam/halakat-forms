@@ -113,10 +113,13 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const create = async () => {
+    const campaignId = useCookie('campaign_id')
     await api("curriculum-template", {
       method: "POST",
       body: {
         ...curriculumTemplate.value,
+        nodes: undefined,
+        campaign_id: Number(campaignId.value),
       },
     });
 
@@ -151,15 +154,16 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const getNode = async (templateId: number, nodeId: number): Promise<CurriculumTemplateNode> => {
-    selectedNode.value = await api(`curriculum-template/${templateId}/nodes/${nodeId}`);
+    selectedNode.value = await api(`curriculum-template/${templateId}/node/${nodeId}`);
     return selectedNode.value;
   };
 
   const createNode = async (templateId: number) => {
-    await api(`curriculum-template/${templateId}/nodes`, {
+    await api(`curriculum-template/node`, {
       method: "POST",
       body: {
         ...selectedNode.value,
+        children: undefined,
         template_id: templateId,
       },
     });
@@ -168,7 +172,7 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const updateNode = async (templateId: number, nodeId: number) => {
-    await api(`curriculum-template/${templateId}/nodes/${nodeId}`, {
+    await api(`curriculum-template/${templateId}/node/${nodeId}`, {
       method: "PUT",
       body: {
         ...selectedNode.value,
@@ -181,7 +185,7 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const removeNode = async (templateId: number, nodeId: number) => {
-    await api(`curriculum-template/${templateId}/nodes/${nodeId}`, {
+    await api(`curriculum-template/${templateId}/node/${nodeId}`, {
       method: 'DELETE'
     });
 
@@ -189,7 +193,7 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const updateNodeStatus = async (templateId: number, nodeId: number, status: NodeStatus) => {
-    await api(`curriculum-template/${templateId}/nodes/${nodeId}/status`, {
+    await api(`curriculum-template/${templateId}/node/${nodeId}/status`, {
       method: "PUT",
       body: { status },
     });
@@ -198,7 +202,7 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
   };
 
   const reorderNodes = async (templateId: number, nodeUpdates: { id: number; order_index: number }[]) => {
-    await api(`curriculum-template/${templateId}/nodes/reorder`, {
+    await api(`curriculum-template/${templateId}/node/reorder`, {
       method: "PUT",
       body: { updates: nodeUpdates },
     });

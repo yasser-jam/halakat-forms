@@ -212,13 +212,6 @@
         </v-card>
       </v-window-item>
     </v-window>
-
-    <div class="flex gap-4 mt-8" v-if="tab === 0">
-      <v-spacer></v-spacer>
-      <v-btn v-if="editMode && tab === 0" @click="tab = 1" color="primary" variant="outlined">
-        إدارة القوالب
-      </v-btn>
-    </div>
   </v-container>
 
   <!-- Add Template Dialog -->

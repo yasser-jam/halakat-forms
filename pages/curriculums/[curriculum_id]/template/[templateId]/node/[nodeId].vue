@@ -4,6 +4,7 @@
     :title="isEditMode ? `تعديل العقدة: ${node?.name || ''}` : 'إضافة عقدة جديدة'"
     max-width="800"
     :loading
+    hide-actions
     @close="navigateBack"
   >
     <v-form v-model="form" @submit.prevent="handleSubmit">
@@ -102,10 +103,9 @@
           ></v-text-field>
         </v-col>
       </v-row>
-    </v-form>
 
-    <template #actions>
-      <v-btn variant="plain" @click="navigateBack">إلغاء</v-btn>
+      <div class="flex justify-end gap-2">
+        <v-btn variant="plain" @click="navigateBack">إلغاء</v-btn>
       <v-btn 
         color="primary" 
         :disabled="!form"
@@ -114,7 +114,8 @@
       >
         {{ isEditMode ? 'تحديث' : 'إضافة' }}
       </v-btn>
-    </template>
+      </div>
+    </v-form>
   </base-dialog>
 </template>
 
@@ -186,6 +187,8 @@ const handleSubmit = async () => {
       // Set the node data in store before creating
       curriculumTemplateStore.selectedNode = node.value;
       await curriculumTemplateStore.createNode(templateId);
+
+      await curriculumTemplateStore.getNodes(templateId);
     }
     
     navigateBack();

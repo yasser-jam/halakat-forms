@@ -14,7 +14,7 @@
           <!-- Expand/Collapse Button -->
           <v-btn
             v-if="hasChildren"
-            :icon="isExpanded ? 'mdi-chevron-down' : 'mdi-chevron-right'"
+            :icon="isExpanded ? 'mdi-chevron-down' : 'mdi-chevron-left'"
             variant="text"
             size="small"
             @click="toggleExpand"
