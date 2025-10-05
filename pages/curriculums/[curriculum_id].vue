@@ -14,7 +14,6 @@
       </div>
 
       <div class="flex gap-2">
-        <v-btn variant="plain" to="/curriculums">إلغاء</v-btn>
         <v-btn 
           v-if="tab === 0"
           color="primary" 
@@ -45,21 +44,11 @@
                     v-model="curriculum.name"
                     :rules="useValidate(curriculum.name)"
                     placeholder="اسم المنهج"
-                    variant="outlined"
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6">
-                  <base-label>الوصف</base-label>
-                  <v-textarea
-                    v-model="curriculum.description"
-                    placeholder="وصف المنهج"
-                    variant="outlined"
-                    rows="3"
-                  ></v-textarea>
-                </v-col>
 
-                <v-col cols="12" v-if="editMode && curriculum.categories && curriculum.categories.length > 0">
+                <v-col cols="12" md="6" v-if="editMode && curriculum.categories?.length">
                   <base-label>الفئات المرتبطة</base-label>
                   <div class="flex flex-wrap gap-2 mt-2">
                     <v-chip
@@ -73,9 +62,22 @@
                   </div>
                 </v-col>
 
+                <v-col cols="12" md="6">
+                  <base-label>الوصف</base-label>
+                  <v-textarea
+                    v-model="curriculum.description"
+                    placeholder="وصف المنهج"
+                    rows="3"
+                  ></v-textarea>
+                </v-col>
+
+                
+
+                <v-divider></v-divider>
+
                 <v-col cols="12" v-if="editMode">
-                  <div class="text-sm text-gray-600">
-                    <div>تاريخ الإنشاء: {{ formatDate(curriculum.created_at) }}</div>
+                  <div class="text-sm text-gray-500">
+                    <div class="my-2">تاريخ الإنشاء: {{ formatDate(curriculum.created_at) }}</div>
                     <div v-if="curriculum.updated_at">آخر تحديث: {{ formatDate(curriculum.updated_at) }}</div>
                   </div>
                 </v-col>
@@ -87,106 +89,125 @@
 
       <!-- Curriculum Templates Tab -->
       <v-window-item v-if="editMode">
-        <v-card>
-          <v-card-title class="flex justify-between items-center">
-            <span>قوالب المنهج</span>
-            <v-btn
-              color="primary"
-              size="small"
-              @click="openAddTemplateDialog"
-            >
-              إضافة قالب جديد
-            </v-btn>
+        <v-card class="bg-transparent">
+          <v-card-title>
+
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-semibold">قوالب المنهج</span>
+              <v-btn
+                color="primary"
+                @click="openAddTemplateDialog"
+              >
+                إضافة قالب جديد
+              </v-btn>
+            </div>
           </v-card-title>
           
           <v-card-text>
-            <v-text-field
-              v-model="templateSearch"
-              prepend-inner-icon="mdi-magnify"
-              placeholder="ابحث في القوالب..."
-              variant="outlined"
-              size="small"
-              class="mb-4"
-            />
+            <div v-if="templatesLoading" class="flex justify-center my-8">
+              <v-progress-circular
+                color="primary"
+                size="large"
+                indeterminate
+              ></v-progress-circular>
+            </div>
 
-            <client-only>
-              <v-data-table-server
-                :headers="templateHeaders"
-                :items="curriculumTemplates"
-                :items-length="curriculumTemplatesTotalCount"
-                :loading="templatesLoading"
-                :items-per-page="10"
-                :page="1"
+            <base-not-found v-else-if="curriculumTemplates.length === 0" />
+
+            <v-row v-else>
+              <v-col
+                v-for="template in curriculumTemplates"
+                :key="template.id"
+                cols="12"
+                sm="6"
               >
-                <template #item.name="{ item }">
-                  <div class="flex items-center gap-4 my-2">
-                    <div class="flex flex-col gap-1">
-                      <div class="text-md font-weight-bold">
-                        {{ item.name || item.curriculum?.name }}
-                      </div>
-                      <div v-if="item.notes" class="text-sm text-gray-600">
-                        {{ item.notes }}
+                <v-card
+                  class="h-100"
+                >
+                  <v-card-text class="pb-2">
+                    <div class="flex items-start gap-3 mb-3">
+                      <v-avatar
+                        color="primary"
+                        size="48"
+                      >
+                        <v-icon color="white">mdi-book-outline</v-icon>
+                      </v-avatar>
+                      
+                      <div class="flex-1 min-w-0">
+                        <div class="font-weight-bold text-xl text-truncate mb-1">
+                          {{ template.name || template.curriculum?.name }}
+                        </div>
+                        <v-chip
+                          color="info"
+                          variant="tonal"
+                          size="small"
+                          class="mb-2"
+                        >
+                          {{ template.campaign?.name || 'غير محدد' }}
+                        </v-chip>
                       </div>
                     </div>
-                  </div>
-                </template>
 
-                <template #item.campaign.name="{ item }">
-                  <v-chip color="info" variant="tonal">
-                    {{ item.campaign?.name || 'غير محدد' }}
-                  </v-chip>
-                </template>
+                    <div v-if="template.notes" class="text-sm text-gray-500 mb-3">
+                      {{ template.notes }}
+                    </div>
 
-                <template #item.nodes_count="{ item }">
-                  <v-chip color="primary" variant="tonal">
-                    {{ item.nodes?.length || 0 }} عقدة
-                  </v-chip>
-                </template>
+                    <div class="flex items-center justify-between mb-3">
+                      <v-chip
+                        color="primary"
+                        variant="tonal"
+                        size="small"
+                      >
+                        <v-icon start size="16">mdi-sitemap</v-icon>
+                        {{ template.nodes?.length || 0 }} عقدة
+                      </v-chip>
+                      
+                      <v-chip
+                        color="success"
+                        variant="tonal"
+                        size="small"
+                      >
+                        <v-icon start size="16">mdi-calendar</v-icon>
+                        {{ formatDate(template.created_at) }}
+                      </v-chip>
+                    </div>
+                  </v-card-text>
 
-                <template #item.created_at="{ item }">
-                  <v-chip color="success" variant="tonal">
-                    {{ formatDate(item.created_at) }}
-                  </v-chip>
-                </template>
-
-                <template #item.actions="{ item }">
-                  <div class="flex gap-2 justify-end">
+                  <v-card-actions class="pt-0">
                     <v-btn
                       color="green"
                       variant="tonal"
-                      size="x-small"
-                      :rounded="false"
-                      class="rounded-lg"
-                      icon="mdi-eye"
-                      @click="viewTemplate(item)"
+                      size="small"
+                      @click="viewTemplate(template)"
                       title="عرض العقد"
-                    ></v-btn>
+                    >
+                      <v-icon start>mdi-eye</v-icon>
+                      عرض
+                    </v-btn>
+                    
+                    <v-spacer></v-spacer>
+                    
                     <v-btn
                       color="blue"
                       variant="tonal"
-                      size="x-small"
-                      :rounded="false"
-                      class="rounded-lg"
+                      size="small"
                       icon="mdi-pencil"
-                      @click="editTemplate(item)"
+                      @click="editTemplate(template)"
                       title="تعديل القالب"
                     ></v-btn>
+                    
                     <v-btn
                       color="error"
                       variant="tonal"
-                      size="x-small"
-                      :rounded="false"
-                      class="rounded-lg"
+                      size="small"
                       icon="mdi-trash-can"
-                      @click="openDeleteTemplateDialog(item.id as number)"
+                      @click="openDeleteTemplateDialog(template.id as number)"
                       title="حذف القالب"
                     ></v-btn>
-                  </div>
-                </template>
-
-                <template #bottom></template>
-              </v-data-table-server>
-            </client-only>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-window-item>
@@ -201,7 +222,7 @@
   </v-container>
 
   <!-- Add Template Dialog -->
-  <base-dialog v-model="addTemplateDialog" title="إضافة قالب جديد" max-width="600">
+  <base-dialog v-model="addTemplateDialog" hide-actions title="إضافة قالب جديد" max-width="600">
     <v-form v-model="templateForm">
       <v-row>
         <v-col cols="12">
@@ -209,21 +230,7 @@
           <v-text-field
             v-model="curriculumTemplate.name"
             placeholder="اسم مخصص للقالب"
-            variant="outlined"
           ></v-text-field>
-        </v-col>
-
-        <v-col cols="12">
-          <base-label>الحملة</base-label>
-          <v-select
-            v-model="curriculumTemplate.campaign_id"
-            :items="campaigns"
-            item-title="name"
-            item-value="id"
-            placeholder="اختر الحملة"
-            variant="outlined"
-            :rules="useValidate(curriculumTemplate.campaign_id)"
-          ></v-select>
         </v-col>
 
         <v-col cols="12">
@@ -231,24 +238,25 @@
           <v-textarea
             v-model="curriculumTemplate.notes"
             placeholder="ملاحظات خاصة بالحملة"
-            variant="outlined"
             rows="3"
           ></v-textarea>
         </v-col>
       </v-row>
-    </v-form>
 
-    <template #actions>
-      <v-btn variant="plain" @click="addTemplateDialog = false">إلغاء</v-btn>
-      <v-btn 
-        color="primary" 
-        :disabled="!templateForm"
-        :loading="templateLoading"
-        @click="createTemplate"
-      >
-        إضافة
-      </v-btn>
-    </template>
+
+      <div class="flex justify-end gap-2">
+
+        <v-btn variant="plain" @click="addTemplateDialog = false">إلغاء</v-btn>
+        <v-btn 
+          color="primary" 
+          :disabled="!templateForm"
+          :loading="templateLoading"
+          @click="createTemplate"
+        >
+          إضافة
+        </v-btn>
+      </div>
+    </v-form>
   </base-dialog>
 
   <!-- Delete Template Dialog -->
@@ -257,6 +265,8 @@
     :loading="deleteTemplateLoading"
     @delete="removeTemplate"
   ></base-delete-dialog>
+
+  <NuxtPage />
 </template>
 
 <script setup lang="ts">
@@ -276,7 +286,6 @@ const addTemplateDialog = ref<boolean>(false);
 const deleteTemplateDialog = ref<boolean>(false);
 const deleteTemplateLoading = ref<boolean>(false);
 const deletedTemplateId = ref<number>();
-const templateSearch = ref<string>('');
 
 // Stores
 const curriculumStore = useCurriculumStore();
@@ -287,8 +296,7 @@ const { curriculum } = storeToRefs(curriculumStore);
 const { 
   curriculumTemplate, 
   curriculumTemplates, 
-  curriculumTemplatesTotalCount,
-  headers: templateHeaders 
+  curriculumTemplatesTotalCount
 } = storeToRefs(curriculumTemplateStore);
 
 // Route and navigation
@@ -377,8 +385,7 @@ const editTemplate = (template: CurriculumTemplate) => {
 };
 
 const viewTemplate = (template: CurriculumTemplate) => {
-  // Navigate to template view page (to be created later)
-  console.log('View template:', template);
+  navigateTo(`/curriculums/${curriculumId}/template/${template.id}`);
 };
 
 const openDeleteTemplateDialog = (id: number) => {

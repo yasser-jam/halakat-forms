@@ -60,10 +60,12 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   };
 
   const create = async () => {
+    const campaignId = useCookie('campaign_id')
     await api("curriculum", {
       method: "POST",
       body: {
         ...curriculum.value,
+        campaignId: Number(campaignId.value),
       },
     });
 

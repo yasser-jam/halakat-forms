@@ -121,8 +121,8 @@ export const initCurriculumTemplate = (): CurriculumTemplate => ({
   nodes: [],
 })
 
-export const initCurriculumTemplateNode = (): CurriculumTemplateNode => ({
-  template_id: 0,
+export const initCurriculumTemplateNode = (templateId?: number): CurriculumTemplateNode => ({
+  template_id: templateId || 0,
   parent_id: undefined,
   name: '',
   description: '',
