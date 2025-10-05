@@ -4,6 +4,7 @@ export const useCategoryStore = defineStore("category", () => {
   const toasterStore = useToasterStore();
 
   const category = ref<Category>(initCategory());
+  const selectedCategory = ref<Category | null>(null);
 
   const categories = ref<Category[]>([]);
 
@@ -44,7 +45,9 @@ export const useCategoryStore = defineStore("category", () => {
   const reset = () => (category.value = initCategory());
 
   const get = async (id: number): Promise<Category> => {
-    category.value = await api(`category/${id}`);
+    const result = await api(`category/${id}`);
+    category.value = result;
+    selectedCategory.value = result;
     
     return category.value;
   };
@@ -63,7 +66,8 @@ export const useCategoryStore = defineStore("category", () => {
     await api("category", {
       method: "POST",
       body: {
-        ...category.value,
+        name: category.value.name,
+        description: category.value.description,
       },
     });
 
@@ -72,7 +76,7 @@ export const useCategoryStore = defineStore("category", () => {
 
   const update = async (id: number) => {
     await api(`category/${id}`, {
-      method: "PUT",
+      method: "PATCH",
       body: {
         ...category.value,
       },
@@ -94,6 +98,7 @@ export const useCategoryStore = defineStore("category", () => {
     search,
     headers,
     category,
+    selectedCategory,
     categories,
     categoriesTotalCount,
     reset,
