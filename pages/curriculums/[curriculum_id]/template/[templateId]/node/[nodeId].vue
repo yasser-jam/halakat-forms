@@ -83,10 +83,10 @@
 
         <!-- Estimated Duration -->
         <v-col cols="12" md="4">
-          <base-label>المدة المتوقعة (بالدقائق)</base-label>
+          <base-label>المدة المتوقعة</base-label>
           <v-text-field
             v-model.number="node.estimated_duration_minutes"
-            placeholder="المدة بالدقائق"
+            placeholder="المدة"
             type="number"
             :min="0"
           ></v-text-field>

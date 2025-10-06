@@ -60,12 +60,12 @@ export const useCurriculumStore = defineStore("curriculum", () => {
   };
 
   const create = async () => {
-    const campaignId = useCookie('campaign_id')
+    const organizationId = useCookie('organization_id')
     await api("curriculum", {
       method: "POST",
       body: {
-        ...curriculum.value,
-        campaignId: Number(campaignId.value),
+        name: curriculum.value.name,
+        organization_id: Number(organizationId.value),
       },
     });
 
@@ -79,6 +79,7 @@ export const useCurriculumStore = defineStore("curriculum", () => {
         ...curriculum.value,
         // Remove categories from update payload to avoid conflicts
         categories: undefined,
+        category_ids: curriculum.value?.categories?.map(el => el.id)
       },
     });
 

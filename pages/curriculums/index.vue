@@ -44,9 +44,13 @@
             </template>
 
             <template #item.categories_count="{ item }">
-              <v-chip color="primary" variant="tonal">
-                {{ item.categories?.length || 0 }} فئة
-              </v-chip>
+              <div v-if="item.categories?.length" class="flex items-center gap-2">
+                <v-chip v-for="category in item.categories" color="primary" variant="tonal">
+                  {{ category.name }}
+                </v-chip>
+              </div>
+
+              <div v-else class="text-sm text-gray-500 italic">لا يوجد</div>
             </template>
 
             <template #item.created_at="{ item }">
@@ -57,7 +61,7 @@
 
             <template #item.actions="{ item }">
               <div class="flex gap-2 justify-end">
-                <v-btn
+                <!-- <v-btn
                   color="green"
                   variant="tonal"
                   size="x-small"
@@ -66,7 +70,7 @@
                   icon="mdi-eye"
                   :to="`curriculums/${item.id}/view`"
                   title="عرض الفئات"
-                ></v-btn>
+                ></v-btn> -->
                 <v-btn
                   color="blue"
                   variant="tonal"

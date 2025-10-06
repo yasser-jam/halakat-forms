@@ -64,7 +64,7 @@
                 class="flex items-center gap-1"
               >
                 <v-icon size="14">mdi-clock-outline</v-icon>
-                {{ node.estimated_duration_minutes }} دقيقة
+                {{ node.estimated_duration_minutes }} ساعة
               </span>
 
               <span v-if="node.lesson_span" class="flex items-center gap-1">

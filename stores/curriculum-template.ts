@@ -68,7 +68,7 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
       sortable: false,
     },
     {
-      title: "المدة المقدرة (دقيقة)",
+      title: "المدة المقدرة (ساعة)",
       key: "estimated_duration_minutes",
       sortable: false,
     },

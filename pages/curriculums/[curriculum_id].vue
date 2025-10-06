@@ -48,18 +48,9 @@
                 </v-col>
 
 
-                <v-col cols="12" md="6" v-if="editMode && curriculum.categories?.length">
+                <v-col cols="12" md="6" v-if="editMode">
                   <base-label>الفئات المرتبطة</base-label>
-                  <div class="flex flex-wrap gap-2 mt-2">
-                    <v-chip
-                      v-for="category in curriculum.categories"
-                      :key="category.id"
-                      :color="category.color"
-                      variant="tonal"
-                    >
-                      {{ category.name }}
-                    </v-chip>
-                  </div>
+                  <curriculum-categories-select v-model="curriculum.categories" />
                 </v-col>
 
                 <v-col cols="12" md="6">
