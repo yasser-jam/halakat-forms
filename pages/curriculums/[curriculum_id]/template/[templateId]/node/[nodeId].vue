@@ -162,7 +162,8 @@ const { pending } = useLazyAsyncData(async () => {
     
     if (isEditMode) {
       // Load specific node for editing
-      await curriculumTemplateStore.getNode(templateId, Number(nodeId));
+      await curriculumTemplateStore.getNode(Number(nodeId));
+
       if (selectedNode.value) {
         node.value = { ...selectedNode.value };
       }
@@ -182,7 +183,11 @@ const handleSubmit = async () => {
   submitting.value = true;
   try {
     if (isEditMode) {
-      await curriculumTemplateStore.updateNode(templateId, Number(nodeId));
+      await curriculumTemplateStore.updateNode(Number(nodeId));
+    
+      await curriculumTemplateStore.getNodes(templateId);
+
+
     } else {
       // Set the node data in store before creating
       curriculumTemplateStore.selectedNode = node.value;

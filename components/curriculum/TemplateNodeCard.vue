@@ -103,12 +103,13 @@
 
           <!-- Delete Button -->
           <v-btn
-            icon="mdi-delete"
+            icon="mdi-trash-can"
             variant="text"
             size="small"
             color="error"
             @click="$emit('delete', node)"
           ></v-btn>
+          
         </div>
       </div>
     </v-card-text>
@@ -121,6 +122,8 @@
             :node="child"
             :level="level + 1"
             @expand="$emit('expand', $event)"
+            @edit="$emit('edit', $event)"
+            @delete="$emit('delete', $event)"
           />
         </template>
       </div>

@@ -153,8 +153,8 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     return nodes.value;
   };
 
-  const getNode = async (templateId: number, nodeId: number): Promise<CurriculumTemplateNode> => {
-    selectedNode.value = await api(`curriculum-template/${templateId}/node/${nodeId}`);
+  const getNode = async (nodeId: number): Promise<CurriculumTemplateNode> => {
+    selectedNode.value = await api(`curriculum-template/node/${nodeId}`);
     return selectedNode.value;
   };
 
@@ -171,8 +171,8 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     toasterStore.success('تم إضافة العقدة بنجاح');
   };
 
-  const updateNode = async (templateId: number, nodeId: number) => {
-    await api(`curriculum-template/${templateId}/node/${nodeId}`, {
+  const updateNode = async (nodeId: number) => {
+    await api(`curriculum-template/node/${nodeId}`, {
       method: "PUT",
       body: {
         ...selectedNode.value,
@@ -184,8 +184,8 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     toasterStore.success('تم تعديل العقدة بنجاح');
   };
 
-  const removeNode = async (templateId: number, nodeId: number) => {
-    await api(`curriculum-template/${templateId}/node/${nodeId}`, {
+  const removeNode = async (nodeId: number) => {
+    await api(`curriculum-template/node/${nodeId}`, {
       method: 'DELETE'
     });
 

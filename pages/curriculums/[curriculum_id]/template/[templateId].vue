@@ -48,6 +48,13 @@
 
     <NuxtPage />
   </base-dialog>
+
+  <!-- Delete Node Dialog -->
+  <base-delete-dialog
+    v-model="deleteNodeDialog"
+    :loading="deleteNodeLoading"
+    @delete="removeNode"
+  ></base-delete-dialog>
 </template>
 
 <script setup lang="ts">
@@ -64,6 +71,11 @@ const { nodes, curriculumTemplate: template } = storeToRefs(
 
 const loading = ref(false);
 const expandedNodes = ref<Set<number>>(new Set());
+
+// Delete dialog state
+const deleteNodeDialog = ref<boolean>(false);
+const deleteNodeLoading = ref<boolean>(false);
+const deletedNodeId = ref<number>();
 
 // Computed property to build hierarchical structure
 const hierarchicalNodes = computed(() => {
@@ -135,7 +147,20 @@ const handleEditNode = (node: CurriculumTemplateNode) => {
 };
 
 const handleDeleteNode = (node: CurriculumTemplateNode) => {
-  // TODO: Implement delete confirmation dialog
-  console.log('Delete node:', node);
+  deletedNodeId.value = node.id!;
+  deleteNodeDialog.value = true;
+};
+
+const removeNode = async () => {
+  deleteNodeLoading.value = true;
+
+  try {
+    await curriculumTemplateStore.removeNode(deletedNodeId.value as number);
+    // Reload nodes after deletion
+    await curriculumTemplateStore.getNodes(templateId);
+  } finally {
+    deleteNodeLoading.value = false;
+    deleteNodeDialog.value = false;
+  }
 };
 </script>
