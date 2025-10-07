@@ -205,8 +205,13 @@
     </v-window>
   </v-container>
 
-  <!-- Add Template Dialog -->
-  <base-dialog v-model="addTemplateDialog" hide-actions title="إضافة قالب جديد" max-width="600">
+  <!-- Add/Edit Template Dialog -->
+  <base-dialog 
+    v-model="addTemplateDialog" 
+    hide-actions 
+    :title="isEditingTemplate ? 'تعديل القالب' : 'إضافة قالب جديد'" 
+    max-width="600"
+  >
     <v-form v-model="templateForm">
       <v-row>
         <v-col cols="12">
@@ -230,14 +235,14 @@
 
       <div class="flex justify-end gap-2">
 
-        <v-btn variant="plain" @click="addTemplateDialog = false">إلغاء</v-btn>
+        <v-btn variant="plain" @click="closeTemplateDialog">إلغاء</v-btn>
         <v-btn 
           color="primary" 
           :disabled="!templateForm"
           :loading="templateLoading"
-          @click="createTemplate"
+          @click="submitTemplate"
         >
-          إضافة
+          {{ isEditingTemplate ? 'تحديث' : 'إضافة' }}
         </v-btn>
       </div>
     </v-form>
@@ -270,6 +275,8 @@ const addTemplateDialog = ref<boolean>(false);
 const deleteTemplateDialog = ref<boolean>(false);
 const deleteTemplateLoading = ref<boolean>(false);
 const deletedTemplateId = ref<number>();
+const isEditingTemplate = ref<boolean>(false);
+const editingTemplateId = ref<number>();
 
 // Stores
 const curriculumStore = useCurriculumStore();
@@ -346,26 +353,42 @@ const submit = async () => {
 const openAddTemplateDialog = () => {
   curriculumTemplateStore.reset();
   curriculumTemplate.value.curriculum_id = Number(curriculumId);
+  isEditingTemplate.value = false;
+  editingTemplateId.value = undefined;
   addTemplateDialog.value = true;
 };
 
-const createTemplate = async () => {
+const editTemplate = (template: CurriculumTemplate) => {
+  // Populate the form with existing template data
+  curriculumTemplate.value = { ...template };
+  isEditingTemplate.value = true;
+  editingTemplateId.value = template.id;
+  addTemplateDialog.value = true;
+};
+
+const submitTemplate = async () => {
   if (!templateForm.value) return;
 
   templateLoading.value = true;
 
   try {
-    await curriculumTemplateStore.create();
-    addTemplateDialog.value = false;
+    if (isEditingTemplate.value && editingTemplateId.value) {
+      await curriculumTemplateStore.update(editingTemplateId.value);
+    } else {
+      await curriculumTemplateStore.create();
+    }
+    closeTemplateDialog();
     await loadTemplates();
   } finally {
     templateLoading.value = false;
   }
 };
 
-const editTemplate = (template: CurriculumTemplate) => {
-  // Navigate to template editing page (to be created later)
-  console.log('Edit template:', template);
+const closeTemplateDialog = () => {
+  addTemplateDialog.value = false;
+  isEditingTemplate.value = false;
+  editingTemplateId.value = undefined;
+  curriculumTemplateStore.reset();
 };
 
 const viewTemplate = (template: CurriculumTemplate) => {

@@ -130,7 +130,8 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     await api(`curriculum-template/${id}`, {
       method: "PUT",
       body: {
-        ...curriculumTemplate.value,
+        name: curriculumTemplate.value?.name,
+        notes: curriculumTemplate.value?.notes,
         // Remove nodes from update payload to avoid conflicts
         nodes: undefined,
       },
