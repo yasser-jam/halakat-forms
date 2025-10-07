@@ -255,6 +255,36 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     return rootNodes;
   };
 
+  // Group-specific template operations
+  const listByGroup = async (groupId: number): Promise<CurriculumTemplate[]> => {
+    const res = await api(`curriculum-template/group/${groupId}`);
+    curriculumTemplates.value = res;
+    curriculumTemplatesTotalCount.value = res.length;
+    return curriculumTemplates.value;
+  };
+
+  const assignToGroup = async (groupId: number, templateId: number) => {
+    const campaignId = useCookie('campaign_id');
+    await api('curriculum-template/assign', {
+      method: 'POST',
+      body: {
+        group_id: groupId,
+        template_id: templateId,
+        campaign_id: Number(campaignId.value),
+      },
+    });
+
+    toasterStore.success('تم تعيين القالب للحلقة بنجاح');
+  };
+
+  const unassignFromGroup = async (groupId: number, templateId: number) => {
+    await api(`curriculum-template/unassign/${groupId}/${templateId}`, {
+      method: 'DELETE',
+    });
+
+    toasterStore.success('تم إلغاء تعيين القالب من الحلقة بنجاح');
+  };
+
   return {
     // State
     paginationOptions,
@@ -274,6 +304,11 @@ export const useCurriculumTemplateStore = defineStore("curriculumTemplate", () =
     create,
     update,
     remove,
+
+    // Group-specific operations
+    listByGroup,
+    assignToGroup,
+    unassignFromGroup,
 
     // Node operations
     resetNode,
