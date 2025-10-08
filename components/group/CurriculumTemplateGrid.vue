@@ -46,6 +46,7 @@
           <curriculum-template-card
             :template="template"
             @view="$emit('view-template', template)"
+            @view-nodes="$emit('view-nodes', template)"
             @delete="$emit('delete-template', template)"
           />
         </v-col>
@@ -65,6 +66,7 @@ interface Props {
 interface Emits {
   (e: 'assign-template'): void;
   (e: 'view-template', template: CurriculumTemplate): void;
+  (e: 'view-nodes', template: CurriculumTemplate): void;
   (e: 'delete-template', template: CurriculumTemplate): void;
 }
 

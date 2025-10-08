@@ -42,6 +42,14 @@
           ></v-btn>
           
           <v-btn
+            icon="mdi-book-open-page-variant"
+            variant="text"
+            size="small"
+            color="teal"
+            @click="$emit('view-nodes', template)"
+          ></v-btn>
+          
+          <v-btn
             icon="mdi-trash-can"
             variant="text"
             size="small"
@@ -122,6 +130,7 @@ const props = defineProps<Props>();
 
 const emit = defineEmits<{
   view: [template: CurriculumTemplate];
+  'view-nodes': [template: CurriculumTemplate];
   delete: [template: CurriculumTemplate];
 }>();
 

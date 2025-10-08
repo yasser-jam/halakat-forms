@@ -11,7 +11,8 @@ export const useGroupStore = defineStore('group', () => {
     const get = async (id: number): Promise<Group> => {
         const res = await api(`groups/${id}`)
 
-        group.value = res
+        // Handle API response structure { message, data }
+        group.value = res.data || res
 
         return group.value
     }

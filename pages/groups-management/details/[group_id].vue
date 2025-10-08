@@ -30,7 +30,7 @@
     <v-tabs-window v-model="activeTab">
       <!-- Overview Tab -->
       <v-tabs-window-item value="overview">
-        <group-overview-tab />
+        <group-overview-tab :group-id="groupId" />
       </v-tabs-window-item>
 
       <!-- Curriculum Tab -->

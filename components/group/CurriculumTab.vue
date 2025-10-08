@@ -21,7 +21,14 @@
       :loading="loading"
       @assign-template="$emit('assign-template')"
       @view-template="$emit('view-template', $event)"
+      @view-nodes="handleViewNodes"
       @delete-template="$emit('delete-template', $event)"
+    />
+
+    <!-- Nodes List Dialog -->
+    <group-nodes-list-dialog
+      v-model="showNodesDialog"
+      :template="selectedTemplate"
     />
   </div>
 </template>
@@ -42,4 +49,14 @@ interface Emits {
 
 defineProps<Props>();
 defineEmits<Emits>();
+
+// Dialog state
+const showNodesDialog = ref(false);
+const selectedTemplate = ref<CurriculumTemplate | null>(null);
+
+// Methods
+const handleViewNodes = (template: CurriculumTemplate) => {
+  selectedTemplate.value = template;
+  showNodesDialog.value = true;
+};
 </script>
