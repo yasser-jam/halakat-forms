@@ -35,12 +35,6 @@ export const useAuthStore = defineStore('auth', () => {
         // Todo: check for user type before enter
         user.value = res.user
         
-        if (user.value?.role === 'ORGANIZATION_ADMIN') {
-            navigateTo('/mosques')
-        } else {
-            navigateTo('/campaigns')
-        }
-
         toasterStore.success("تم تسجيل الدخول بنجاح");
     }
 
