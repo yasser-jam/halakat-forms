@@ -104,6 +104,8 @@ export interface Teacher {
   job_role?: string;
   workplace_name?: string;
 
+
+  role: string;
   groups?: Group[];
 }
 

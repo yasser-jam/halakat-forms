@@ -12,6 +12,7 @@ import type {
   CurriculumTemplate,
   CurriculumTemplateNode,
   NodeStatus,
+  Mosque,
 } from '~/types';
 
 export const initStudent = (): Student => ({
@@ -133,4 +134,16 @@ export const initCurriculumTemplateNode = (templateId?: number): CurriculumTempl
   lesson_span: undefined,
   status: 'PLANNED' as NodeStatus,
   children: [],
+})
+
+export const initMosque = (): Mosque => ({
+  name: '',
+  city: '',
+  address_area: '',
+  address_details: '',
+  contact_phone: '',
+  contact_email: '',
+  is_active: true,
+  organization_id: 0,
+  metadata: {},
 })

@@ -44,6 +44,7 @@ const toasterStore = useToasterStore();
 const router = useRouter();
 
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
+const { user } = storeToRefs(authStore);
 
 const phoneNumber = ref<string>('');
 const password = ref<string>('');
@@ -56,7 +57,14 @@ const login = async () => {
   try {
     await authStore.login(phoneNumber.value, password.value);
 
-    router.push('/campaigns');
+    console.log(user.value);
+    
+    if (user.value.role === 'ORGANIZATION_ADMIN') {
+      router.push('/mosques');
+    } else {
+      router.push('/campaigns');
+
+    }
   } finally {
     loading.value = false;
   }

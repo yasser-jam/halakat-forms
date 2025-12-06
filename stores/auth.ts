@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     const token = useCookie('halakat_access_token')
 
     const login = async (phoneNumber: string, password: string) => {
-        const res = await api('auth/login/teacher', {
+        const res = await api('auth/login', {
             method: 'POST',
             body: {
                 mobile_phone_number: phoneNumber,
@@ -33,7 +33,14 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = res.access_token
 
         // Todo: check for user type before enter
+        user.value = res.user
         
+        if (user.value?.role === 'ORGANIZATION_ADMIN') {
+            navigateTo('/mosques')
+        } else {
+            navigateTo('/campaigns')
+        }
+
         toasterStore.success("تم تسجيل الدخول بنجاح");
     }
 
@@ -45,7 +52,7 @@ export const useAuthStore = defineStore('auth', () => {
         await listPermissions()
 
         // redirect the user if he has no access to dashboard
-        if (!permissions.value?.includes('DASHBOARD_ACCESS')) navigateTo('/has-no-access')
+        // if (!permissions.value?.includes('DASHBOARD_ACCESS')) navigateTo('/has-no-access')
 
         user.value = res
     }
@@ -66,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         me,
         listPermissions,
-        permissions
+        permissions,
+        user
     }
 })
