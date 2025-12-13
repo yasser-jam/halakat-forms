@@ -57,10 +57,6 @@ const login = async () => {
   try {
     await authStore.login(phoneNumber.value, password.value);
 
-    console.log(user.value);
-    
-    router.push('/campaigns');
-
     // if (user.value.role === 'ORGANIZATION_ADMIN') {
     //   router.push('/mosques');
     // } else {

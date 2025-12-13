@@ -22,6 +22,9 @@ export const useAuthStore = defineStore('auth', () => {
     const token = useCookie('halakat_access_token')
 
     const login = async (phoneNumber: string, password: string) => {
+        
+        const organizationId = useCookie('organization_id')
+
         const res = await api('auth/login', {
             method: 'POST',
             body: {
@@ -31,11 +34,18 @@ export const useAuthStore = defineStore('auth', () => {
         })
 
         token.value = res.access_token
-
-        // Todo: check for user type before enter
-        user.value = res.user
         
+        user.value = res.user
+
         toasterStore.success("تم تسجيل الدخول بنجاح");
+
+        // save org_id in cookies and go to mosques page (if the user is organization_admin)
+        if (res.user.role === 'ORGANIZATION_ADMIN') {
+            organizationId.value = res.assigned_organization.id
+            return navigateTo('/mosques')
+        }
+
+        return navigateTo('/campaigns')
     }
 
     const me = async () => {

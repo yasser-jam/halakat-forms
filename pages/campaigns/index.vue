@@ -39,6 +39,9 @@ definePageMeta({
 const studentStore = useStudentStore();
 
 const authStore = useAuthStore()
+
+const { user } = storeToRefs(authStore)
+
 const campaignStore = useCampaignStore()
 
 const { campaigns } = storeToRefs(campaignStore)
@@ -53,6 +56,7 @@ const campaignId = useCookie('campaign_id')
 const mosqueId = useCookie('mosque_id')
 
 const loading = ref(false)
+
 
 const { pending, data, refresh } = useLazyAsyncData<Campaign[]>(() =>
   campaignStore.list()

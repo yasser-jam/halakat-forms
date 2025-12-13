@@ -10,7 +10,7 @@
 
     <v-row>
       <v-col v-for="mosque in mosques" cols="6">
-        <mosque-card :mosque="mosque" />
+          <mosque-card :mosque="mosque" @click="selectMosque(mosque)" />
       </v-col>
     </v-row>
 
@@ -36,6 +36,8 @@ const mosqueStore = useMosqueStore()
 
 const { mosques } = storeToRefs(mosqueStore)
 
+const mosqueId = useCookie('mosque_id');
+
 const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
@@ -43,6 +45,11 @@ const deleteLoading = ref<boolean>(false);
 const { pending, data, refresh } = useLazyAsyncData<Mosque[]>(() =>
   mosqueStore.list()
 );
+
+const selectMosque = (mosque: Mosque) => {
+  mosqueId.value = String(mosque.id);
+  navigateTo('/campaigns');
+};
 
 const openDeleteDialog = (id: number) => {
   deletedId.value = id;
