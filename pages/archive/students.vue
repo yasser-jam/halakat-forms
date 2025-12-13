@@ -1,20 +1,12 @@
 <template>
   <v-container>
-    <div class="flex justify-between mt-4 mb-6">
-      <div class="text-3xl font-semibold">قائمة الطلاب</div>
-
-      <v-btn color="primary" elevation="0" to="/students/create"
-        >إضافة طالب جديد</v-btn
-      >
-    </div>
+    <div class="text-3xl font-semibold">قائمة الطلاب</div>
 
     <div class="flex items-center gap-2 text-sm font-semibold my-4">
       <v-icon>mdi-information-outline</v-icon>
-      <div>الطلاب المسجلين في   هذه الدورة فقط</div>
-      <nuxt-link to="/archive/students" class="text-primary underline text-italic">مشاهدة جميع الطلاب في المسجد</nuxt-link>
+      <div>جميع الطلاب (جميع الطلاب عند هذه الإدارة)</div>
     </div>
 
-    
     <v-card>
       <v-card-text>
         <v-text-field
@@ -41,7 +33,7 @@
 
                 <div class="flex flex-col gap-1">
                   <div class="text-md font-weight-bold">
-                    {{ item.first_name + " " + item.last_name }}
+                    {{ item.first_name + ' ' + item.last_name }}
                   </div>
                   <div class="text-xs font-bold text-gray-400">
                     الصف {{ item.educational_class }}
@@ -51,7 +43,9 @@
             </template>
 
             <template #item.halakah_name="{ item }">
-              <v-chip v-if="item.group_title" color="blue">{{ item.group_title }}</v-chip>
+              <v-chip v-if="item.group_title" color="blue">{{
+                item.group_title
+              }}</v-chip>
               <v-chip v-else>غير مسجل بعد</v-chip>
             </template>
 
@@ -66,7 +60,9 @@
             </template>
 
             <template #item.phone_number="{ item }">
-              <v-chip color="success">{{ item.student_mobile || 'لا يوجد' }}</v-chip>
+              <v-chip color="success">{{
+                item.student_mobile || 'لا يوجد'
+              }}</v-chip>
             </template>
 
             <template #item.actions="{ item }">
@@ -102,36 +98,36 @@
     :loading="deleteLoading"
     @delete="remove"
   >
-  <template #subtitle>
-    <div class="text-center">
-      عند حذف الطالب سيتم حذف جميع البيانات المرتبطة بالطالب
-    </div>
-  </template>
-</base-delete-dialog>
+    <template #subtitle>
+      <div class="text-center">
+        عند حذف الطالب سيتم حذف جميع البيانات المرتبطة بالطالب
+      </div>
+    </template>
+  </base-delete-dialog>
 
   <NuxtPage />
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useStudentStore } from "~/stores/student";
-import type { Student } from "~/types";
+import { storeToRefs } from 'pinia';
+import { useStudentStore } from '~/stores/student';
+import type { Student } from '~/types';
 
 const studentStore = useStudentStore();
 
 const { headers, paginationOptions, students, studentsTotalCount } =
   storeToRefs(studentStore);
 
-const allStudents = ref(students.value)
+const allStudents = ref(students.value);
 
-const key = ref<string>("");
+const key = ref<string>('');
 
 const deleteToggler = ref<boolean>(false);
 const deletedId = ref<number>();
 const deleteLoading = ref<boolean>(false);
 
 const { pending, data, refresh } = useLazyAsyncData<Student[]>(() =>
-  studentStore.list()
+  studentStore.listAll()
 );
 
 const openDeleteDialog = (id: number) => {
@@ -153,13 +149,12 @@ const remove = async () => {
 };
 
 const search = () => {
-
-  if (!key.value) return students.value = allStudents.value
+  if (!key.value) return (students.value = allStudents.value);
 
   students.value = students.value.filter((stud) =>
     stud.first_name.includes(key.value)
   );
 };
 
-const itemsPerPage = ref(10)
+const itemsPerPage = ref(10);
 </script>

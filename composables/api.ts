@@ -10,8 +10,8 @@ export default async (url: string, options?: any) => {
   try {
     const res = await $fetch(`${config.public.apiUrl}/${url}`, {
       headers: {
-        campaign_id: campaignId.value,
         Authorization: `Bearer ${token.value}`,
+        campaign_id: options?.wihoutCampaign ? undefined : campaignId.value,
       },
       ...options,
     });

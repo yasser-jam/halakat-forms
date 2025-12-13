@@ -66,6 +66,16 @@ export const useStudentStore = defineStore("student", () => {
     return students.value
   };
 
+  const listAll = async () : Promise<Student[]> => {
+    const res = await api("students/all", { wihoutCampaign: true });
+
+    studentsTotalCount.value = res.length;
+
+    students.value = res;
+
+    return students.value
+  };
+
 
   const unassignedStudents = ref<Student[]>([])
 
@@ -122,6 +132,7 @@ export const useStudentStore = defineStore("student", () => {
     reset,
     get,
     list,
+    listAll,
     listUnassigned,
     create,
     update,

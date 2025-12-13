@@ -15,7 +15,7 @@
     <v-divider></v-divider>
 
     <v-list nav>
-      <template v-for="item in links" :key="item.key">
+      <template v-for="item in menuLinks" :key="item.key">
         <!-- Regular menu item without children -->
         <v-list-item
           v-if="!item.children"
@@ -24,12 +24,9 @@
           :to="item.link"
           :active="isActive(item.key)"
         ></v-list-item>
-        
+
         <!-- Menu group with children -->
-        <v-list-group
-          v-else
-          :value="item.key"
-        >
+        <v-list-group v-else :value="item.key">
           <template v-slot:activator="{ props }">
             <v-list-item
               v-bind="props"
@@ -37,7 +34,7 @@
               :title="item.title"
             ></v-list-item>
           </template>
-          
+
           <v-list-item
             v-for="child in item.children"
             :key="child.key"
@@ -127,12 +124,47 @@ const links = ref<MenuItem[]>([
   },
 ]);
 
+const adminLinks = ref<MenuItem[]>([
+  {
+    title: 'المساجد',
+    link: `/admin/mosques`,
+    key: 'mosques',
+    icon: 'mdi-mosque',
+  },
+  {
+    title: 'الأرشيف',
+    key: 'archive',
+    icon: 'mdi-archive',
+    children: [
+      {
+        title: 'الطلاب',
+        link: `/archive/students`,
+        key: 'students',
+        icon: 'mdi-account-school-outline',
+      },
+
+      {
+        title: 'الأساتذة',
+        link: `/archive/teachers`,
+        key: 'teachers',
+        icon: 'mdi-human-male-board',
+      },
+    ],
+  },
+]);
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+
+const isAdmin = computed(() => user.value?.role === 'ORGANIZATION_ADMIN');
+
+const menuLinks = computed(() => isAdmin.value ? [...links.value, ...adminLinks.value] : links.value);
+
 const isActive = (key: string) => {
-  const route = useRoute()
+  const route = useRoute();
 
-  if (key == 'home' && route.fullPath == '/') return true
+  if (key == 'home' && route.fullPath == '/') return true;
 
-  return route.fullPath.includes(key)
-}
-
+  return route.fullPath.includes(key);
+};
 </script>
