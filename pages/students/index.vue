@@ -7,6 +7,13 @@
         >إضافة طالب جديد</v-btn
       >
     </div>
+
+    <div class="flex items-center gap-2 text-sm font-semibold my-4">
+      <v-icon>mdi-information-outline</v-icon>
+      <div>الطلاب المسجلين في هذه الدورة فقط</div>
+      <nuxt-link to="/students/all" class="text-primary underline text-italic">مشاهدة جميع الطلاب في المسجد</nuxt-link>
+    </div>
+
     
     <v-card>
       <v-card-text>
