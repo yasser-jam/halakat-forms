@@ -59,12 +59,14 @@ const login = async () => {
 
     console.log(user.value);
     
-    if (user.value.role === 'ORGANIZATION_ADMIN') {
-      router.push('/mosques');
-    } else {
-      router.push('/campaigns');
+    router.push('/campaigns');
 
-    }
+    // if (user.value.role === 'ORGANIZATION_ADMIN') {
+    //   router.push('/mosques');
+    // } else {
+    //   router.push('/campaigns');
+
+    // }
   } finally {
     loading.value = false;
   }
