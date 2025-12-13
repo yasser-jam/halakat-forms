@@ -41,9 +41,12 @@
 <script setup>
 const drawer = ref(true);
 
+const mosqueId = useCookie('mosque_id');
+
 const authStore = useAuthStore();
 const toasterStore = useToasterStore();
 const campaignStore = useCampaignStore();
+const mosqueStore = useMosqueStore();
 
 const { user } = storeToRefs(authStore);
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
@@ -52,4 +55,6 @@ const { campaign } = storeToRefs(campaignStore);
 const isAdmin = computed(() => user.value?.role === 'ORGANIZATION_ADMIN');
 
 useAsyncData(() => authStore.me());
+
+useAsyncData(() => mosqueStore.get(Number(mosqueId.value)));
 </script>
