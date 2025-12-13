@@ -98,13 +98,13 @@
 
         <div class="flex flex-wrap gap-2">
           <v-chip
-            v-for="day in campaign?.days"
+            v-for="day in days"
             :key="day"
             color="primary"
             variant="flat"
             size="small"
           >
-            {{ day }}
+            {{ getDay(day as any) }}
           </v-chip>
         </div>
       </div>
@@ -117,4 +117,7 @@ import dayjs from 'dayjs';
 
 const campaignStore = useCampaignStore();
 const { campaign } = storeToRefs(campaignStore);
+
+const days = campaign.value?.days?.toString()?.split(',')?.map((day: string) => day.trim().toLowerCase())
+
 </script>
