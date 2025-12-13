@@ -18,6 +18,10 @@
           @update:model-value="search"
         />
 
+        <div>
+          <mosque-multi-select v-model="selectedMosques" />
+        </div>
+
         <client-only>
           <v-data-table
             :headers="headers"
@@ -157,4 +161,14 @@ const search = () => {
 };
 
 const itemsPerPage = ref(10);
+
+// Filter
+const selectedMosques = ref<number[]>([]);
+
+watch(selectedMosques, (newVal: any[], oldVal) => {
+  studentStore.listAll(newVal);
+})
+
+
+
 </script>

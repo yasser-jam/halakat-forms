@@ -1,9 +1,8 @@
-import { defineStore } from "pinia";
-import type { Student, Header, PaginationOptions } from "~/types";
+import { defineStore } from 'pinia';
+import type { Student, Header, PaginationOptions } from '~/types';
 
-export const useStudentStore = defineStore("student", () => {
-
-  const toasterStore = useToasterStore()
+export const useStudentStore = defineStore('student', () => {
+  const toasterStore = useToasterStore();
 
   const student = ref<Student>(initStudent());
 
@@ -15,111 +14,114 @@ export const useStudentStore = defineStore("student", () => {
 
   const headers = ref<Header[]>([
     {
-      title: "الاسم",
-      key: "name",
+      title: 'الاسم',
+      key: 'name',
       sortable: false,
     },
     {
-      title: "اسم الحلقة",
-      key: "halakah_name",
+      title: 'اسم الحلقة',
+      key: 'halakah_name',
       sortable: false,
     },
     {
-      title: "الأجزاء المحفوظة",
-      key: "preserved_parts",
+      title: 'الأجزاء المحفوظة',
+      key: 'preserved_parts',
       sortable: false,
     },
     {
-      title: "النقاط",
-      key: "points",
+      title: 'النقاط',
+      key: 'points',
       sortable: false,
     },
     {
-      title: "الرقم",
-      key: "phone_number",
+      title: 'الرقم',
+      key: 'phone_number',
       sortable: false,
     },
     {
-      title: "",
-      key: "actions",
+      title: '',
+      key: 'actions',
       sortable: false,
     },
   ]);
 
-  const search = ref<string>('')
+  const search = ref<string>('');
 
   const reset = () => (student.value = initStudent());
 
-  const get = async (id: number) : Promise<Student> => {
-    student.value = await api(`students/${id}`)
-  
-    return student.value
-  }
+  const get = async (id: number): Promise<Student> => {
+    student.value = await api(`students/${id}`);
 
-  const list = async () : Promise<Student[]> => {
-    const res = await api("students");
+    return student.value;
+  };
+
+  const list = async (): Promise<Student[]> => {
+    const res = await api('students');
 
     studentsTotalCount.value = res.length;
 
     students.value = res;
 
-    return students.value
+    return students.value;
   };
 
-  const listAll = async () : Promise<Student[]> => {
-    const res = await api("students/all", { wihoutCampaign: true });
+  const listAll = async (mosqueIds?: number[]): Promise<Student[]> => {
+    const res = await api('students/all', {
+      wihoutCampaign: true,
+      params: { mosqueIds: mosqueIds?.join(',') },
+    });
 
     studentsTotalCount.value = res.length;
 
     students.value = res;
 
-    return students.value
+    return students.value;
   };
 
+  const unassignedStudents = ref<Student[]>([]);
 
-  const unassignedStudents = ref<Student[]>([])
-
-  const listUnassigned = async () : Promise<Student[]> => {
+  const listUnassigned = async (): Promise<Student[]> => {
     const res = await api(`students/unassigned`);
 
     unassignedStudents.value = res?.data;
 
-    return unassignedStudents.value
+    return unassignedStudents.value;
   };
 
   const create = async () => {
-    await api("students", {
-      method: "POST",
+    await api('students', {
+      method: 'POST',
       body: {
         ...student.value,
         birth_date: new Date(student.value.birth_date as string),
-        student_mobile: student.value?.student_mobile ?student.value.student_mobile : student.value.student_mobile_number 
+        student_mobile: student.value?.student_mobile
+          ? student.value.student_mobile
+          : student.value.student_mobile_number,
       },
     });
 
-    toasterStore.success('تم إضافة الطالب بنجاح')
+    toasterStore.success('تم إضافة الطالب بنجاح');
   };
 
   const update = async (id: number) => {
     await api(`students/${id}`, {
-      method: "PUT",
+      method: 'PUT',
       body: {
         ...student.value,
         birth_date: new Date(student.value.birth_date as string),
       },
     });
 
-    toasterStore.success('تم تعديل الطالب بنجاح')
+    toasterStore.success('تم تعديل الطالب بنجاح');
   };
-
 
   const remove = async (id: number) => {
     await api(`students/${id}`, {
-      method: 'DELETE'
-    })
+      method: 'DELETE',
+    });
 
-    toasterStore.success('تم حذف الطالب بنجاح')
-  }
+    toasterStore.success('تم حذف الطالب بنجاح');
+  };
 
   return {
     paginationOptions,
@@ -136,6 +138,6 @@ export const useStudentStore = defineStore("student", () => {
     listUnassigned,
     create,
     update,
-    remove
+    remove,
   };
 });
