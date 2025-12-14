@@ -62,4 +62,9 @@ useAsyncData(() => authStore.me());
 useAsyncData(() => authStore.listPermissions());
 useAsyncData(() => mosqueStore.get(Number(mosqueId.value)));
 
+// change title
+useHead({
+  title: mosque?.value?.name ? `منصة حلقات - ${mosque?.value?.name}` : 'منصة حلقات'
+})
+
 </script>
