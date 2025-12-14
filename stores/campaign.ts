@@ -136,7 +136,7 @@ export const useCampaignStore = defineStore("campaign", () => {
       ...campaign.value,
       id: undefined,
       mosque_id: undefined,
-      days: campaign.value?.days?.join(),
+      days: Array.isArray(campaign.value?.days) ? campaign.value?.days?.join(',') : campaign.value?.days,
       start_date: new Date(campaign.value.start_date).toISOString(),
       start_time: campaign.value.timing_approach === 'pray_time' 
         ? formatTime(timeValues?.start_time) 
