@@ -21,6 +21,14 @@ export const useAttendanceStore = defineStore('attnedance', () => {
     return campaignAttednace.value
   }
 
+  const filterByCampaignDays = (attendances: Attendance[], validDates: string[]) => {
+    return attendances.filter(attend => {
+      const attendDate = new Date(attend.taken_date).toISOString().split('T')[0];
+      const formattedDate = attendDate.substring(5); // Get MM-DD
+      return validDates.includes(formattedDate);
+    });
+  }
+
 
   const attendState = ref([])
 
@@ -67,6 +75,7 @@ export const useAttendanceStore = defineStore('attnedance', () => {
     attendState,
     campaignAttednace,
     listForCampaign,
+    filterByCampaignDays,
     attendance,
     get,
     update

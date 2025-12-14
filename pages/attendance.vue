@@ -3,7 +3,7 @@
   <v-container>
     <div class="text-3xl font-semibold mb-8">سجل التفقد</div>
     
-    <base-loader v-if="status == 'pending' && !campaignAttednace?.length" />
+    <!-- <base-loader v-if="status == 'pending' && !campaignAttednace?.length" /> -->
 
     <template v-for="(item, index) in campaignAttednace">
       <div class="my-4">
@@ -40,22 +40,35 @@
 import dayjs from 'dayjs';
 const groupStore = useGroupStore();
 const attendanceStore = useAttendanceStore();
-
+const campaignStore = useCampaignStore();
 
 const { groups } = storeToRefs(groupStore);
-
 const { attendances, campaignAttednace } = storeToRefs(attendanceStore);
+const { campaign } = storeToRefs(campaignStore);
 
+// Get campaign info first
+const campaignId = useCookie('campaign_id');
 
-const { data, status } = useLazyAsyncData('list_attendances_for_campaign', () => attendanceStore.listForCampaign())
+// Get campaign days info
+const campaignDaysInfo = computed(() => {
+  if (!campaign.value || !campaign.value.days) return null;
+  return getCampaignDays(campaign.value);
+});
+
+console.log(campaignDaysInfo.value);
 
 const generateHeaders = (attendances: any[]) => {
   // Get unique dates
-  const uniqueDates = Array.from(
+  let uniqueDates = Array.from(
     new Set(attendances?.map(el => dayjs(el.taken_date).format('MM-DD')))
   );
 
-
+  // Filter dates based on campaign days
+  if (campaignDaysInfo.value?.validDates) {
+    uniqueDates = uniqueDates.filter(date => 
+      campaignDaysInfo.value!.validDates.includes(date)
+    );
+  }
 
   const dateHeaders = uniqueDates.map(date => ({
     title: date,
@@ -74,18 +87,26 @@ const generateHeaders = (attendances: any[]) => {
 }
 
 const generateData = (attendances: any[]) => {
-  let students: Student[] = []
+  let students: Student[] = [];
 
-  attendances.forEach((el) => {
+  // Filter attendances based on campaign days
+  let filteredAttendances = attendances;
+  if (campaignDaysInfo.value?.validDates) {
+    filteredAttendances = attendances.filter(attend => 
+      campaignDaysInfo.value!.validDates.includes(dayjs(attend.taken_date).format('MM-DD'))
+    );
+  }
+
+  filteredAttendances.forEach((el) => {
     if (students.findIndex(item => item.id == el.student_id) == -1) {
-      students.push(el.student as Student)
+      students.push(el.student as Student);
     }
-  })
+  });
 
   return students?.map(el => ({
     student: el,
-    attendances: attendances?.filter(attend => attend.student_id == el.id)
-  }))
+    attendances: filteredAttendances?.filter(attend => attend.student_id == el.id)
+  }));
 }
 
 </script>
