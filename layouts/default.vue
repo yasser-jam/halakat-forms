@@ -16,8 +16,12 @@
       <v-app-bar-title>
         <div class="flex justify-between items-center">
           <div>
-            <nuxt-link to="/" class="decoration-none text-dark font-semibold">
-              منصة حلقات</nuxt-link
+            <nuxt-link
+            to="/" class="decoration-none text-dark font-semibold">
+            
+            {{ mosque?.name || 'منصة حلقات' }}
+            
+              </nuxt-link
             >
 
             <div class="text-sm text-gray-500">
@@ -48,13 +52,14 @@ const toasterStore = useToasterStore();
 const campaignStore = useCampaignStore();
 const mosqueStore = useMosqueStore();
 
-const { user } = storeToRefs(authStore);
 const { toasterMsg, toasterShow } = storeToRefs(toasterStore);
 const { campaign } = storeToRefs(campaignStore);
+const { mosque } = storeToRefs(mosqueStore);
 
-const isAdmin = computed(() => user.value?.role === 'ORGANIZATION_ADMIN');
 
+// fetch initial data
 useAsyncData(() => authStore.me());
-
+useAsyncData(() => authStore.listPermissions());
 useAsyncData(() => mosqueStore.get(Number(mosqueId.value)));
+
 </script>

@@ -40,8 +40,8 @@ export const useAuthStore = defineStore('auth', () => {
         toasterStore.success("تم تسجيل الدخول بنجاح");
 
         // save org_id in cookies and go to mosques page (if the user is organization_admin)
-        if (res.user.role === 'ORGANIZATION_ADMIN') {
-            organizationId.value = res.assigned_organization.id
+        if (res.user.role === 'ORGANIZATION_ADMIN' && res.assigned_organization?.id) {
+            organizationId.value = res.assigned_organization?.id
             return navigateTo('/mosques')
         }
 
@@ -53,12 +53,14 @@ export const useAuthStore = defineStore('auth', () => {
             method: 'POST'
         })
 
-        await listPermissions()
+        // await listPermissions()
 
         // redirect the user if he has no access to dashboard
         // if (!permissions.value?.includes('DASHBOARD_ACCESS')) navigateTo('/has-no-access')
 
         user.value = res
+
+        return user.value
     }
 
     const permissions = ref<string[]>([])

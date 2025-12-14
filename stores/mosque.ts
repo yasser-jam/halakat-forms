@@ -10,7 +10,7 @@ export const useMosqueStore = defineStore('mosque', () => {
 
   const get = async (id: number): Promise<Mosque> => {
     const res = await api(`mosques/${id}`);
-    mosque.value = res;
+    mosque.value = res?.data;
     return mosque.value;
   };
 
